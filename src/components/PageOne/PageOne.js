@@ -4,7 +4,7 @@ import { Routes, Route, Link as RouteLink, Outlet, useNavigate } from 'react-rou
 import { Link, Box, Chip } from '@mui/material';
 import { getPosts } from '../../data';
 import { useDispatch, useSelector } from 'react-redux';
-import { add, remove } from '../../store/actions/storeRoute';
+import { addRoute, removeRoute } from '../../redux/routes/routes.actions';
 
 const PageOne = () => {
 
@@ -23,14 +23,15 @@ const PageOne = () => {
     }, []);
 
     const handleDelete = (item) => {
-        setIntNav(intNav.filter(crumb => crumb.name !== item.name));
-        dispatch(remove(intNav.filter(crumb=>crumb.name != item.name)));
+        dispatch(removeRoute(item));
     }
+
+    
 
     return (
         <div>
             <header>
-                {intNav.length>1&&(
+                {routes.length>1&&(
                     <Box sx={{
                         backgroundColor: 'white',
                         paddingY: '12px',
@@ -38,8 +39,8 @@ const PageOne = () => {
                         textAlign: 'left',
                         borderBottom: '1px solid #999'
                     }} >
-                        {intNav.map((item)=>(
-                            <Chip sx={{marginX: '5px'}} color={'primary'} label={item.name} onClick={(e)=>e.prventDefault} component={RouteLink} to={item.url} onDelete={()=>handleDelete(item)} />
+                        {routes.map((item)=>(
+                            <Chip key={item.name} sx={{marginX: '5px', marginY: '5px'}} color={'primary'} label={item.name} onClick={(e)=>e.prventDefault} component={RouteLink} to={item.url} onDelete={()=>handleDelete(item)} />
                         ))}
                     </Box>
                 )}
@@ -51,9 +52,9 @@ const PageOne = () => {
                     textAlign: 'left',
                 }} >
                     <Breadcrumbs>
-                       {intNav.map((item)=>(
+                       {routes.map((item)=>(
                         //    <Link component={RouteLink} to={item.url} key={item.url} >
-                           <p> {item.name}</p>
+                           <p key={item.name} > {item.name}</p>
                         //    </Link>
                        ))}
                     </Breadcrumbs>
@@ -68,9 +69,9 @@ const PageOne = () => {
                         to={`/page-one/${post.id}`} 
                         key={post.id} 
                         onClick={()=>{
-                            if(intNav.filter(e => e.name === post.title).length < 1){
-                                setIntNav(oldArray=>[...oldArray, {name: post.title, url: `/page-one/${post.id}`}])
-                                dispatch(add(oldArray=>[...oldArray, { name: post.title, url: `/page-one/${post.id}`}]))
+                            if(routes.filter(e => e.name === post.title).length < 1){
+                                dispatch(addRoute({name: post.title, url: `/page-one/${post.id}`}))
+                                console.log('Updated Routes', routes);
                             }
                         }}
                     >

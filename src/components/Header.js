@@ -7,7 +7,7 @@ import { Link, Outlet } from 'react-router-dom';
 
 const Header = () => {
 
-    const [value, setValue] = useState('');
+    const [value, setValue] = useState('/');
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
