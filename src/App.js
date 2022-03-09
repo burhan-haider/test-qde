@@ -1,15 +1,40 @@
+import {useState, useEffect} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import PageOne from './components/PageOne';
+import Home from './components/Home';
 import PageTwo from './components/PageTwo';
 import Post from './components/PageOne/Posts/post';
 import { Box } from '@mui/material' ;
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import ComponentHolder from './components/componentHolder/ComponentHolder';
+import {useSelector, useDispatch} from 'react-redux';
+import { setSelectedSubFeature } from './redux/routes/routes.actions';
+// import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function App() {
+
+  const features = useSelector(state => state.routes.features);
+  const mainRoute = useSelector(state => state.routes.mainRoute);
+
+  const mapComponent = [
+    {
+      id: 0,
+      component: <Home feature={features[0]} />,
+    },
+    {
+      id: 1,
+      component: <PageOne feature={features[1]} />,
+    }
+  ]
+
   return (
-    <div className="App">
-      <Routes>
+    <div className="App bg-purple-700">
+      {mapComponent.map((item)=>( 
+        <ComponentHolder key={item.id} index={item.id} value={mainRoute}>
+          {item.component}
+        </ComponentHolder>
+      ))}
+      {/* <Routes>
         <Route exact path="/" element={<Home />} />
         <Route path='page-one' element={<PageOne />} >
           <Route path=':postId' element={<Post />} />
@@ -23,48 +48,13 @@ function App() {
             </main>
           }
         />
-      </Routes>
+      </Routes> */}
     </div>
   );
 }
 
-const Home = () =>{
-  return(
-    <div>
-      <Box sx={{
-        backgroundColor: 'white',
-        paddingY: '12px',
-        paddingX: '50px',
-        textAlign: 'left',
-        borderBottom: '1px solid #999'
-      }} >
-        refreshing Tabs here 
-      </Box>
-      <Box sx={{
-        backgroundColor: 'white',
-        paddingY: '12px',
-        paddingX: '50px',
-        textAlign: 'left',
-      }} >
-        Breadcrumbs here 
-      </Box>
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  )
-}
+
+
+
 
 export default App;

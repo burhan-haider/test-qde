@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import { Breadcrumbs } from '@mui/material';
-import { Routes, Route, Link as RouteLink, Outlet, useNavigate } from 'react-router-dom';
+// import { Routes, Route, Link as RouteLink, Outlet, useNavigate } from 'react-router-dom';
 import { Link, Box, Chip } from '@mui/material';
 import { getPosts } from '../../data';
 import { useDispatch, useSelector } from 'react-redux';
 import { addRoute, removeRoute } from '../../redux/routes/routes.actions';
 
-const PageOne = () => {
+const PageOne = ({feature}) => {
 
     const routes = useSelector(state => state.routes.postRoutes);
     const dispatch = useDispatch();
@@ -15,12 +15,17 @@ const PageOne = () => {
 
 
     let posts = getPosts();
-    const navigation = useNavigate();
 
-    useEffect(() => {
-        console.log('Store:', routes)
+    // useEffect(() => {
+    //     if (routes.length < 2) {
+    //         if(routes.filter(e=>e.name === 'Page One').length < 1) {
+    //             dispatch(addRoute({name: 'Page One', url: '/page-one'}));
+    //         }
+    //     }
+    //     console.log('Store:', routes)
+    //     console.log('Feature 2:', feature)
         
-    }, []);
+    // }, []);
 
     const handleDelete = (item) => {
         dispatch(removeRoute(item));
@@ -31,7 +36,7 @@ const PageOne = () => {
     return (
         <div>
             <header>
-                {routes.length>1&&(
+                {/* {routes.length>1&&(
                     <Box sx={{
                         backgroundColor: 'white',
                         paddingY: '12px',
@@ -43,7 +48,7 @@ const PageOne = () => {
                             <Chip key={item.name} sx={{marginX: '5px', marginY: '5px'}} color={'primary'} label={item.name} onClick={(e)=>e.prventDefault} component={RouteLink} to={item.url} onDelete={()=>handleDelete(item)} />
                         ))}
                     </Box>
-                )}
+                )} */}
                 
                 <Box sx={{
                     backgroundColor: 'white',
@@ -54,13 +59,13 @@ const PageOne = () => {
                     <Breadcrumbs>
                        {routes.map((item)=>(
                         //    <Link component={RouteLink} to={item.url} key={item.url} >
-                           <p key={item.name} > {item.name}</p>
+                           <p key={item.name}> {item.name}</p>
                         //    </Link>
                        ))}
                     </Breadcrumbs>
                 </Box>
             </header>
-            <h1>Posts</h1>
+            {/* <h1>Posts</h1>
             <nav>
                 {posts.map((post)=>(
                     <Link 
@@ -78,8 +83,8 @@ const PageOne = () => {
                         {post.title}
                     </Link>
                 ))}
-            </nav>
-            <Outlet />
+            </nav> */}
+            {/* <Outlet /> */}
         </div>
     );
 }

@@ -3,6 +3,7 @@ import Header from '../Header';
 import { Box } from '@mui/material';
 
 const Layout = ({ children }) => {
+    
     return (
         <Box sx={{
             backgroundColor: '#ddd',
