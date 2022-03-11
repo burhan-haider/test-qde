@@ -40,6 +40,8 @@ const Header = () => {
                 onChange={handleChange}
                 variant="scrollable"
                 scrollButtons="auto"
+                indicator={{background: 'blue'}}
+                className="bg-purple-700 text-white"
             >
                 {/* <Tab icon={<MdHome size={24} />} component={Link} value="/" to={'/'} iconPosition="start"  label="Item One" />
                 <Tab icon={<MdSettings size={24} />} component={Link} value="/page-one" to={'/page-one'} iconPosition="start"   label="Item Two" />
@@ -49,10 +51,11 @@ const Header = () => {
                         key={item.id} 
                         icon={iconsMap[item.id]} 
                         iconPosition="start" 
+                        className="text-white"
                         label={openFeatures.includes(item.id) ? <span style={{textAlign: 'center'}} >{item.name}<br/><Badge color='primary' badgeContent={''} variant={'dot'} /></span> : item.name}
                     />    
                 ))}
-                <Tab label="Item Four" />
+                {/* <Tab label="Item Four" /> */}
                 
             </Tabs>
         </Box>

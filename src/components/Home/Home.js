@@ -8,7 +8,12 @@ import ComponentHolder from '../componentHolder/ComponentHolder';
 import SubFeatureOne from './SubFeatureOne/SubFeatureOne';
 import SubFeatureTwo from './SubFeatureTwo/SubFeatureTwo';
 import {useSelector, useDispatch} from 'react-redux';
-import {setSelectedSubFeature, removeFromOpenTabs} from '../../redux/routes/routes.actions';
+import {
+  setSelectedSubFeature, 
+  removeFromOpenTabs, 
+  addToMapTrail,
+  addToOpenTabs,
+} from '../../redux/routes/routes.actions';
 
 const Home = ({feature}) =>{
 
@@ -25,14 +30,13 @@ const Home = ({feature}) =>{
 
     const handleDelete = (item) => {
         dispatch(removeFromOpenTabs(feature.id, item))
-        dispatch(setSelectedSubFeature(feature.id, 1));
-
+        dispatch(setSelectedSubFeature(feature.id, feature.id));
     }
 
   
     return(
       <div>
-          {feature.openTabs.length > 1 && (
+          {feature.openTabs.length > 0 && (
             <Box sx={{
                 paddingY: '12px',
                 paddingX: '50px',
@@ -57,22 +61,54 @@ const Home = ({feature}) =>{
             paddingX: '50px',
             textAlign: 'left',
             marginX: '20px',
+            marginY: '20px'
             }}
             className="rounded-md">
           <Breadcrumbs>
-            {feature.openTabs.map((item) => (
-                <p key={item.id}> {item.name}</p>
+            {feature.mapTrail.map((item) => (
+                <p 
+                  onClick={()=>{dispatch(setSelectedSubFeature(feature.id, item.id))}} 
+                  className="cursor-pointer"
+                  key={item.id}
+                > 
+                  {item.name}{feature.mapTrail.indexOf(item) === feature.mapTrail.length-1&&' /'}
+                </p>
             ))}
           </Breadcrumbs>
         </Box>
-        <ComponentHolder index={1} type={'main'} value={feature.selectedTab}>
+        <ComponentHolder index={feature.id} type={'main'} value={feature.selectedTab} >
+          <MainPage feature={feature} />
+        </ComponentHolder>
+        <ComponentHolder index={feature.subFeatures[0].id} type={'main'} value={feature.selectedTab}>
           <SubFeatureOne feature={feature} subFeature={feature.subFeatures[0]} />
         </ComponentHolder>
-        <ComponentHolder index={2} type={'main'} value={feature.selectedTab} >
+        <ComponentHolder index={feature.subFeatures[1].id} type={'main'} value={feature.selectedTab} >
           <SubFeatureTwo feature={feature} subFeature={feature.subFeatures[1]} />
         </ComponentHolder>
           
       </div>
+    )
+  }
+
+  const MainPage = ({feature}) =>{
+
+    const dispatch = useDispatch();
+
+    const handleClick = (item) => {
+      dispatch(addToMapTrail(feature.id, item));
+      dispatch(setSelectedSubFeature(feature.id, item.id))
+      dispatch(addToOpenTabs(feature.id, item))
+    }
+
+    return(
+      <Box >
+        {feature.subFeatures.map((item)=>(
+          <button key={item.id} onClick={()=>handleClick(item)} className=" m-5 text-white font-bold border-none bg-red-500 hover:bg-red-700 rounded-md p-3 cursor-pointer">
+            {item.name}
+          </button>
+        ))}
+        
+      </Box>
     )
   }
 

@@ -19,21 +19,21 @@ const initialState = {
     mainRoute: 0,
     features: [
         {
-            id: 1,
-            name: 'Feature One',
+            id: '111',
+            name: 'Home',
             subFeatures: [
                 {
-                    id: 1,
+                    id: '111a',
                     name: 'Sub Feature One',
                 },
                 {
-                    id: 2,
+                    id: '111b',
                     name: 'Sub Feature Two',
                 }
             ],
-            mapTrail: ['Sub Feature One',],
-            openTabs: [{id: 1, name: 'Sub Feature One'},],
-            selectedTab: 1,
+            mapTrail: [{id: 0, name: 'Home'},],
+            openTabs: [],
+            selectedTab: '111',
         },
         {
             id: 2,

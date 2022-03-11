@@ -6,9 +6,9 @@ const Layout = ({ children }) => {
     
     return (
         <Box sx={{
-            backgroundColor: '#ddd',
             minHeight: '100vh',
-        }} >
+        }}
+        className="bg-purple-700" >
             <Header />
             {children}
         </Box>

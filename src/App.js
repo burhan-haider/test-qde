@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+// import {useState, useEffect} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import PageOne from './components/PageOne';
@@ -7,8 +7,11 @@ import PageTwo from './components/PageTwo';
 import Post from './components/PageOne/Posts/post';
 import { Box } from '@mui/material' ;
 import ComponentHolder from './components/componentHolder/ComponentHolder';
-import {useSelector, useDispatch} from 'react-redux';
-import { setSelectedSubFeature } from './redux/routes/routes.actions';
+import {
+  useSelector,
+  // useDispatch
+} from 'react-redux';
+// import { setSelectedSubFeature } from './redux/routes/routes.actions';
 // import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function App() {

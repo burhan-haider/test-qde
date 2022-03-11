@@ -19,7 +19,7 @@ const SubFeatureOne = ({feature, subFeature}) => {
     });
   
     const handleClick = () => {
-      dispatch(setSelectedSubFeature(homeFeature.id, 2));
+      dispatch(setSelectedSubFeature(homeFeature.id, homeFeature.id));
       if(openTabs.filter(e => e.id === homeFeature.subFeatures[1].id).length < 1){
         dispatch(addToOpenTabs(homeFeature.id, homeFeature.subFeatures[1]))
       }
