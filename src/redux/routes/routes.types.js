@@ -1,5 +1,3 @@
-export const ADD_ROUTE = 'ADD_ROUTE';
-export const REMOVE_ROUTE = 'REMOVE_ROUTE';
 export const SET_MAIN_ROUTE = 'SET_MAIN_ROUTE';
 
 export const SET_SELECTED_FEATURE = 'SET_SELECTED_FEATURE';

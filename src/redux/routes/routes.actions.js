@@ -1,6 +1,4 @@
-import { 
-    ADD_ROUTE, 
-    REMOVE_ROUTE, 
+import {
     SET_MAIN_ROUTE,
     SET_SELECTED_FEATURE,
     ADD_TO_OPEN_TABS,
@@ -11,20 +9,6 @@ import {
     REMOVE_FROM_OPEN_FEATURES,
     SET_SELECTED_SUB_FEATURE,
 } from "./routes.types";
-
-export const addRoute = (route) => {
-    return {
-        type: ADD_ROUTE,
-        payload: route,
-    }
-};
-
-export const removeRoute = (route) => {
-    return {
-        type: REMOVE_ROUTE,
-        payload: route,
-    }
-};
 
 export const setMainRoute = (route) => {
     return {

@@ -1,12 +1,12 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Badge from '@mui/material/Badge';
-import { MdHome, MdSettings, MdLocationOn } from 'react-icons/md'
+import Icon from 'components/Icon';
 // import { Link, Outlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addRoute, removeRoute, setMainRoute } from '../redux/routes/routes.actions';
+import { setMainRoute } from '../redux/routes/routes.actions';
 
 const Header = () => {
 
@@ -21,13 +21,7 @@ const Header = () => {
         console.log('Features:', features);
         console.log('Main Route:', mainRoute);
         
-    }, []);
-
-    const iconsMap = {
-        1: <MdHome size={24} />,
-        2: <MdSettings size={24} />,
-        3: <MdLocationOn size={24} />,
-    }
+    });
 
     const handleChange = (event, newValue) => {
         dispatch(setMainRoute(newValue));
@@ -49,8 +43,9 @@ const Header = () => {
                 {features.map((item)=>(
                     <Tab 
                         key={item.id} 
-                        icon={iconsMap[item.id]} 
+                        icon={<Icon iconName={item.icon} size={24} color={'inherit'} />} 
                         iconPosition="start" 
+                        value={item.id}
                         className="text-white"
                         label={openFeatures.includes(item.id) ? <span style={{textAlign: 'center'}} >{item.name}<br/><Badge color='primary' badgeContent={''} variant={'dot'} /></span> : item.name}
                     />    
