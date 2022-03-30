@@ -8,6 +8,10 @@ import {
     ADD_TO_OPEN_FEATURES,
     REMOVE_FROM_OPEN_FEATURES,
     SET_SELECTED_SUB_FEATURE,
+    ADD_TO_MODULES,
+    REMOVE_FROM_MODULES,
+    ADD_TO_PINNED_MODULES,
+    REMOVE_FROM_PINNED_MODULES,
 } from "./routes.types";
 
 export const setMainRoute = (route) => {
@@ -34,6 +38,7 @@ export const setSelectedSubFeature = (feature, subFeature) => {
     }
 };
 
+
 export const addToOpenTabs = (feature, subFeature) => {
     return {
         type: ADD_TO_OPEN_TABS,
@@ -47,6 +52,25 @@ export const addToOpenTabs = (feature, subFeature) => {
 export const removeFromOpenTabs = (feature, subFeature) => {
     return {
         type: REMOVE_FROM_OPEN_TABS,
+        payload: {
+            feature,
+            subFeature,
+        },
+    }
+};
+export const addToModules = (feature, subFeature) => {
+    return {
+        type: ADD_TO_MODULES,
+        payload: {
+            feature,
+            subFeature,
+        },
+    }
+};
+
+export const removeFromModules = (feature, subFeature) => {
+    return {
+        type: REMOVE_FROM_MODULES,
         payload: {
             feature,
             subFeature,
@@ -87,3 +111,17 @@ export const removeFromOpenFeatures = (feature) => {
         payload: feature,
     }
 };
+
+export const addToPinnedModules = (feature) => {
+    return {
+        type: ADD_TO_PINNED_MODULES,
+        payload: feature
+    }
+}
+
+export const removeFromPinnedModules = (feature) => {
+    return {
+        type: REMOVE_FROM_PINNED_MODULES,
+        payload: feature
+    }
+}

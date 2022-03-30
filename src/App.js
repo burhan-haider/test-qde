@@ -7,23 +7,20 @@ import {
 } from 'react-redux';
 
 function App() {
-
-  const features = useSelector(state => state.routes.features);
-  const mainRoute = useSelector(state => state.routes.mainRoute);
+  // const features = useSelector(state => state.routes.features);
+  const newFeatures = useSelector(state => state.routes.newFeatures.features);
+  const selectedFeature = useSelector(state => state.routes.newFeatures.featureCode);
+  // const mainRoute = useSelector(state => state.routes.mainRoute);
 
   return (
     <div className="App bg-purple-700">
-      {features.map((item)=>( 
-        <ComponentHolder key={item.id} index={item.id} value={mainRoute}>
+      {newFeatures.map((item)=>( 
+        <ComponentHolder key={item.featureCode} index={item.featureCode} value={selectedFeature}>
           <FeatureHolder feature={item} />
         </ComponentHolder>
       ))}
     </div>
   );
 }
-
-
-
-
 
 export default App;
