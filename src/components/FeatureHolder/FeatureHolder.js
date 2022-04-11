@@ -53,6 +53,8 @@ import {
                 dispatch(addToMapTrail(feature.featureCode, {id: item.id, label: item.label, level: item.level}));
             }
         }
+
+        //  if there is any breadcrumb with level higer than selected breadcrumb, it will be removed
         feature.breadCrumbs.map(crumb=>{
             if(crumb.level>=item.level&&crumb.id!==item.id){
                 dispatch(removeFromMapTrail(feature.featureCode, crumb));
@@ -193,6 +195,8 @@ import {
 
     return(
       <Box >
+
+           {/* mapping all the modules inside a feature as button */}
         {feature.modules.length>0 && feature.modules.map((item)=>(<>{item.parentModuleId===null&&(
           <button key={item.id} onClick={()=>handleClick(item)} className=" m-5 text-white font-bold border-none bg-red-500 hover:bg-red-700 rounded-md p-3 cursor-pointer">
             {item.moduleName}

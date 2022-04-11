@@ -503,6 +503,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state, mainRoute: action.payload,
             };
+            // changing the active feature
         case SET_SELECTED_FEATURE:
             return {
                 ...state, newFeatures:{...state.newFeatures, featureCode: action.payload},
