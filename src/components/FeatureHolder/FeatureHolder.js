@@ -34,7 +34,7 @@ import {
     }
 
     const dispatch =  useDispatch();
-    const selectedFeature = useSelector(state => state.routes.mainRoute);
+    const selectedFeature = useSelector(state => state.routes.newFeatures.featureCode);
     const pinnedModules = useSelector(state => state.routes.pinnedModules);
     
     const handleClick = (item) => {
@@ -43,14 +43,19 @@ import {
         const currentModule = feature.modules.filter(e => e.uniqueNo === item.id)[0];
         // to check if there is any value in array 
         if(feature.breadCrumbs.filter(e=>e.id===item.id).length<1){
+
             if(currentModule.parentModuleId!==null){
+
                 const parentModule = feature.modules.filter(e=>e.uniqueNo === currentModule.parentModuleId)[0];
+
                 if(feature.breadCrumbs.filter(e=>e.id===parentModule.uniqueNo).length<1){
                     dispatch(addToMapTrail(feature.featureCode, {id: parentModule.uniqueNo, label: parentModule.moduleName, level: item.level-1}))
                 }
+
                 dispatch(addToMapTrail(feature.featureCode, {id: item.id, label: item.label, level: item.level}));
             }
             else{
+
                 dispatch(addToMapTrail(feature.featureCode, {id: item.id, label: item.label, level: item.level}));
             }
         }
@@ -149,14 +154,10 @@ import {
                     'aria-labelledby': 'bookmark-button',
                     }}
                 >
-                {pinnedModules.length>0?(
-                    <>
-                        {pinnedModules.map(pin=>(
-                            <MenuItem onClick={handleBookmarkClose}>{pin.label}</MenuItem>
+                {pinnedModules.length>0?pinnedModules.map(pin=>(
+                    <MenuItem onClick={handleBookmarkClose}>{pin.label}</MenuItem>
 
-                        ))}
-                    </>
-                ):(
+                )):(
                     <p>No Pinned Modules Here!</p>
                 )}
                 </Menu>
@@ -173,7 +174,7 @@ import {
     )
   }
 
-  const MainPage = ({feature}) =>{
+const MainPage = ({feature}) =>{
 
     const dispatch = useDispatch();
 
@@ -199,13 +200,13 @@ import {
 
            {/* mapping all the modules inside a feature as button */}
         {feature.modules.length>0 && feature.modules.map((item)=>(<>{item.parentModuleId===null&&(
-          <button key={item.id} onClick={()=>handleClick(item)} className=" m-5 text-white font-bold border-none bg-red-500 hover:bg-red-700 rounded-md p-3 cursor-pointer">
+            <button key={item.id} onClick={()=>handleClick(item)} className=" m-5 text-white font-bold border-none bg-red-500 hover:bg-red-700 rounded-md p-3 cursor-pointer">
             {item.moduleName}
-          </button>
+            </button>
         )}</>))}
         
-      </Box>
+        </Box>
     )
-  }
+}
 
   export default FeatureHolder;

@@ -1,13 +1,15 @@
 import React, {useEffect} from 'react';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
+import {Tabs, Tab} from 'components/CustomTabs';
 import Box from '@mui/material/Box';
 import Badge from '@mui/material/Badge';
 import Icon from 'components/Icon';
+import getIconByKey from 'assets/icons';
+import { Divider } from '@mui/material';
 // import { Link, Outlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToOpenFeatures, setSelectedFeature } from '../redux/routes/routes.actions';
-
+import logo from 'assets/header/cognifi-logo.png';
+import headerBar from 'assets/header/header-bar.png'
 const Header = () => {
 
     // const mainRoute = useSelector(state => state.routes.mainRoute);
@@ -57,14 +59,14 @@ const Header = () => {
     };
 
     return (
-        <Box>
+        <Box className='flex justify-start align-middle'>
+            <img src={logo} alt="cognifi-logo" className="h-8 w-8 m-auto mx-2 cursor-pointer" />
+            <img src={headerBar} alt="cognifi-logo" className="h-9 w-auto m-auto" />
             <Tabs
                 value={selectedFeature}
                 onChange={handleChange}
                 variant="scrollable"
                 scrollButtons="auto"
-                indicator={{background: 'blue'}}
-                className="bg-purple-700 text-white"
             >
                 {/* <Tab icon={<MdHome size={24} />} component={Link} value="/" to={'/'} iconPosition="start"  label="Item One" />
                 <Tab icon={<MdSettings size={24} />} component={Link} value="/page-one" to={'/page-one'} iconPosition="start"   label="Item Two" />
@@ -72,18 +74,24 @@ const Header = () => {
                 {newFeatures.map((item)=>(
                     <Tab 
                         key={item.featureCode} 
-                        icon={<Icon iconName={item.icon} size={24} color={'inherit'} />} 
+                        icon={<Icon iconName={item.icon} size={18} color={'inherit'} />} 
                         iconPosition="start" 
                         value={item.featureCode}
-                        className="text-white"
+                        className="text-white border-none"
                         label={
-                            openFeatures.filter(e=>e.featureCode === item.featureCode).length > 0 && selectedFeature !== item.featureCode ? <span style={{textAlign: 'center'}} ><Badge sx={{"& .MuiBadge-badge": {backgroundColor: 'white', color: 'white'}}} badgeContent={''} variant={'dot'} /><br/>{item.featureName}</span> : item.featureName
+                            item.featureName
                         }
                     />    
+                    
                 ))}
                 {/* <Tab label="Item Four" /> */}
                 
             </Tabs>
+            <img src={headerBar} alt="cognifi-logo" className="h-9 w-auto m-auto" />
+            <img src={getIconByKey('searchOne')} alt={'search_icon'} className="h-5 w-auto mx-3 m-auto cursor-pointer" />
+            <Divider sx={{borderColor: '#e2e8f0', marginTop: '16px', marginBottom: '16px'}} orientation='vertical' variant='middle' flexItem />
+            <img src={getIconByKey('menu')} alt={'menu icon'} className="h-4 w-auto mx-3 m-auto" />
+
         </Box>
     );
 }
