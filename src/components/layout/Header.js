@@ -1,5 +1,7 @@
 import React, {useEffect} from 'react';
-import {Tabs, Tab} from 'components/CustomTabs';
+import {Tabs, Tab} from 'components/common/CustomTabs';
+import TabScrollButton from '@mui/material/TabScrollButton';
+import { styled } from '@mui/system';
 import Box from '@mui/material/Box';
 import Badge from '@mui/material/Badge';
 import Icon from 'components/Icon';
@@ -7,9 +9,24 @@ import getIconByKey from 'assets/icons';
 import { Divider } from '@mui/material';
 // import { Link, Outlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToOpenFeatures, setSelectedFeature } from '../redux/routes/routes.actions';
+import { addToOpenFeatures, setSelectedFeature } from '../../redux/routes/routes.actions';
 import logo from 'assets/header/cognifi-logo.png';
 import headerBar from 'assets/header/header-bar.png'
+
+const MyTabScrollButton = styled(TabScrollButton)({
+    display: 'none',
+    width: 12,
+    root: {
+      display: 'none',
+      width: 28,
+      overflow: 'hidden',
+      transition: 'width 5s',
+      '&.Mui-disabled': {
+        width: 0,
+      },
+    },
+  });
+
 const Header = () => {
 
     // const mainRoute = useSelector(state => state.routes.mainRoute);
@@ -59,14 +76,20 @@ const Header = () => {
     };
 
     return (
-        <Box className='flex justify-start align-middle'>
-            <img src={logo} alt="cognifi-logo" className="h-8 w-8 m-auto mx-2 cursor-pointer" />
+        <Box className='flex justify-start align-middle px-2'>
+            <img 
+                src={logo} 
+                alt="cognifi-logo" 
+                className="h-8 w-8 m-auto mx-2 cursor-pointer" 
+                onClick={()=>window.location.reload}
+            />
             <img src={headerBar} alt="cognifi-logo" className="h-9 w-auto m-auto" />
             <Tabs
                 value={selectedFeature}
                 onChange={handleChange}
                 variant="scrollable"
                 scrollButtons="auto"
+                ScrollButtonComponent={MyTabScrollButton}
             >
                 {/* <Tab icon={<MdHome size={24} />} component={Link} value="/" to={'/'} iconPosition="start"  label="Item One" />
                 <Tab icon={<MdSettings size={24} />} component={Link} value="/page-one" to={'/page-one'} iconPosition="start"   label="Item Two" />
@@ -90,8 +113,10 @@ const Header = () => {
             <img src={headerBar} alt="cognifi-logo" className="h-9 w-auto m-auto" />
             <img src={getIconByKey('searchOne')} alt={'search_icon'} className="h-5 w-auto mx-3 m-auto cursor-pointer" />
             <Divider sx={{borderColor: '#e2e8f0', marginTop: '16px', marginBottom: '16px'}} orientation='vertical' variant='middle' flexItem />
-            <img src={getIconByKey('menu')} alt={'menu icon'} className="h-4 w-auto mx-3 m-auto" />
-
+            <img src={getIconByKey('menu')} alt={'menu icon'} className="h-4 w-auto ml-3 m-auto" />
+            {/*<div className="flex justify-start align-middle w-100" >
+                <p className="text-white" >Vivek Raj</p>
+                    </div>*/}
         </Box>
     );
 }

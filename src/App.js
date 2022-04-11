@@ -1,6 +1,6 @@
 import './App.css';
-import FeatureHolder from 'components/FeatureHolder';
-import ComponentHolder from './components/componentHolder/ComponentHolder';
+import FeatureHolder from 'components/common/FeatureHolder';
+import ComponentHolder from './components/common/componentHolder/ComponentHolder';
 import {
   useSelector,
   // useDispatch
@@ -13,7 +13,7 @@ function App() {
   // const mainRoute = useSelector(state => state.routes.mainRoute);
 
   return (
-    <div className="App bg-purple-700">
+    <div className="App " style={{backgroundColor: '#052a4f'}}>
       {newFeatures.map((item)=>( 
         <ComponentHolder 
           key={item.featureCode} 

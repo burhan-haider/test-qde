@@ -7,8 +7,8 @@ const CustomTabs = styled(Tabs)({
     height: '3rem',
     display: 'flex',
     justifyContent: 'start',
-    paddingLeft: '0rem',
-    paddingRight: '0rem',
+    paddingLeft: '0.25rem',
+    paddingRight: '0.25rem',
     alignItems: 'center',
     '& .MuiTabs-indicator': {
         background: 'transparent',

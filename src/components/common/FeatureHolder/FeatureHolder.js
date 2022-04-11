@@ -8,8 +8,8 @@ import {
     Button,
 } from '@mui/material';
 import { MdPushPin, MdBookmark, MdArrowDropDown } from 'react-icons/md'
-import ComponentHolder from 'components/componentHolder/ComponentHolder';
-import ModuleHolder from 'components/ModuleHolder'
+import ComponentHolder from 'components/common/componentHolder/ComponentHolder';
+import ModuleHolder from 'components/common/ModuleHolder'
 import {useDispatch, useSelector} from 'react-redux';
 import {
     setSelectedSubFeature, 
@@ -105,7 +105,7 @@ import {
 
     return(
         <div>
-            <Box className="bg-purple-700 px-12 py-3 text-left">
+            <Box className="px-12 py-3 text-left" style={{backgroundColor: '#052a4f'}} >
                 {feature.openTabs.length>0 && feature.openTabs.map((item)=>(
                     <>
                         {feature.selectedModule===item.id ? (
