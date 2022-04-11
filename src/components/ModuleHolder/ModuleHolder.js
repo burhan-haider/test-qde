@@ -9,14 +9,14 @@ const ModuleHolder = ({feature, subFeature}) => {
     const selectedFeature = useSelector(state=>state.routes.newFeatures.featureCode);
     let modules = allModules.filter(e=>e.parentModuleId===subFeature.uniqueNo);
     
-    useEffect(() => {
-        console.log(selectedFeature);
-        if(selectedFeature === feature.featureCode){
-            console.log("SubFeature Modules:-",modules)
-            console.log('Feature:-', feature)
-        }
+    // useEffect(() => {
+    //     console.log(selectedFeature);
+    //     if(selectedFeature === feature.featureCode){
+    //         console.log("SubFeature Modules:-",modules)
+    //         console.log('Feature:-', feature)
+    //     }
         
-    });
+    // });
 
     const handleClick = (item) => {
         if(feature.modules.filter(e=>e.uniqueNo === item.uniqueNo).length<1){

@@ -15,7 +15,11 @@ function App() {
   return (
     <div className="App bg-purple-700">
       {newFeatures.map((item)=>( 
-        <ComponentHolder key={item.featureCode} index={item.featureCode} value={selectedFeature}>
+        <ComponentHolder 
+          key={item.featureCode} 
+          index={item.featureCode} 
+          value={selectedFeature}
+          >
           <FeatureHolder feature={item} />
         </ComponentHolder>
       ))}

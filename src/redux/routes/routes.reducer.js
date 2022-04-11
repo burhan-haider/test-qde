@@ -267,7 +267,7 @@ const initialState = {
                 openTabs: [],
                 breadCrumbs: [{id: 'dashboard', label: 'Dashboard', level: 0}],
                 selectedModule: 'dashboard',
-            }
+            },
         ],
     },
     mainFeatures: {
@@ -491,7 +491,7 @@ const initialState = {
         ],
         refreshModule: null,
     },
-    selectedFeature: '',
+    selectedFeature: 'dashboard',
     openFeatures: [],
     pinnedModules: [],
 };

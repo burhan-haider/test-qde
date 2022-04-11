@@ -7,8 +7,8 @@ const Layout = ({ children }) => {
     return (
         <Box sx={{
             minHeight: '100vh',
-        }}
-        className="bg-purple-700" >
+            background: '#052a4f',
+        }} >
             <Header />
             {children}
         </Box>
