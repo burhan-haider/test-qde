@@ -41,6 +41,7 @@ import {
         dispatch(setSelectedSubFeature(feature.featureCode, item.id));
         console.log("Item in Tabs", item)
         const currentModule = feature.modules.filter(e => e.uniqueNo === item.id)[0];
+        // to check if there is any value in array 
         if(feature.breadCrumbs.filter(e=>e.id===item.id).length<1){
             if(currentModule.parentModuleId!==null){
                 const parentModule = feature.modules.filter(e=>e.uniqueNo === currentModule.parentModuleId)[0];
