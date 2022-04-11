@@ -9,16 +9,26 @@ import { Provider } from 'react-redux';
 import { store, persistor } from './redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { StyledEngineProvider } from '@mui/material/styles';
+import { Router } from 'react-router-dom'
+import history from 'services/history';
+import Authentication from 'components/auth/Authentication';
+import Authorization from 'components/auth/Authorization';
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <StyledEngineProvider injectFirst>
-          <Layout>
-            <App />
-          </Layout>
-        </StyledEngineProvider>
+        <Router history={history}>
+          <Authentication>
+            <Authorization>
+              <StyledEngineProvider injectFirst>
+                <Layout>
+                  <App />
+                </Layout>
+              </StyledEngineProvider>
+            </Authorization>
+          </Authentication>
+        </Router>
       </PersistGate>
     </Provider>
   </React.StrictMode>,

@@ -4,7 +4,7 @@ import {
   FormControl,
   FormControlLabel,
   FormHelperText
-} from "@material-ui/core";
+} from "@mui/material";
 import { withFormsy } from "formsy-react";
 import _ from "lodash";
 

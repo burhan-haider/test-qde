@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Login from "../login/Login";
+import Login from "components/login/Login";
 import { useSelector, useDispatch } from "react-redux";
-import authservice from "../../services/auth/authService";
+import authservice from "services/auth/authService";
 import {
   setUserData,
   setGuestUserRole
-} from "../../store/actions/auth/user.action";
+} from "redux/actions/auth/user.action";
 
 function Authentication(props) {
   const dispatch = useDispatch();

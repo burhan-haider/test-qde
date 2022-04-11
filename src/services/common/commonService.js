@@ -1,6 +1,6 @@
-import httpService from "../httpservice/httpService";
+import httpService from "services/httpservice/httpService";
 //import user from "../../components/auth/reducer/userReducer";
-import store from "app/store";
+import {store} from "redux/store";
 class commonService {
     fetchTimeout = async () => {
       return await new Promise((resolve, reject) => {

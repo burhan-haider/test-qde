@@ -1,6 +1,6 @@
-import AuthService from "app/services/auth/authService";
-import authService from "app/services/auth/authService";
-import history from "../../../../history";
+import AuthService from "services/auth/authService";
+import authService from "services/auth/authService";
+import history from "services/history";
 
 export const SET_USER_DATA = "SET USER DATA";
 export const SET_GUEST_USER_DATA = "SET GUEST USER";

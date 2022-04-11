@@ -6,12 +6,13 @@ import {
   InputAdornment,
   IconButton,
   FormHelperText
-} from "@material-ui/core";
+} from "@mui/material";
 import { withFormsy } from "formsy-react";
 import _ from "lodash";
-import SearchIcon from "@mui/icons-material/Search";
-import { GenericDialog } from "@application";
-import ModuleParamValue from "app/component/modules/moduleDataContainer/modulePages/masterModules/ModuleParamValue/index";
+// import SearchIcon from "@mui/icons-material/Search";
+import { MdSearch as SearchIcon } from 'react-icons/md';
+// import { GenericDialog } from "@application";
+// import ModuleParamValue from "app/component/modules/moduleDataContainer/modulePages/masterModules/ModuleParamValue/index";
 
 function ViewFieldFormsy(props) {
   const importedProps = _.pick(props, [
@@ -122,16 +123,7 @@ function ViewFieldFormsy(props) {
           <FormHelperText>{errorMessage}</FormHelperText>
         )}
       </FormControl>
-      <GenericDialog
-        closeModal={handleCloseModal}
-        state={openModal}
-        property={property}
-      >
-        <ModuleParamValue
-          modalContent={modalContent}
-          closeModal={handleCloseModal}
-        />
-      </GenericDialog>
+      
     </React.Fragment>
   );
 }

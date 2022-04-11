@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { getDesiredLabels } from "../../store/actions/auth/user.action";
+// import { getDesiredLabels } from "redux/actions/auth/user.action";
 import { useSelector } from "react-redux";
 import { Redirect, Route, Switch } from "react-router-dom";
-import Login from "../login/Login";
+import Login from "components/login/Login";
 
 function Authorization(props) {
   const dispatch = useDispatch();

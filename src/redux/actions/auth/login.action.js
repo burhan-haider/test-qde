@@ -1,4 +1,4 @@
-import authService from "app/services/auth/authService";
+import authService from "services/auth/authService";
 // import login from "../reducer/loginReducer";
 import { setUserData } from "./user.action";
 

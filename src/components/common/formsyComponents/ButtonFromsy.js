@@ -1,9 +1,9 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Button } from "@material-ui/core";
+import { styled } from "@mui/material/styles";
+import { Button } from "@mui/material";
 import _ from "lodash";
 
-const useStyles = makeStyles(theme => ({
+const CustomButton = styled(Button)({
   buttonRoot: {
     borderRadius: "25px",
     marginRight: "1%",
@@ -20,10 +20,9 @@ const useStyles = makeStyles(theme => ({
     textTransform: "capitalize"
     //color: "white"
   }
-}));
+});
 
 function GenericButton(props) {
-  const classes = useStyles();
   const importedProps = _.pick(props, [
     "className",
     "disabled",
@@ -34,12 +33,8 @@ function GenericButton(props) {
   ]);
 
   return (
-    <Button
+    <CustomButton
       {...importedProps}
-      classes={{
-        root: classes.buttonRoot,
-        label: classes.buttonLabel
-      }}
       {...props}
     />
   );

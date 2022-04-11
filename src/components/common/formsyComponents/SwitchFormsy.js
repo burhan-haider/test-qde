@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { withFormsy } from "formsy-react";
 import _ from "lodash";
-import { FormControlLabel } from "@material-ui/core";
-import { GenericSwitch } from "@application";
+import { FormControlLabel } from "@mui/material";
+// import { GenericSwitch } from "@application";
 
 function SwitchFormsy(props) {
   const importedProps = _.pick(props, [
@@ -47,10 +47,10 @@ function SwitchFormsy(props) {
         backgroundColor: value ? "#052a4f" : "#f4f5fa",
         color: value ? "#fff" : "#353535"
       }}
-      control={
-        // <Switch checked={value} onChange={changeValue} color="primary" />
-        <GenericSwitch checked={value} onChange={changeValue} />
-      }
+      // control={
+      //   // <Switch checked={value} onChange={changeValue} color="primary" />
+      //   <GenericSwitch checked={value} onChange={changeValue} />
+      // }
       label={props.label}
       labelPlacement="start"
     />

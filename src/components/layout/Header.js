@@ -2,11 +2,9 @@ import React, {useEffect} from 'react';
 import {Tabs, Tab} from 'components/common/CustomTabs';
 import TabScrollButton from '@mui/material/TabScrollButton';
 import { styled } from '@mui/system';
-import Box from '@mui/material/Box';
-import Badge from '@mui/material/Badge';
 import Icon from 'components/Icon';
 import getIconByKey from 'assets/icons';
-import { Divider } from '@mui/material';
+import { Avatar, Divider, Button, IconButton, Box, Badge } from '@mui/material';
 // import { Link, Outlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToOpenFeatures, setSelectedFeature } from '../../redux/routes/routes.actions';
@@ -76,7 +74,7 @@ const Header = () => {
     };
 
     return (
-        <Box className='flex justify-start align-middle px-2'>
+        <Box className='flex justify-start align-middle px-1'>
             <img 
                 src={logo} 
                 alt="cognifi-logo" 
@@ -111,12 +109,20 @@ const Header = () => {
                 
             </Tabs>
             <img src={headerBar} alt="cognifi-logo" className="h-9 w-auto m-auto" />
-            <img src={getIconByKey('searchOne')} alt={'search_icon'} className="h-5 w-auto mx-3 m-auto cursor-pointer" />
-            <Divider sx={{borderColor: '#e2e8f0', marginTop: '16px', marginBottom: '16px'}} orientation='vertical' variant='middle' flexItem />
-            <img src={getIconByKey('menu')} alt={'menu icon'} className="h-4 w-auto ml-3 m-auto" />
+            <IconButton onClick={()=>{}} color="primary" className="mx-2 m-auto" >
+                <img src={getIconByKey('searchOne')} alt={'search_icon'} className="h-5 w-auto " />
+            </IconButton>
+            <Divider sx={{borderColor: '#e2e8f0', marginTop: '20px', marginBottom: '16px'}} orientation='vertical' variant='middle' flexItem />
+            <img src={getIconByKey('menu')} alt={'menu icon'} className="h-4 w-auto mx-4 m-auto" />
             {/*<div className="flex justify-start align-middle w-100" >
                 <p className="text-white" >Vivek Raj</p>
                     </div>*/}
+            <Button variant="text" className="flex rounded py-0 px-5 mr-3 normal-case" >
+                <p className="text-white text-sm normal-case" >Vivek&nbsp;Raj&nbsp;&nbsp;</p>
+                <Avatar sx={{width: '35px', height: '35px'}} >
+                    
+                </Avatar>
+            </Button>
         </Box>
     );
 }

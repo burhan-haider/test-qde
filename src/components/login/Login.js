@@ -1,18 +1,16 @@
 import React, { useState, useRef } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/styles";
 import Formsy from "formsy-react";
-
-import { Button, FormControl, Typography } from "@material-ui/core";
+import { Button, FormControl, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
-
-import commonService from "../../services/common/commonService";
-import COGNIFI_LOGO_FULL from "../../../assets/icons/cognifi_logo_full.png";
-import QDE_LOGO from "../../../assets/icons/QDE_LOGO.png";
-import Cognifi_Logo_Animated from "../../../assets/icons/Cognifi_Logo_Animated.gif";
+import commonService from "services/common/commonService";
+import COGNIFI_LOGO_FULL from "assets/icons/cognifi_logo_full.png";
+import QDE_LOGO from "assets/icons/QDE_LOGO.png";
+import Cognifi_Logo_Animated from "assets/icons/Cognifi_Logo_Animated.gif";
 
 import { TextFieldFormsy } from "../common/formsyComponents";
-import { submitLogin } from "../../store/actions/auth";
-import crypto from "crypto";
+import { submitLogin } from "redux/actions/auth";
+const crypto = require("crypto");
 // submitLogin;
 const useStyles = makeStyles((theme) => ({
   buttonRoot: {
@@ -118,7 +116,7 @@ function Login(props) {
   const dispatch = useDispatch();
   // VIVEK - BCRYPT
   // var bcrypt = require("bcryptjs");
-  const exportImage = require.context("../../../assets", true);
+  const exportImage = require.context("assets", true);
 
   function encryptData(plaintext) {
     const iv = crypto.randomBytes(16);
