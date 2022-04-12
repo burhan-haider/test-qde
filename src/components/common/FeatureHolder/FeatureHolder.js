@@ -163,7 +163,7 @@ import {
                 </Menu>
             </Box>
             <ComponentHolder index={feature.featureCode} type={'main'} value={feature.selectedModule}>
-                <MainPage feature={feature} />
+                <MainPage key={feature.featureCode} feature={feature} />
             </ComponentHolder>
             {feature.modules.length > 0 && feature.modules.map((item)=>(
                 <ComponentHolder index={item.uniqueNo} key={item.uniqueNo} type={'main'} value={feature.selectedModule}  >

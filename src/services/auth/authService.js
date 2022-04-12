@@ -16,7 +16,7 @@ class AuthService {
         .then((response) => {
           if (response.status === 200) {
             this.setSession(response.data.token);
-
+            console.log("response :"+response.data.token);
             resolve(response.data.token);
           } else {
             reject(response.data.message);
