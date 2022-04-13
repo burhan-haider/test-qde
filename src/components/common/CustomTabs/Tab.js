@@ -5,7 +5,7 @@ const CustomTabComponent = styled(props=><Tab disableRipple {...props} />)(({the
     color: '#000',
     fontSize: '14px',
     backgroundColor: 'inherit',
-    minHeight: '3rem',
+    minHeight: '2.25rem',
     textTransform: 'none',
     paddingTop: '0.1rem',
     paddingBottom: '0.1rem',

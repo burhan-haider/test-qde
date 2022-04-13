@@ -15,7 +15,18 @@ import {
 } from "./routes.types";
 
 const initialState = {
-   
+    openFeatures: [],
+    userFeatures: [],
+    features: [
+        {
+            featureCode: 'dashboard',
+            modules: [],
+            openTabs: [],
+            breadCrumbs: [],
+            selectedModule: ''
+        }
+    ],
+    featureCode: '',
 
 
 };

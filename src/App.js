@@ -1,4 +1,3 @@
-import './App.css';
 import FeatureHolder from 'components/common/FeatureHolder';
 import ComponentHolder from './components/common/componentHolder/ComponentHolder';
 import {
@@ -13,7 +12,7 @@ function App() {
   // const mainRoute = useSelector(state => state.routes.mainRoute);
 
   return (
-    <div className="App " style={{backgroundColor: '#052a4f'}}>
+    <div className="text-center" style={{backgroundColor: '#052a4f'}}>
       {newFeatures.map((item)=>( 
         <ComponentHolder 
           key={item.featureCode} 
