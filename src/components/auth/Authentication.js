@@ -35,6 +35,9 @@ function Authentication(props) {
           authservice.setSession(false);
         });
     }
+    else{
+      props.history.push("/");
+    }
   }, [auth, dispatch, loading]);
 
   return (

@@ -4,7 +4,12 @@ module.exports = {
   ],
   important: '#root',
   theme: {
-    extend: {},
+    
+    extend: {
+      colors: {
+        'light-grey': '#83a3bb',
+      },
+    },
   },
   plugins: [],
 }

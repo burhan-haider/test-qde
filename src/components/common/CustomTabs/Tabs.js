@@ -6,13 +6,15 @@ const CustomTabs = styled(Tabs)({
     color: '#fff',
     height: '3rem',
     display: 'flex',
-    justifyContent: 'start',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
     paddingLeft: '0.25rem',
     paddingRight: '0.25rem',
     alignItems: 'center',
     '& .MuiTabs-indicator': {
         background: 'transparent',
-    }
+    },
+    transition: 'all 0.3s ease-in-out',
 })
 
 export default CustomTabs;

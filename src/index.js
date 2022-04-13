@@ -19,8 +19,8 @@ ReactDOM.render(
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <Router history={history}>
-          <Authentication>
-            <Authorization>
+          <Authentication history={history}>
+            <Authorization history={history}>
               <StyledEngineProvider injectFirst>
                 <Layout>
                   <App />

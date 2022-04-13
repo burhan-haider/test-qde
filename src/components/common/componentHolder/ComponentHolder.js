@@ -8,6 +8,7 @@ const ComponentHolder = (props) => {
             id={`componentHolder-${index}`}
             hidden={value !== index}
             className={type === 'main' && 'bg-white m-5 rounded-md min-h-screen'}
+            style={{transition: 'all 0.3s ease-in'}}
             {...other}
         >
             {children}
