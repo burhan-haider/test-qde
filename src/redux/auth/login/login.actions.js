@@ -1,9 +1,11 @@
 import authService from "services/auth/authService";
 // import login from "../reducer/loginReducer";
-import { setUserData } from "./user.action";
+import { setUserData } from "redux/auth/user/user.actions";
 
-export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
-export const LOGIN_ERROR = "LOGIN_ERROR";
+import {
+  LOGIN_SUCCESS,
+  LOGIN_ERROR,
+} from './login.types'
 
 export function submitLogin({ userName, userPassword }, loadingHandler) {
   return (dispatch) =>

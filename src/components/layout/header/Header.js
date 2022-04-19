@@ -5,9 +5,14 @@ import { styled } from '@mui/system';
 import Icon from 'components/Icon';
 import getIconByKey from 'assets';
 import { Avatar, Divider, Button, IconButton, Box, Badge } from '@mui/material';
+import { 
+    fetchUserFeature,
+    setSelectedFeature,
+    fetchFeatureModules,
+} from 'redux/features/features.actions';
 // import { Link, Outlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToOpenFeatures, setSelectedFeature } from '../../../redux/routes/routes.actions';
+// import { addToOpenFeatures, setSelectedFeature } from 'redux/routes/routes.actions';
 import logo from 'assets/header/cognifi-logo.png';
 import headerBar from 'assets/header/header-bar.png'
 import UserMenuList from './userMenu/UserMenu';
@@ -29,62 +34,42 @@ const MyTabScrollButton = styled(TabScrollButton)({
 
 const Header = () => {
 
-    const selectedFeature = useSelector(state => state.routes.newFeatures.featureCode);
-    const modules = useSelector(state => state.routes.modules);
-    const currentFeatures = useSelector(state => state.routes.newFeatures.userFeatures);
-    const openFeatures = useSelector(state => state.routes.newFeatures.features);
-    
-    const [newFeatures, setNewFeatures] = useState(currentFeatures);
+    const selectedFeature = useSelector(state => state.features.features.featureCode);
+    // const modules = useSelector(state => state.routes.modules);
+    // const currentFeatures = useSelector(state => state.routes.newFeatures.userFeatures);
+    const newFeatures = useSelector(state => state.features.features.userFeatures);
+    // const openFeatures = useSelector(state => state.routes.newFeatures.features);
+    const user = useSelector(state => state.auth.user)
+    // const [newFeatures, setNewFeatures] = useState(currentFeatures);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        commonService.fetchUserFeatures().then(res=>{
-            console.log('Features:', res)
-            setNewFeatures(res)
-        })
-        .catch(err=>{
-            console.log("Err:",err)
-        })
+        dispatch(fetchUserFeature(user))
+        console.log("selectedFeature", selectedFeature);
+        if(selectedFeature==null){
+            dispatch(setSelectedFeature('dashboard'))
+            dispatch(fetchFeatureModules('dashboard'))
+        }
+        // setNewFeatures(currentFeatures)
     },[]);
 
     const handleChange = (event, newValue) => {
         dispatch(setSelectedFeature(newValue));
-        const featureModulesId = newFeatures.filter(e => e.featureCode === newValue)[0].mainModulesList;
-
-        const featureModules = [];
-
-        const featureName = newFeatures.filter(e => e.featureCode === newValue)[0].featureName;
-
-        if(modules&&modules.length>0){
-            modules.map(module => {
-                if(featureModulesId.includes(module.moduleCode)){
-                    featureModules.push(module);
-                    return module;
-                }
-                return module;
-            })
-        }
-        if(openFeatures.filter(e => e.featureCode === newValue).length < 1){
-            dispatch(addToOpenFeatures({
-                featureCode: newValue,
-                modules: featureModules,
-                openTabs: [],
-                breadCrumbs: [{id: newValue, label: featureName, level: 0}],
-                selectedModule: newValue
-            }));
-        }
+        dispatch(fetchFeatureModules(newValue));
     };
 
     return (
         <Box className='flex justify-start align-middle px-3'>
-            <img 
-                src={logo} 
-                alt="cognifi-logo" 
-                className="h-8 w-8 m-auto mx-2 cursor-pointer" 
-                onClick={()=>window.location.reload()}
-            />
-            <img src={headerBar} alt="header-bar" className="h-9 w-auto m-auto" />
+            <div className='flex justify-start' >
+                <img 
+                    src={logo} 
+                    alt="cognifi-logo" 
+                    className="h-8 w-8 m-auto mx-2 cursor-pointer" 
+                    onClick={()=>window.location.reload()}
+                />
+                <img src={headerBar} alt="header-bar" className="h-9 w-auto m-auto" />
+            </div>
             <Tabs
                 value={selectedFeature}
                 onChange={handleChange}
@@ -98,7 +83,7 @@ const Header = () => {
                 {newFeatures.map((item)=>(
                     <Tab 
                         key={item.featureCode?item.featureCode:item.featureMapping_Id} 
-                        icon={item.icon?<Icon iconName={item.icon} size={18} color={'inherit'} />:<img src={getIconByKey(item.featureIcon)} class="h-5 w-auto mr-2" alt={item.featureIcon}/>} 
+                        icon={item.icon?<Icon iconName={item.icon} size={18} color={'inherit'} />:<img src={getIconByKey(item.featureIcon)} style={{height: '1.25rem', width: 'auto'}} className="h-5 w-auto mr-2" alt={item.featureIcon}/>} 
                         iconPosition="start" 
                         value={item.featureCode?item.featureCode:item.featureMapping_Id}
                         className="text-white border-none"

@@ -22,12 +22,12 @@ const composeEnhancers =
 const enhancer = composeEnhancers(applyMiddleware(thunk, logger));
 
 
-const persistConfig = {
-    key: 'root',
-    storage,
-};
+// const persistConfig = {
+//     key: 'root',
+//     storage,
+// };
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+// const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-export const store = createStore(persistedReducer, enhancer);
-export const persistor = persistStore(store);
+export const store = createStore(rootReducer, enhancer);
+// export const persistor = persistStore(store);

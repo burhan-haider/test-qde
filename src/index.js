@@ -17,19 +17,20 @@ import Authorization from 'components/auth/Authorization';
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
+      {/* <PersistGate loading={null} persistor={persistor}> */}
         <Router history={history}>
           <Authentication history={history}>
             <Authorization history={history}>
               <StyledEngineProvider injectFirst>
                 <Layout>
+                  {/* <h1>Featuers</h1> */}
                   <App />
                 </Layout>
               </StyledEngineProvider>
             </Authorization>
           </Authentication>
         </Router>
-      </PersistGate>
+      {/* </PersistGate> */}
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

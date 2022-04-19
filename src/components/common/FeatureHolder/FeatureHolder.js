@@ -12,20 +12,15 @@ import { MdPushPin, MdBookmark, MdArrowDropDown } from 'react-icons/md'
 import ComponentHolder from 'components/common/componentHolder/ComponentHolder';
 import ModuleHolder from 'components/common/ModuleHolder'
 import {useDispatch, useSelector} from 'react-redux';
-import {
-    setSelectedSubFeature, 
-    removeFromOpenTabs, 
-    addToMapTrail,
-    removeFromMapTrail,
-    addToOpenTabs,
-    addToPinnedModules,
-    removeFromPinnedModules,
-  } from 'redux/routes/routes.actions';
+import { setSelectedModule } from 'redux/features/features.actions';
 import getIconByKey from 'assets';
 
 const FeatureHolder = ({feature}) => {
 
   const [bookMark, toggleBookMark] = useState(null);
+  const features = useSelector(state => state.features.features);
+  const [trail, setTrail] = useState([]);
+
   const open = Boolean(bookMark);
 
   const handleBookmark = (event) => {
@@ -35,75 +30,124 @@ const FeatureHolder = ({feature}) => {
       toggleBookMark(null);
   }
 
+  useEffect(()=>{
+      console.log("Feature:", feature)
+  })
+
   const dispatch =  useDispatch();
-  const selectedFeature = useSelector(state => state.routes.newFeatures.featureCode);
-  const pinnedModules = useSelector(state => state.routes.pinnedModules);
-  
-  const handleClick = (item) => {
-      dispatch(setSelectedSubFeature(feature.featureCode, item.id));
-      console.log("Item in Tabs", item)
-      const currentModule = feature.modules.filter(e => e.uniqueNo === item.id)[0];
-      // to check if there is any value in array 
-      if(feature.breadCrumbs.filter(e=>e.id===item.id).length<1){
+  const selectedFeature = useSelector(state => state.features.features.featureCode);
+//   const selectedNewFeature = useSelector(state=> state.features.features.featureCode)
+  const pinnedModules = useSelector(state => state.features.features.pinnedModules);
 
-          if(currentModule.parentModuleId!==null){
+  var url = selectedFeature
+    ? `/common/feature/${selectedFeature.featureCode}`
+    : null;
 
-              const parentModule = feature.modules.filter(e=>e.uniqueNo === currentModule.parentModuleId)[0];
+  const makeApiCallUrl = (uniqueNo, module_Id, parentModule_Id) => {
+    return new Promise((resolve, reject) => {
+      if (trail && trail.filter(mod => mod.id === uniqueNo).length === 0) {
+        var mainUrl = "";
 
-              if(feature.breadCrumbs.filter(e=>e.id===parentModule.uniqueNo).length<1){
-                  dispatch(addToMapTrail(feature.featureCode, {id: parentModule.uniqueNo, label: parentModule.moduleName, level: item.level-1}))
-              }
+        let prevModules = trail
+          .filter(x => x.id !== features.featureCode && x.id !== uniqueNo)
+          .map(code => code.code);
 
-              dispatch(addToMapTrail(feature.featureCode, {id: item.id, label: item.label, level: item.level}));
-          }
-          else{
-
-              dispatch(addToMapTrail(feature.featureCode, {id: item.id, label: item.label, level: item.level}));
-          }
+        if (parentModule_Id !== undefined && parentModule_Id !== null) {
+          prevModules.push(parentModule_Id);
+          prevModules = [...new Set(prevModules)];
+        }
+        prevModules.push(module_Id);
+        const finalUrl = url + prevModules.map(x => `~~~${x}`);
+        mainUrl = finalUrl.replace(",", "");
+        mainUrl = mainUrl.replaceAll(",", "");
+        // makes url for first jump / not chart click
+        //============================================================
+      } else {
+        const trailIndex = trail.findIndex(x => x.code === module_Id);
+        if (trail.slice(1, trailIndex).length > 0) {
+          const finalUrl = `~~~${trail.slice(1, trailIndex)[0].code}`;
+          mainUrl = `${url}${finalUrl.replace(
+            ",",
+            ""
+          )}~~~${parentModule_Id}~~~${module_Id}`;
+          mainUrl.replace(",", "");
+        } else {
+          const finalUrl = `~~~${module_Id}`;
+          mainUrl = `${url}${finalUrl.replace(",", "")}`;
+          mainUrl.replaceAll(",", "");
+        }
       }
 
-      //  if there is any breadcrumb with level higer than selected breadcrumb, it will be removed
-      feature.breadCrumbs.map(crumb=>{
-          if(crumb.level>=item.level&&crumb.id!==item.id){
-              dispatch(removeFromMapTrail(feature.featureCode, crumb));
-              return crumb
-          }
-          return crumb;
-      })
+      resolve(mainUrl);
+    });
+  };
+  
+  
+  const handleClick = (item) => {
+    //   dispatch(setSelectedSubFeature(feature.featureMapping_Id, item.id));
+    //   console.log("Item in Tabs", item)
+    //   const currentModule = feature.modules.filter(e => e.uniqueNo === item.id)[0];
+    //   // to check if there is any value in array 
+    //   if(feature.breadCrumbs.filter(e=>e.id===item.id).length<1){
+
+    //       if(currentModule.parentModuleId!==null){
+
+    //           const parentModule = feature.modules.filter(e=>e.uniqueNo === currentModule.parentModuleId)[0];
+
+    //           if(feature.breadCrumbs.filter(e=>e.id===parentModule.uniqueNo).length<1){
+    //               dispatch(addToMapTrail(feature.featureMapping_Id, {id: parentModule.uniqueNo, label: parentModule.moduleName, level: item.level-1}))
+    //           }
+
+    //           dispatch(addToMapTrail(feature.featureCode, {id: item.id, label: item.label, level: item.level}));
+    //       }
+    //       else{
+
+    //           dispatch(addToMapTrail(feature.featureCode, {id: item.id, label: item.label, level: item.level}));
+    //       }
+    //   }
+
+    //   //  if there is any breadcrumb with level higer than selected breadcrumb, it will be removed
+    //   feature.breadCrumbs.map(crumb=>{
+    //       if(crumb.level>=item.level&&crumb.id!==item.id){
+    //           dispatch(removeFromMapTrail(feature.featureCode, crumb));
+    //           return crumb
+    //       }
+    //       return crumb;
+    //   })
   }
 
   const handleDelete = (item) => {
-      dispatch(removeFromOpenTabs(feature.featureCode, item))
-      dispatch(setSelectedSubFeature(feature.featureCode, feature.featureCode));
-      feature.breadCrumbs.map(crumb=>{
-          if(crumb.level>=1){
-              dispatch(removeFromMapTrail(feature.featureCode, crumb));
-              return crumb
-          }
-          return crumb;
-      })
+    //   dispatch(removeFromOpenTabs(feature.featureCode, item))
+    //   dispatch(setSelectedSubFeature(feature.featureCode, feature.featureCode));
+    //   feature.breadCrumbs.map(crumb=>{
+    //       if(crumb.level>=1){
+    //           dispatch(removeFromMapTrail(feature.featureCode, crumb));
+    //           return crumb
+    //       }
+    //       return crumb;
+    //   })
   }
 
   const handleClickBreadcrumb = (item) => {
-      dispatch(setSelectedSubFeature(feature.featureCode, item.id));
-      if(item.id!==feature.featureCode && feature.openTabs.filter(e=>e.label===item.label).length<1){
-          dispatch(addToOpenTabs(feature.featureCode, item));
-      }
-      feature.breadCrumbs.map(crumb=>{
-          if(crumb.id!==item.id&&crumb.level >= item.level){
-              dispatch(removeFromMapTrail(feature.featureCode, crumb));
-              return crumb
-          }
-          return crumb;
-      }) 
+      dispatch(setSelectedModule(feature.featureCode, item.id));
+//       if(item.id!==feature.featureMapping_Id && feature.openTabs.filter(e=>e.label===item.label).length<1){
+//           dispatch(addToOpenTabs(feature.featureMapping_Id, item));
+//       }
+//       feature.breadCrumbs.map(crumb=>{
+//           if(crumb.id!==item.id&&crumb.level >= item.level){
+//               dispatch(removeFromMapTrail(feature.featureMapping_Id, crumb));
+//               return crumb
+//           }
+//           return crumb;
+//       }) 
   }
 
-  const handleClickPin = () => {
-      const label = feature.modules.filter(e=>e.uniqueNo===feature.selectedModule)[0].moduleName
-      if(selectedFeature === feature.featureCode){
-          dispatch(addToPinnedModules({label: label,feature: feature}));
-      }
-  }
+//   const handleClickPin = () => {
+//       const label = feature.modules.filter(e=>e.uniqueNo===feature.selectedModule)[0].moduleName
+//       if(selectedFeature === feature.featureCode){
+//           dispatch(addToPinnedModules({label: label,feature: feature}));
+//       }
+//   }
 
   return(
       <div>
@@ -133,7 +177,8 @@ const FeatureHolder = ({feature}) => {
                             <p 
                                 onClick={()=>handleClickBreadcrumb(item)} 
                                 className="cursor-pointer my-1 text-white"
-                                key={item.id}> 
+                                key={item.id}
+                            > 
                                 {item.label}{feature.breadCrumbs.indexOf(item) === feature.breadCrumbs.length-1&&' /'}
                             </p>
                         ))}
@@ -141,12 +186,12 @@ const FeatureHolder = ({feature}) => {
                 </div>
             </Box>
           </div>
-          <ComponentHolder index={feature.featureCode} type={'main'} value={feature.selectedModule}>
+          <ComponentHolder index={feature.featureCode} type={'main'} value={feature.showModule}>
               <MainPage key={feature.featureCode} feature={feature} />
           </ComponentHolder>
           {feature.modules.length > 0 && feature.modules.map((item)=>(
-              <ComponentHolder index={item.uniqueNo} key={item.uniqueNo} type={'main'} value={feature.selectedModule}  >
-                  <ModuleHolder feature={feature} subFeature={item} />
+              <ComponentHolder index={item.uniqueNo} key={item.uniqueNo} type={'main'} value={feature.showModule}  >
+                  <ModuleHolder feature={feature} module={item} />
               </ComponentHolder>
           ))}
       </div>
@@ -157,21 +202,26 @@ const MainPage = ({feature}) =>{
 
     const dispatch = useDispatch();
 
+    useEffect(()=>{
+        console.log("Module Feature:", feature)
+    })
+
     const handleClick = (item) => {
-        if(feature.breadCrumbs.filter(e=>e.id===item.id).length<1){
-            dispatch(addToMapTrail(feature.featureCode, {id: item.uniqueNo, label: item.moduleName, level: 1}));
-        }
-        feature.breadCrumbs.map(crumb=>{
-            if(crumb.level===1 && crumb.id!==item.id){
-                dispatch(removeFromMapTrail(feature.featureCode, crumb));
-                return crumb
-            }
-            return crumb;
-        })
-        dispatch(setSelectedSubFeature(feature.featureCode, item.uniqueNo))
-        if(feature.openTabs && feature.openTabs.filter(e => e.id === item.uniqueNo).length<1){
-            dispatch(addToOpenTabs(feature.featureCode, {id: item.uniqueNo, label: item.moduleName, level: 1}))
-        }
+        dispatch(setSelectedModule(feature.featureCode, item.uniqueNo));
+        // if(feature.breadCrumbs.filter(e=>e.id===item.id).length<1){
+        //     dispatch(addToMapTrail(feature.featureCode, {id: item.uniqueNo, label: item.moduleName, level: 1}));
+        // }
+        // feature.breadCrumbs.map(crumb=>{
+        //     if(crumb.level===1 && crumb.id!==item.id){
+        //         dispatch(removeFromMapTrail(feature.featureCode, crumb));
+        //         return crumb
+        //     }
+        //     return crumb;
+        // })
+        // dispatch(setSelectedSubFeature(feature.featureCode, item.uniqueNo))
+        // if(feature.openTabs && feature.openTabs.filter(e => e.id === item.uniqueNo).length<1){
+        //     dispatch(addToOpenTabs(feature.featureCode, {id: item.uniqueNo, label: item.moduleName, level: 1}))
+        // }
     }
 
     return(
@@ -180,7 +230,7 @@ const MainPage = ({feature}) =>{
            {/* mapping all the modules inside a feature as button */}
         {feature.modules.length>0 && feature.modules.map((item)=>(<>{item.parentModuleId===null&&(
             <button key={item.id} onClick={()=>handleClick(item)} className=" m-5 text-white font-bold border-none bg-red-500 hover:bg-red-700 rounded-md p-3 cursor-pointer">
-            {item.moduleName}
+                {item.moduleName}
             </button>
         )}</>))}
         

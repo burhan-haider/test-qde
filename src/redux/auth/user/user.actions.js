@@ -2,11 +2,13 @@ import AuthService from "services/auth/authService";
 import authService from "services/auth/authService";
 import history from "services/history";
 
-export const SET_USER_DATA = "SET USER DATA";
-export const SET_GUEST_USER_DATA = "SET GUEST USER";
-export const USER_LOGGED_OUT = "USER_LOGGED_OUT";
-export const RESET_STATE_AFTER_LOGOUT = "RESET_STATE_AFTER_LOGOUT";
-export const FETCH_ALL_LABELS = "FETCH_ALL_LABELS";
+import {
+  SET_GUEST_USER_DATA,
+  SET_USER_DATA,
+  USER_LOGGED_OUT,
+  RESET_STATE_AFTER_LOGOUT,
+  FETCH_ALL_LABELS
+} from "./user.types";
 
 export function setUserData(user) {
   return (dispatch) => {

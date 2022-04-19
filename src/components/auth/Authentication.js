@@ -5,7 +5,7 @@ import authservice from "services/auth/authService";
 import {
   setUserData,
   setGuestUserRole
-} from "redux/actions/auth/user.action";
+} from "redux/auth/user/user.actions";
 
 function Authentication(props) {
   const dispatch = useDispatch();

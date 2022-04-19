@@ -1,4 +1,7 @@
-import * as Actions from "redux/actions/auth";
+import {
+  LOGIN_ERROR,
+  LOGIN_SUCCESS,
+} from "./login.types";
 
 const initialState = {
   success: false
@@ -6,12 +9,12 @@ const initialState = {
 
 const login = (state = initialState, action) => {
   switch (action.type) {
-    case Actions.LOGIN_SUCCESS: {
+    case LOGIN_SUCCESS: {
       return {
         success: true
       };
     }
-    case Actions.LOGIN_ERROR: {
+    case LOGIN_ERROR: {
       return {
         success: false,
         error: action.payload

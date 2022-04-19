@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutUser } from "redux/actions/auth/user.action";
+import { logoutUser } from "redux/auth/user/user.actions";
 // import { GenericDialog } from "@application";
 // import UserProfile from "components/layout/header/userMenu/UserProfile";
 // import VivekImage from "assets/Vivek.jpg";

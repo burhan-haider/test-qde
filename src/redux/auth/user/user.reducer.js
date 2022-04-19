@@ -1,4 +1,4 @@
-import * as Actions from "redux/actions/auth";
+import * as Actions from "./user.types";
 
 const initialState = {
   roleId: "",
