@@ -64,7 +64,7 @@ const features = (state = initialState, action) => {
                         item.modules = _.uniqBy(allModules, "uniqueNo");
 
                         item.showRoot = true;
-                        item.showModule = null;
+                        item.showModule = featureCode;
 
                     }
                     return item;
