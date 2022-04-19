@@ -12,7 +12,7 @@ import { MdPushPin, MdBookmark, MdArrowDropDown } from 'react-icons/md'
 import ComponentHolder from 'components/common/componentHolder/ComponentHolder';
 import ModuleHolder from 'components/common/ModuleHolder'
 import {useDispatch, useSelector} from 'react-redux';
-import { setSelectedModule } from 'redux/features/features.actions';
+import { setSelectedModule, addToBreadcrumbs, removeFromBreadcrumbs, addToOpenTabs, removeFromOpenTabs } from 'redux/features/features.actions';
 import getIconByKey from 'assets';
 
 const FeatureHolder = ({feature}) => {
@@ -84,36 +84,36 @@ const FeatureHolder = ({feature}) => {
   
   
   const handleClick = (item) => {
-    //   dispatch(setSelectedSubFeature(feature.featureMapping_Id, item.id));
+      dispatch(setSelectedModule(feature.featureCode, item.id));
     //   console.log("Item in Tabs", item)
-    //   const currentModule = feature.modules.filter(e => e.uniqueNo === item.id)[0];
-    //   // to check if there is any value in array 
-    //   if(feature.breadCrumbs.filter(e=>e.id===item.id).length<1){
+      const currentModule = feature.modules.filter(e => e.uniqueNo === item.id)[0];
+      // to check if there is any value in array 
+      if(feature.breadCrumbs.filter(e=>e.id===item.id).length<1){
 
-    //       if(currentModule.parentModuleId!==null){
+          if(currentModule.parentModuleId!==null){
 
-    //           const parentModule = feature.modules.filter(e=>e.uniqueNo === currentModule.parentModuleId)[0];
+              const parentModule = feature.modules.filter(e=>e.uniqueNo === currentModule.parentModuleId)[0];
 
-    //           if(feature.breadCrumbs.filter(e=>e.id===parentModule.uniqueNo).length<1){
-    //               dispatch(addToMapTrail(feature.featureMapping_Id, {id: parentModule.uniqueNo, label: parentModule.moduleName, level: item.level-1}))
-    //           }
+              if(feature.breadCrumbs.filter(e=>e.id===parentModule.uniqueNo).length<1){
+                  dispatch(addToBreadcrumbs(feature.featureMapping_Id, {id: parentModule.uniqueNo, label: parentModule.moduleName, level: item.level-1}))
+              }
 
-    //           dispatch(addToMapTrail(feature.featureCode, {id: item.id, label: item.label, level: item.level}));
-    //       }
-    //       else{
+              dispatch(addToBreadcrumbs(feature.featureCode, {id: item.id, label: item.label, level: item.level}));
+          }
+          else{
 
-    //           dispatch(addToMapTrail(feature.featureCode, {id: item.id, label: item.label, level: item.level}));
-    //       }
-    //   }
+              dispatch(addToBreadcrumbs(feature.featureCode, {id: item.id, label: item.label, level: item.level}));
+          }
+      }
 
     //   //  if there is any breadcrumb with level higer than selected breadcrumb, it will be removed
-    //   feature.breadCrumbs.map(crumb=>{
-    //       if(crumb.level>=item.level&&crumb.id!==item.id){
-    //           dispatch(removeFromMapTrail(feature.featureCode, crumb));
-    //           return crumb
-    //       }
-    //       return crumb;
-    //   })
+      feature.breadCrumbs.map(crumb=>{
+          if(crumb.level>=item.level&&crumb.id!==item.id){
+              dispatch(removeFromBreadcrumbs(feature.featureCode, crumb));
+              return crumb
+          }
+          return crumb;
+      })
   }
 
   const handleDelete = (item) => {
@@ -130,16 +130,16 @@ const FeatureHolder = ({feature}) => {
 
   const handleClickBreadcrumb = (item) => {
       dispatch(setSelectedModule(feature.featureCode, item.id));
-//       if(item.id!==feature.featureMapping_Id && feature.openTabs.filter(e=>e.label===item.label).length<1){
-//           dispatch(addToOpenTabs(feature.featureMapping_Id, item));
-//       }
-//       feature.breadCrumbs.map(crumb=>{
-//           if(crumb.id!==item.id&&crumb.level >= item.level){
-//               dispatch(removeFromMapTrail(feature.featureMapping_Id, crumb));
-//               return crumb
-//           }
-//           return crumb;
-//       }) 
+      if(item.id!==feature.featureCode && feature.openTabs.filter(e=>e.label===item.label).length<1){
+          dispatch(addToOpenTabs(feature.featureCode, item));
+      }
+      feature.breadCrumbs.map(crumb=>{
+          if(crumb.id!==item.id&&crumb.level >= item.level){
+              dispatch(removeFromBreadcrumbs(feature.featureCode, crumb));
+              return crumb
+          }
+          return crumb;
+      }) 
   }
 
 //   const handleClickPin = () => {
@@ -156,7 +156,7 @@ const FeatureHolder = ({feature}) => {
                 <Box className="px-4 pt-1 text-left mx-5" style={{backgroundColor: '#fff'}} >
                     {feature.openTabs.length>0 && feature.openTabs.map((item)=>(
                         <>
-                            {feature.selectedModule===item.id ? (
+                            {feature.showModule===item.id ? (
                                 <Chip key={item.id} style={{backgroundColor: '#83a3bb',}} className="text-xs py-2m-1 text-white" label={item.label} size="small" onDelete={()=>handleDelete(item)} />
                             ):(
                                 <Chip key={item.id} style={{border: '1px solid #83a3bb'}} className=" bg-transparent hover:bg-light-grey hover:text-white text-xs py-2  m-1" size="small" label={item.label} onClick={()=>handleClick(item)}  onDelete={()=>handleDelete(item)} />
@@ -208,20 +208,20 @@ const MainPage = ({feature}) =>{
 
     const handleClick = (item) => {
         dispatch(setSelectedModule(feature.featureCode, item.uniqueNo));
-        // if(feature.breadCrumbs.filter(e=>e.id===item.id).length<1){
-        //     dispatch(addToMapTrail(feature.featureCode, {id: item.uniqueNo, label: item.moduleName, level: 1}));
-        // }
-        // feature.breadCrumbs.map(crumb=>{
-        //     if(crumb.level===1 && crumb.id!==item.id){
-        //         dispatch(removeFromMapTrail(feature.featureCode, crumb));
-        //         return crumb
-        //     }
-        //     return crumb;
-        // })
-        // dispatch(setSelectedSubFeature(feature.featureCode, item.uniqueNo))
-        // if(feature.openTabs && feature.openTabs.filter(e => e.id === item.uniqueNo).length<1){
-        //     dispatch(addToOpenTabs(feature.featureCode, {id: item.uniqueNo, label: item.moduleName, level: 1}))
-        // }
+
+        if(feature.breadCrumbs.filter(e=>e.id===item.id).length<1){
+            dispatch(addToBreadcrumbs(feature.featureCode, {id: item.uniqueNo, label: item.moduleName, level: 1}));
+        }
+        feature.breadCrumbs.map(crumb=>{
+            if(crumb.level===1 && crumb.id!==item.uniqueNo){
+                dispatch(removeFromBreadcrumbs(feature.featureCode, crumb));
+                return crumb
+            }
+            return crumb;
+        })
+        if(feature.openTabs.filter(e=>e.id===item.uniqueNo).length<1){
+            dispatch(addToOpenTabs(feature.featureCode, {id: item.uniqueNo, label: item.moduleName, level: 1}));
+        }
     }
 
     return(

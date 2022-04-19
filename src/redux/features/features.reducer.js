@@ -6,7 +6,11 @@ import {
     FETCH_FEATURE_MODULES_SUCCESS,
     FETCH_MODULE_DATA_ERROR,
     FETCH_MODULE_DATA_SUCCESS,
-    SET_SELECTED_MODULE
+    SET_SELECTED_MODULE,
+    ADD_TO_BREADCRUMBS,
+    REMOVE_FROM_BREADCRUMBS,
+    ADD_TO_OPENTABS,
+    REMOVE_FROM_OPENTABS,
 } from 'redux/features/features.types';
 import _ from "lodash";
 
@@ -150,7 +154,58 @@ const features = (state = initialState, action) => {
                     return item;
                 })
             }
-        
+        case ADD_TO_BREADCRUMBS: 
+            return{
+                ...state,
+                features: state.features.map(item => {
+                    if(item.featureCode === action.payload.featureCode){
+                        return{
+                            ...item,
+                            breadCrumbs: [...item.breadCrumbs, action.payload.module]
+                        }
+                    }
+                    return item;
+                })
+            }
+        case REMOVE_FROM_BREADCRUMBS:
+            return{
+                ...state,
+                features: state.features.map(item => {
+                    if(item.featureCode === action.payload.featureCode){
+                        return{
+                            ...item,
+                            breadCrumbs: item.breadCrumbs.filter(item => item.id !== action.payload.module.id)
+                        }
+                    }
+                    return item;
+                })
+            }
+        case ADD_TO_OPENTABS:
+            return{
+                ...state,
+                features: state.features.map(item => {
+                    if(item.featureCode === action.payload.featureCode){
+                        return{
+                            ...item,
+                            openTabs: [...item.openTabs, action.payload.module]
+                        }
+                    }
+                    return item;
+                })
+            }
+        case REMOVE_FROM_OPENTABS:
+            return{
+                ...state,
+                features: state.features.map(item => {
+                    if(item.featureCode === action.payload.featureCode){
+                        return{
+                            ...item,
+                            openTabs: item.openTabs.filter(item => item !== action.payload.module)
+                        }
+                    }
+                    return item;
+                })
+            }
         default:
             return state;
     }

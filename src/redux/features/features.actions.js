@@ -10,6 +10,10 @@ import {
     FETCH_MODULE_DATA_ERROR,
     FETCH_MODULE_DATA_SUCCESS,
     SET_SELECTED_MODULE,
+    ADD_TO_BREADCRUMBS,
+    REMOVE_FROM_BREADCRUMBS,
+    ADD_TO_OPENTABS,
+    REMOVE_FROM_OPENTABS,
 } from './features.types'
 
 
@@ -86,6 +90,43 @@ export const setSelectedModule = (featureCode, uniqueNo) => {
     });
   }
 }
+
+export const addToBreadcrumbs = (featureCode, module) => {
+  return dispatch => {
+    return dispatch({
+      type: ADD_TO_BREADCRUMBS,
+      payload: { featureCode, module }
+    });
+  }
+}
+
+export const removeFromBreadcrumbs = (featureCode, module) => {
+  return dispatch => {
+    return dispatch({
+      type: REMOVE_FROM_BREADCRUMBS,
+      payload: { featureCode, module }
+    });
+  }
+}
+
+export const addToOpenTabs = (featureCode, module) => {
+  return dispatch => {
+    return dispatch({
+      type: ADD_TO_OPENTABS,
+      payload: { featureCode, module }
+    });
+  }
+}
+
+export const removeFromOpenTabs = (featureCode, module) => {
+  return dispatch => {
+    return dispatch({
+      type: REMOVE_FROM_OPENTABS,
+      payload: { featureCode, module }
+    });
+  }
+}
+
 
 // export const selectSpecificModule = (root, code) => {
 //   return dispatch => {
