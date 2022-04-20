@@ -95,7 +95,7 @@ const FeatureHolder = ({feature}) => {
               const parentModule = feature.modules.filter(e=>e.uniqueNo === currentModule.parentModuleId)[0];
 
               if(feature.breadCrumbs.filter(e=>e.id===parentModule.uniqueNo).length<1){
-                  dispatch(addToBreadcrumbs(feature.featureMapping_Id, {id: parentModule.uniqueNo, label: parentModule.moduleName, level: item.level-1}))
+                  dispatch(addToBreadcrumbs(feature.featureCode, {id: parentModule.uniqueNo, label: parentModule.moduleName, level: item.level-1}))
               }
 
               dispatch(addToBreadcrumbs(feature.featureCode, {id: item.id, label: item.label, level: item.level}));
