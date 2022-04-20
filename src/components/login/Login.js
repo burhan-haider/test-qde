@@ -101,7 +101,7 @@ const customStyles = {
     },
     "& .MuiOutlinedInput-input": {
       padding: "14px 14px",
-      fontFamily: "Open Sans",
+      fontFamily: "GoogleSans-Regular",
       // "& fieldset": {
       //   borderColor: "default"
       // }
@@ -126,7 +126,7 @@ const customStyles = {
     marginTop: "1%",
     marginBottom: '0px',
     fontSize: "14px",
-    fontFamily: "Open Sans",
+    fontFamily: "GoogleSans-Regular",
     float: "right",
     outline: "none",
     "&:hover": {
@@ -147,7 +147,7 @@ const customStyles = {
     float: "right",
   },
   cognifiHead: {
-    fontFamily: "Open Sans",
+    fontFamily: "GoogleSans-Regular",
   },
   LoginImage: {
     position: "absolute",
@@ -247,7 +247,7 @@ function Login(props) {
                 InputProps={{
                   className: classes.MuiOutlinedInput,
                   shrink: "true",
-                  sx: {fontFamily: 'Open Sans'}
+                  sx: {fontFamily: 'GoogleSans-Regular'}
                 }}
               />
             </FormControl>
@@ -311,7 +311,7 @@ function Login(props) {
           <Typography
             style={{
               fontSize: "14px",
-              fontFamily: "Open Sans",
+              fontFamily: "GoogleSans-Regular",
             }}
           >
             Version 0.1
@@ -326,7 +326,7 @@ function Login(props) {
             className="flex no-underline text-gray-900 justify-center ml-4"
           >
             <Typography
-              style={{ fontSize: "14px", fontFamily: "Open Sans", textAlign: "center" }}
+              style={{ fontSize: "14px", fontFamily: "GoogleSans-Regular", textAlign: "center" }}
             >
               www.quantumdataengines.com
             </Typography>
