@@ -8,6 +8,7 @@ const Layout = ({ children }) => {
         <Box sx={{
             minHeight: '100vh',
             background: '#052a4f',
+            paddingBottom: 1
         }} >
             <Header />
             {children}

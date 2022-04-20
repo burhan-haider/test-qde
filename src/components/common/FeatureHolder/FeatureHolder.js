@@ -231,15 +231,22 @@ const MainPage = ({feature}) =>{
 
            {/* mapping all the modules inside a feature as button */}
         {feature.modules.length>0 && feature.modules.map((item)=>(
-            <Grid item xs={6} >
-            
-            {item.moduleChartDetails!=null?(
-                <div className="rounded-md shadow-lg text-center" >
-                    <p>{item.moduleName}</p>
-                    <ModuleChartFrame current={item} />
-                </div>
-            ):(<></>)}
-            </Grid>
+            <>
+                {item.moduleChartDetails!=null?(
+                <Grid item xs={6} >
+
+                    <div className="rounded-md shadow-lg text-center" >
+                        <p>{item.moduleName}</p>
+                        <ModuleChartFrame current={item} />
+                    </div>
+                </Grid>
+
+                ):(
+                    <button key={item.id} onClick={()=>handleClick(item)} className=" m-5 text-white font-bold border-none bg-red-500 hover:bg-red-700 rounded-md p-3 cursor-pointer">
+                        {item.moduleName}
+                    </button>
+                )}
+            </>
         ))}
         
         </Grid>
