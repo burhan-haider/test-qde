@@ -6,7 +6,8 @@ import {
     Menu,
     MenuItem,
     Button,
-    IconButton
+    IconButton,
+    Grid
 } from '@mui/material';
 import { MdPushPin, MdBookmark, MdArrowDropDown } from 'react-icons/md'
 import ComponentHolder from 'components/common/componentHolder/ComponentHolder';
@@ -14,6 +15,7 @@ import ModuleHolder from 'components/common/ModuleHolder'
 import {useDispatch, useSelector} from 'react-redux';
 import { setSelectedModule, addToBreadcrumbs, removeFromBreadcrumbs, addToOpenTabs, removeFromOpenTabs } from 'redux/features/features.actions';
 import getIconByKey from 'assets';
+import ModuleChartFrame from 'components/common/modules/moduleDataSearchFrame/ModuleChartFrame'
 
 const FeatureHolder = ({feature}) => {
 
@@ -117,15 +119,15 @@ const FeatureHolder = ({feature}) => {
   }
 
   const handleDelete = (item) => {
-    //   dispatch(removeFromOpenTabs(feature.featureCode, item))
-    //   dispatch(setSelectedSubFeature(feature.featureCode, feature.featureCode));
-    //   feature.breadCrumbs.map(crumb=>{
-    //       if(crumb.level>=1){
-    //           dispatch(removeFromMapTrail(feature.featureCode, crumb));
-    //           return crumb
-    //       }
-    //       return crumb;
-    //   })
+      dispatch(removeFromOpenTabs(feature.featureCode, item))
+      dispatch(setSelectedModule(feature.featureCode, feature.featureCode));
+      feature.breadCrumbs.map(crumb=>{
+          if(crumb.level>=1){
+              dispatch(removeFromBreadcrumbs(feature.featureCode, crumb));
+              return crumb
+          }
+          return crumb;
+      })
   }
 
   const handleClickBreadcrumb = (item) => {
@@ -225,16 +227,22 @@ const MainPage = ({feature}) =>{
     }
 
     return(
-      <Box >
+      <Grid container spacing={1} className="px-5 pt-5 pb-10" >
 
            {/* mapping all the modules inside a feature as button */}
-        {feature.modules.length>0 && feature.modules.map((item)=>(<>{item.parentModuleId===null&&(
-            <button key={item.id} onClick={()=>handleClick(item)} className=" m-5 text-white font-bold border-none bg-red-500 hover:bg-red-700 rounded-md p-3 cursor-pointer">
-                {item.moduleName}
-            </button>
-        )}</>))}
+        {feature.modules.length>0 && feature.modules.map((item)=>(
+            <Grid item xs={6} >
+            
+            {item.moduleChartDetails!=null?(
+                <div className="rounded-md shadow-lg text-center" >
+                    <p>{item.moduleName}</p>
+                    <ModuleChartFrame current={item} />
+                </div>
+            ):(<></>)}
+            </Grid>
+        ))}
         
-        </Box>
+        </Grid>
     )
 }
 

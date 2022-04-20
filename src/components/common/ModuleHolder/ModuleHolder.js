@@ -50,6 +50,7 @@ const ModuleHolder = ({feature, module}) => {
         <div>
             {!module.hasChildren?(
                 <h1 className="text-red-700 pt-20 font-bold text-5xl" >{module.moduleName}</h1>
+                
             ):(
                 <div>
                     <h1 className="text-red-700 pt-20 font-bold text-5xl" >{module.moduleName}</h1>

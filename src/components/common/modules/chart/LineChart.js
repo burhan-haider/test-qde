@@ -1,5 +1,8 @@
 import React from "react";
 import { Line } from "react-chartjs-2";
+import { Chart as ChartJS, registerables } from 'chart.js';
+
+ChartJS.register(...registerables);
 
 function LineChart(props) {
   function graphClickEvent(dataIndexArray) {
@@ -54,7 +57,7 @@ function LineChart(props) {
     datasets: [
       {
         label: "0+%", //props.moduleChartDetail.labelName,
-        backgroundColor: "green",
+        backgroundColor: "#0074D9",
         borderColor: "#0074D9",
         fill: false,
         lineTension: 0,
@@ -66,7 +69,7 @@ function LineChart(props) {
       },
       {
         label: "30+%",
-        backgroundColor: "green",
+        backgroundColor: "#FF4136",
         borderColor: "#FF4136",
         fill: false,
         lineTension: 0,
@@ -78,7 +81,7 @@ function LineChart(props) {
       },
       {
         label: "60+%",
-        backgroundColor: "green",
+        backgroundColor: "#2ECC40",
         borderColor: "#2ECC40",
         fill: false,
         lineTension: 0,
@@ -90,7 +93,7 @@ function LineChart(props) {
       },
       {
         label: "90+%",
-        backgroundColor: "green",
+        backgroundColor: "#FF851B",
         borderColor: "#FF851B",
         fill: false,
         lineTension: 0,

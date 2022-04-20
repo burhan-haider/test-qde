@@ -1,6 +1,7 @@
 import React from "react";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
+import Box from '@mui/material/Box'
 import { makeStyles } from "@mui/styles";
 
 import LineChart from "components/common/modules/chart/LineChart";
@@ -22,169 +23,141 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function ModuleChartFrame(props) {
-  const { current, getModuleChartData, getmoduleDetails } = props;
+  const { current } = props;
 
   function chartClickOperation(
-    module_Id,
-    url,
-    presentationCategory,
-    dataPointClick,
-    moduleName,
-    parentModuleId,
-    parentModule_Id,
-    hasMoreChild,
-    uniqueNo,
-    hasChildren
+    module
   ) {
-    if (dataPointClick) {
-      if (hasMoreChild) {
-        // getModuleChartData(module_Id, parentModule);
+    console.log("chartClickOperations Triggered")
+    // if (dataPointClick) {
+    //   if (hasMoreChild) {
+    //     // getModuleChartData(module_Id, parentModule);
 
-        getModuleChartData({
-          module_Id,
-          url,
-          presentationCategory,
-          dataPointClick,
-          moduleName,
-          parentModuleId,
-          parentModule_Id,
-          uniqueNo,
-          hasChildren,
-          hasMoreChild
-        });
-      } else {
-        props.getmoduleDetails({
-          module_Id,
-          url,
-          presentationCategory,
-          dataPointClick,
-          moduleName,
-          parentModuleId,
-          parentModule_Id,
-          uniqueNo,
-          hasChildren,
-          hasMoreChild
-        });
-      }
-    } else {
-      getModuleChartData({
-        module_Id,
-        uniqueNo,
-        parentModuleId,
-        parentModule_Id,
-        dataPointClick,
-        hasChildren
-      });
-    }
+    //     getModuleChartData({
+    //       module_Id: module.module_Id,
+    //       url: module.url,
+    //       presentationCategory: module.presentationCategory,
+    //       dataPointClick:module.dataPointClick,
+    //       moduleName:module.moduleName,
+    //       parentModuleId:module.parentModuleId,
+    //       parentModule_Id:module.parentModule_Id,
+    //       uniqueNo:module.uniqueNo,
+    //       hasChildren:module.hasChildren,
+    //       hasMoreChild: module.hasMoreChild,
+    //     });
+    //   } else {
+    //     props.getmoduleDetails({
+    //       module_Id:module.module_Id,
+    //       url:module.url,
+    //       presentationCategory:module.presentationCategory,
+    //       dataPointClick:module.dataPointClick,
+    //       moduleName:module.moduleName,
+    //       parentModuleId:module.parentModuleId,
+    //       parentModule_Id:module.parentModule_Id,
+    //       uniqueNo:module.uniqueNo,
+    //       hasChildren:module.hasChildren,
+    //       hasMoreChild: module.hasMoreChild,
+    //     });
+    //   }
+    // } else {
+    //   getModuleChartData({
+    //     module_Id:module.module_Id,
+    //     uniqueNo:module.uniqueNo,
+    //     parentModuleId:module.parentModuleId,
+    //     parentModule_Id:module.parentModule_Id,
+    //     dataPointClick:module.dataPointClick,
+    //     hasChildren:module.hasChildren
+    //   });
+    // }
   }
 
   function selectSpecificChart(
-    moduleChartDetails,
-    module_Id,
-    moduleURL,
-    hasChildren,
-    presentationCategory,
-    parentModuleId,
-    parentModule_Id,
-    uniqueNo
+    module
   ) {
-    let chartType = moduleChartDetails && moduleChartDetails.chartType;
+    let chartType = module.moduleChartDetails && module.moduleChartDetails.chartType;
     switch (chartType) {
       case "LINE":
         return (
           <LineChart
-            moduleChartDetail={moduleChartDetails}
-            module_Id={module_Id}
-            moduleURL={moduleURL}
+            moduleChartDetail={module.moduleChartDetails}
+            module_Id={module.module_Id}
+            moduleURL={module.moduleURL}
             chartClickOperation={chartClickOperation}
-            hasChildren={hasChildren}
-            presentationCategory={presentationCategory}
-            parentModuleId={parentModuleId}
-            parentModule_Id={parentModule_Id}
-            uniqueNo={uniqueNo}
+            hasChildren={module.hasChildren}
+            presentationCategory={module.presentationCategory}
+            parentModuleId={module.parentModuleId}
+            parentModule_Id={module.parentModule_Id}
+            uniqueNo={module.uniqueNo}
           ></LineChart>
         );
       case "BAR":
         return (
           <BarChart
-            moduleChartDetail={moduleChartDetails}
-            module_Id={module_Id}
-            moduleURL={moduleURL}
+            moduleChartDetail={module.moduleChartDetails}
+            module_Id={module.module_Id}
+            moduleURL={module.moduleURL}
             chartClickOperation={chartClickOperation}
-            hasChildren={hasChildren}
-            presentationCategory={presentationCategory}
-            parentModuleId={parentModuleId}
-            parentModule_Id={parentModule_Id}
-            uniqueNo={uniqueNo}
+            hasChildren={module.hasChildren}
+            presentationCategory={module.presentationCategory}
+            parentModuleId={module.parentModuleId}
+            parentModule_Id={module.parentModule_Id}
+            uniqueNo={module.uniqueNo}
           ></BarChart>
         );
       case "PIE":
         return (
           <PieChart
-            moduleChartDetail={moduleChartDetails}
-            module_Id={module_Id}
-            moduleURL={moduleURL}
+            moduleChartDetail={module.moduleChartDetails}
+            module_Id={module.module_Id}
+            moduleURL={module.moduleURL}
             chartClickOperation={chartClickOperation}
-            hasChildren={hasChildren}
-            presentationCategory={presentationCategory}
-            parentModuleId={parentModuleId}
-            parentModule_Id={parentModule_Id}
-            uniqueNo={uniqueNo}
+            hasChildren={module.hasChildren}
+            presentationCategory={module.presentationCategory}
+            parentModuleId={module.parentModuleId}
+            parentModule_Id={module.parentModule_Id}
+            uniqueNo={module.uniqueNo}
           ></PieChart>
         );
       default:
         return (
           <LineChart
-            moduleChartDetail={moduleChartDetails}
-            module_Id={module_Id}
-            moduleURL={moduleURL}
+            moduleChartDetail={module.moduleChartDetails}
+            module_Id={module.module_Id}
+            moduleURL={module.moduleURL}
             chartClickOperation={chartClickOperation}
-            hasChildren={hasChildren}
-            presentationCategory={presentationCategory}
-            parentModuleId={parentModuleId}
-            parentModule_Id={parentModule_Id}
-            uniqueNo={uniqueNo}
+            hasChildren={module.hasChildren}
+            presentationCategory={module.presentationCategory}
+            parentModuleId={module.parentModuleId}
+            parentModule_Id={module.parentModule_Id}
+            uniqueNo={module.uniqueNo}
           ></LineChart>
         );
     }
   }
   const classes = useStyles();
   return (
-    <Grid container spacing={3} className={classes.chartContentContainer}>
-      {current && current !== null && Array.isArray(current)
-        ? current.map((module, index) =>
-            module.moduleChartDetails !== null ? (
-              <Grid item md={4} lg={6} key={module.module_Id}>
+    <Box className={classes.chartContentContainer}>
+      {
+            current.moduleChartDetails !== null ? (
                 <Paper elevation={3}>
-                  {selectSpecificChart(
-                    module.moduleChartDetails,
-                    module.module_Id,
-                    module.url,
-                    module.hasChildren,
-                    module.presentationCategory,
-                    module.parentModuleId,
-                    module.parentModule_Id,
-                    module.uniqueNo
-                  )}
+                  {selectSpecificChart(current)}
                 </Paper>
-              </Grid>
             ) : (
-              <Grid item md={4} lg={6} key={module.module_Id}>
-                <Paper
+              <Grid item md={4} lg={6} key={current.module_Id}>
+                {/* <Paper
                   elevation={3}
                   onClick={() => {
-                    module.hasChildren
-                      ? getModuleChartData(module)
-                      : getmoduleDetails(module);
+                    current.hasChildren
+                      ? getModuleChartData(current)
+                      : getmoduleDetails(current);
                   }}
                 >
-                  {module.module_Id}
-                </Paper>
+                  {current.module_Id}
+                </Paper> */}
               </Grid>
             )
-          )
-        : null}
-    </Grid>
+          }
+    </Box>
   );
 }
 export default ModuleChartFrame;
