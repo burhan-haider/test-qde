@@ -1,0 +1,303 @@
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { Typography, Grid } from "@material-ui/core";
+import TextFieldFormsy from "app/components/common/formsyComponents/TextFieldFormsy";
+const useStyles = makeStyles(theme => ({
+  MuiOutlinedInput: {
+    paddingLeft: "10px"
+    //paddingright: "8px"
+  },
+  MuiGridRow: {
+    backgroundColor: "#f1f2f3",
+    borderRadius: "50px",
+    height: "8vh"
+  },
+  MuiTypoGraphy: {
+    float: "left",
+    marginBottom: "0.5%",
+    fontWeight: "bold",
+    marginLeft: "1%",
+    fontSize: "15px"
+  },
+  TestAlignment: {
+    alignSelf: "center"
+  }
+}));
+function RTSDataEntryForm(props) {
+  const classes = useStyles();
+  return (
+    <div className="m-8">
+      <Typography className={classes.MuiTypoGraphy}>Data Entry Form</Typography>
+      <Grid
+        alignItems="center"
+        justify="center"
+        container
+        className={classes.MuiGridRow}
+      >
+        <Grid xs={4} item>
+          <Grid container>
+            <Grid xs={5} item={true} className={classes.TestAlignment}>
+              Name 1
+            </Grid>
+            <Grid xs={7} item={true} className={classes.TestAlignment}>
+              <TextFieldFormsy
+                size="small"
+                value="osama bin laden"
+                name="NAME1"
+                className="w-full rounded-full bg-white"
+                InputProps={{
+                  className: classes.MuiOutlinedInput,
+                  disableUnderline: true
+                }}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid xs={4} item>
+          <Grid container>
+            <Grid xs={5} item={true} className={classes.TestAlignment}>
+              Name 2
+            </Grid>
+            <Grid xs={7} item={true} className={classes.TestAlignment}>
+              <TextFieldFormsy
+                size="small"
+                name="NAME2"
+                className="w-full rounded-full bg-white"
+                InputProps={{
+                  className: classes.MuiOutlinedInput,
+                  disableUnderline: true
+                }}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid xs={4} item>
+          <Grid container>
+            <Grid xs={5} item={true} className={classes.TestAlignment}>
+              Name 3
+            </Grid>
+            <Grid xs={6} item={true} className={classes.TestAlignment}>
+              <TextFieldFormsy
+                size="small"
+                name="NAME3"
+                className="w-full rounded-full bg-white"
+                InputProps={{
+                  className: classes.MuiOutlinedInput,
+                  disableUnderline: true
+                }}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+      <br></br>
+      <Grid
+        container
+        alignItems="center"
+        justify="center"
+        className={classes.MuiGridRow}
+      >
+        <Grid xs={4} item>
+          <Grid container>
+            <Grid xs={5} item={true} className={classes.TestAlignment}>
+              Name 4
+            </Grid>
+            <Grid xs={7} item={true} className={classes.TestAlignment}>
+              <TextFieldFormsy
+                size="small"
+                name="NAME4"
+                className="w-full rounded-full bg-white"
+                InputProps={{
+                  className: classes.MuiOutlinedInput,
+                  disableUnderline: true
+                }}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid xs={4} item>
+          <Grid container>
+            <Grid xs={5} item={true} className={classes.TestAlignment}>
+              Name 5
+            </Grid>
+            <Grid xs={7} item={true} className={classes.TestAlignment}>
+              <TextFieldFormsy
+                size="small"
+                name="NAME5"
+                className="w-full rounded-full bg-white"
+                InputProps={{
+                  className: classes.MuiOutlinedInput,
+                  disableUnderline: true
+                }}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid xs={4} item>
+          <Grid container>
+            <Grid xs={5} item={true} className={classes.TestAlignment}>
+              Date of Birth
+            </Grid>
+            <Grid xs={6} item={true} className={classes.TestAlignment}>
+              <TextFieldFormsy
+                size="small"
+                name="DATEOFBIRTH"
+                className="w-full rounded-full bg-white"
+                InputProps={{
+                  className: classes.MuiOutlinedInput,
+                  disableUnderline: true
+                }}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+      <br></br>
+      <Grid
+        container
+        alignItems="center"
+        justify="center"
+        className={classes.MuiGridRow}
+      >
+        <Grid xs={4} item>
+          <Grid container>
+            <Grid xs={5} item={true} className={classes.TestAlignment}>
+              Passport No
+            </Grid>
+            <Grid xs={7} item={true} className={classes.TestAlignment}>
+              <TextFieldFormsy
+                size="small"
+                name="PASSPORTNO"
+                className="w-full rounded-full bg-white"
+                InputProps={{
+                  className: classes.MuiOutlinedInput,
+                  disableUnderline: true
+                }}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid xs={4} item>
+          <Grid container>
+            <Grid xs={5} item={true} className={classes.TestAlignment}>
+              National Id value
+            </Grid>
+            <Grid xs={7} item={true} className={classes.TestAlignment}>
+              <TextFieldFormsy
+                size="small"
+                name="PANNO"
+                className="w-full rounded-full bg-white"
+                InputProps={{
+                  className: classes.MuiOutlinedInput,
+                  disableUnderline: true
+                }}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid xs={4} item>
+          <Grid container>
+            <Grid xs={5} item={true} className={classes.TestAlignment}>
+              Account No
+            </Grid>
+            <Grid xs={6} item={true} className={classes.TestAlignment}>
+              <TextFieldFormsy
+                size="small"
+                name="ACCOUNTNO"
+                className="w-full rounded-full bg-white"
+                InputProps={{
+                  className: classes.MuiOutlinedInput,
+                  disableUnderline: true
+                }}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+      <br></br>
+      <Grid
+        container
+        alignItems="center"
+        justify="center"
+        className={classes.MuiGridRow}
+      >
+        <Grid xs={4} item>
+          <Grid container>
+            <Grid xs={5} item={true} className={classes.TestAlignment}>
+              Customer Id
+            </Grid>
+            <Grid xs={7} item={true} className={classes.TestAlignment}>
+              <TextFieldFormsy
+                size="small"
+                name="CUSTOMERID"
+                className="w-full rounded-full bg-white"
+                InputProps={{
+                  className: classes.MuiOutlinedInput,
+                  disableUnderline: true
+                }}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid xs={4} item>
+          <Grid container>
+            <Grid xs={5} item={true} className={classes.TestAlignment}>
+              Address
+            </Grid>
+            <Grid xs={7} item={true} className={classes.TestAlignment}>
+              <TextFieldFormsy
+                size="small"
+                name="ADDRESS"
+                className="w-full rounded-full bg-white"
+                InputProps={{
+                  className: classes.MuiOutlinedInput,
+                  disableUnderline: true
+                }}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid xs={4} item>
+          <Grid container>
+            <Grid xs={5} item={true} className={classes.TestAlignment}>
+              Image File Path
+            </Grid>
+            <Grid xs={6} item={true} className={classes.TestAlignment}>
+              <TextFieldFormsy
+                size="small"
+                name="IMAGEFILEPATH"
+                className="w-full rounded-full bg-white"
+                InputProps={{
+                  className: classes.MuiOutlinedInput,
+                  disableUnderline: true
+                }}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+      <br></br>
+      <Grid container alignItems="center" className={classes.MuiGridRow}>
+        <Grid xs={4} item>
+          <Grid container>
+            <Grid xs={5} item={true} className={classes.TestAlignment}>
+              Image Scan Threshold
+            </Grid>
+            <Grid xs={7} item={true} className={classes.TestAlignment}>
+              <TextFieldFormsy
+                size="small"
+                name="IMAGESCANTHRESHOLD"
+                className="w-full rounded-full bg-white"
+                InputProps={{
+                  className: classes.MuiOutlinedInput,
+                  disableUnderline: true
+                }}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+    </div>
+  );
+}
+export default RTSDataEntryForm;
