@@ -308,9 +308,13 @@ const MainPage = ({feature, getModuleChartData}) =>{
                 </Grid>
 
                 ):(
-                    <button key={item.id} onClick={()=>handleClick(item)} className=" m-5 text-white font-bold border-none bg-red-500 hover:bg-red-700 rounded-md p-3 cursor-pointer">
-                        {item.moduleName}
-                    </button>
+                    <>
+                        {item.parentModuleId==null&&(
+                            <button key={item.id} onClick={()=>handleClick(item)} className=" m-5 text-white font-bold border-none bg-red-500 hover:bg-red-700 rounded-md p-3 cursor-pointer">
+                            {item.moduleName}
+                            </button>
+                        )}   
+                    </>
                 )}
             </>
         ))}
