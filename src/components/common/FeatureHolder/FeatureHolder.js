@@ -13,15 +13,29 @@ import { MdPushPin, MdBookmark, MdArrowDropDown } from 'react-icons/md'
 import ComponentHolder from 'components/common/componentHolder/ComponentHolder';
 import ModuleHolder from 'components/common/ModuleHolder'
 import {useDispatch, useSelector} from 'react-redux';
-import { setSelectedModule, addToBreadcrumbs, removeFromBreadcrumbs, addToOpenTabs, removeFromOpenTabs } from 'redux/features/features.actions';
+import { 
+    setSelectedModule, 
+    addToBreadcrumbs, 
+    removeFromBreadcrumbs, 
+    addToOpenTabs, 
+    removeFromOpenTabs,
+    putMapClickedDataInFeatures,
+    fetchModuleDetails 
+} from 'redux/features/features.actions';
 import getIconByKey from 'assets';
 import ModuleChartFrame from 'components/common/modules/moduleDataSearchFrame/ModuleChartFrame'
 
 const FeatureHolder = ({feature}) => {
 
   const [bookMark, toggleBookMark] = useState(null);
+  const [trail, setTrail] = useState(feature.breadCrumbs);
+  const [modules, setModules] = useState(null);
+
+  const dispatch =  useDispatch();
+  const selectedFeature = useSelector(state => state.features.features.featureCode);
+//   const selectedNewFeature = useSelector(state=> state.features.features.featureCode)
+  const pinnedModules = useSelector(state => state.features.features.pinnedModules);
   const features = useSelector(state => state.features.features);
-  const [trail, setTrail] = useState([]);
 
   const open = Boolean(bookMark);
 
@@ -34,15 +48,22 @@ const FeatureHolder = ({feature}) => {
 
   useEffect(()=>{
       console.log("Feature:", feature)
+      if(feature.featureCode === selectedFeature){
+            setModules(feature.modules);
+      }
+      if(feature.showModule === selectedFeature){
+        feature.breadCrumbs.map(crumb=>{
+            if(crumb.id!==feature.featureCode){
+                dispatch(removeFromBreadcrumbs(feature.featureCode, crumb))
+            }
+        })
+      }
   })
 
-  const dispatch =  useDispatch();
-  const selectedFeature = useSelector(state => state.features.features.featureCode);
-//   const selectedNewFeature = useSelector(state=> state.features.features.featureCode)
-  const pinnedModules = useSelector(state => state.features.features.pinnedModules);
+  
 
   var url = selectedFeature
-    ? `/common/feature/${selectedFeature.featureCode}`
+    ? `/common/feature/${selectedFeature}`
     : null;
 
   const makeApiCallUrl = (uniqueNo, module_Id, parentModule_Id) => {
@@ -52,7 +73,7 @@ const FeatureHolder = ({feature}) => {
 
         let prevModules = trail
           .filter(x => x.id !== features.featureCode && x.id !== uniqueNo)
-          .map(code => code.code);
+          .map(code => code.id);
 
         if (parentModule_Id !== undefined && parentModule_Id !== null) {
           prevModules.push(parentModule_Id);
@@ -68,6 +89,7 @@ const FeatureHolder = ({feature}) => {
         const trailIndex = trail.findIndex(x => x.code === module_Id);
         if (trail.slice(1, trailIndex).length > 0) {
           const finalUrl = `~~~${trail.slice(1, trailIndex)[0].code}`;
+          console.log("2nd One was fired")
           mainUrl = `${url}${finalUrl.replace(
             ",",
             ""
@@ -75,6 +97,7 @@ const FeatureHolder = ({feature}) => {
           mainUrl.replace(",", "");
         } else {
           const finalUrl = `~~~${module_Id}`;
+          console.log("3rd one was fired")
           mainUrl = `${url}${finalUrl.replace(",", "")}`;
           mainUrl.replaceAll(",", "");
         }
@@ -83,6 +106,47 @@ const FeatureHolder = ({feature}) => {
       resolve(mainUrl);
     });
   };
+
+  function getModuleChartData(module) {
+    const { uniqueNo, module_Id, parentModule_Id, dataPointClick } = module;
+    let moduleDataArray = [];
+    moduleDataArray.push({
+      uniqueNo: module.uniqueNo,
+      module_Id: module.module_Id,
+      moduleName: module.moduleName,
+      parentModule_Id: module.parentModule_Id,
+      parentModuleId: module.parentModuleId,
+      url: module.moduleURL,
+      presentationCategory: module.presentationCategory,
+      dataPointClick: module.dataPointClick,
+      hasChildren: module.hasMoreChild
+    });
+
+    //==========================================================
+    if (
+      modules.filter(x => x.uniqueNo === uniqueNo).length > 0 &&
+      modules.filter(x => x.uniqueNo === uniqueNo)[0].selected
+    ) {
+    //   dispatch(removeModuleFromDeleted(uniqueNo));
+    //   dispatch(selectSpecificModule(false, uniqueNo));
+    } else {
+    //   dispatch(removeModuleFromDeleted(uniqueNo));
+      if (dataPointClick !== undefined && dataPointClick === true) {
+        dispatch(putMapClickedDataInFeatures(moduleDataArray));
+      }
+      makeApiCallUrl(uniqueNo, module_Id, parentModule_Id).then(res => {
+      console.log("TRAIL----->",trail)
+        dispatch(
+          fetchModuleDetails(
+            res,
+            module_Id,
+            uniqueNo,
+            selectedFeature
+          )
+        );
+      });
+    }
+  }
   
   
   const handleClick = (item) => {
@@ -189,18 +253,18 @@ const FeatureHolder = ({feature}) => {
             </Box>
           </div>
           <ComponentHolder index={feature.featureCode} type={'main'} value={feature.showModule}>
-              <MainPage key={feature.featureCode} feature={feature} />
+              <MainPage key={feature.featureCode} feature={feature} getModuleChartData={getModuleChartData} />
           </ComponentHolder>
           {feature.modules.length > 0 && feature.modules.map((item)=>(
               <ComponentHolder index={item.uniqueNo} key={item.uniqueNo} type={'main'} value={feature.showModule}  >
-                  <ModuleHolder feature={feature} module={item} />
+                  <ModuleHolder feature={feature} module={item} getModuleChartData={getModuleChartData} />
               </ComponentHolder>
           ))}
       </div>
   )
 }
 
-const MainPage = ({feature}) =>{
+const MainPage = ({feature, getModuleChartData}) =>{
 
     const dispatch = useDispatch();
 
@@ -224,10 +288,12 @@ const MainPage = ({feature}) =>{
         if(feature.openTabs.filter(e=>e.id===item.uniqueNo).length<1){
             dispatch(addToOpenTabs(feature.featureCode, {id: item.uniqueNo, label: item.moduleName, level: 1}));
         }
+
+        getModuleChartData(item);
     }
 
     return(
-      <Grid container spacing={1} className="px-5 pt-5 pb-10" >
+      <Grid container className="px-5 py-3" >
 
            {/* mapping all the modules inside a feature as button */}
         {feature.modules.length>0 && feature.modules.map((item)=>(
@@ -235,7 +301,7 @@ const MainPage = ({feature}) =>{
                 {item.moduleChartDetails!=null?(
                 <Grid item xs={6} >
 
-                    <div className="rounded-md shadow-lg text-center" >
+                    <div className="rounded-md shadow-lg text-center m-4" >
                         <p>{item.moduleName}</p>
                         <ModuleChartFrame current={item} />
                     </div>

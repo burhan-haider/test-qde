@@ -41,6 +41,7 @@ const Header = () => {
     // const openFeatures = useSelector(state => state.routes.newFeatures.features);
     const user = useSelector(state => state.auth.user)
     // const [newFeatures, setNewFeatures] = useState(currentFeatures);
+    const features = useSelector(state=>state.features.features.features)
 
     const dispatch = useDispatch();
 
@@ -56,7 +57,9 @@ const Header = () => {
 
     const handleChange = (event, newValue) => {
         dispatch(setSelectedFeature(newValue));
-        dispatch(fetchFeatureModules(newValue));
+        if(features.filter(e=>e.featureCode===newValue).length<1){
+            dispatch(fetchFeatureModules(newValue));
+        }
     };
 
     return (

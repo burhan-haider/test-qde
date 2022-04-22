@@ -14,6 +14,7 @@ import {
     REMOVE_FROM_BREADCRUMBS,
     ADD_TO_OPENTABS,
     REMOVE_FROM_OPENTABS,
+    PUT_MAP_CLICK_DATA_IN_FEATURES
 } from './features.types'
 
 
@@ -127,6 +128,12 @@ export const removeFromOpenTabs = (featureCode, module) => {
   }
 }
 
+export const putMapClickedDataInFeatures = data => {
+  return {
+    type: PUT_MAP_CLICK_DATA_IN_FEATURES,
+    payload: data
+  };
+};
 
 // export const selectSpecificModule = (root, code) => {
 //   return dispatch => {
@@ -189,12 +196,7 @@ export const removeFromOpenTabs = (featureCode, module) => {
 //   };
 // };
 
-// export const putMapClickedDataInFeatures = data => {
-//   return {
-//     type: PUT_MAP_CLICK_DATA_IN_FEATURES,
-//     payload: data
-//   };
-// };
+
 // export const selectModuleAsPinned = wholeResponse => {
 //   return {
 //     type: SELECT_MODULE_AS_PINNED,

@@ -11,6 +11,7 @@ import {
     REMOVE_FROM_BREADCRUMBS,
     ADD_TO_OPENTABS,
     REMOVE_FROM_OPENTABS,
+    PUT_MAP_CLICK_DATA_IN_FEATURES
 } from 'redux/features/features.types';
 import _ from "lodash";
 
@@ -50,6 +51,7 @@ const features = (state = initialState, action) => {
             const moduleData = data.map(item => ({
                 ...item,
                 parentModuleId: null,
+                parentModule_Id: null,
             }))
 
             var stateData = state.features;
@@ -206,6 +208,18 @@ const features = (state = initialState, action) => {
                     return item;
                 })
             }
+        case PUT_MAP_CLICK_DATA_IN_FEATURES: {
+            const showData = state.features.map(f => {
+              if (f.featureCode === state.featureCode) {
+                f.showModule = action.payload[0].uniqueNo;
+                f.showRoot = false;
+                f.modules = [...f.modules, ...action.payload];
+              }
+              return f;
+            });
+      
+            return { ...state, features: showData };
+          }
         default:
             return state;
     }
