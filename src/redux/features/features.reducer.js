@@ -11,7 +11,8 @@ import {
     REMOVE_FROM_BREADCRUMBS,
     ADD_TO_OPENTABS,
     REMOVE_FROM_OPENTABS,
-    PUT_MAP_CLICK_DATA_IN_FEATURES
+    PUT_MAP_CLICK_DATA_IN_FEATURES,
+    REMOVE_REFRESH_MODULE
 } from 'redux/features/features.types';
 import _ from "lodash";
 
@@ -220,9 +221,19 @@ const features = (state = initialState, action) => {
       
             return { ...state, features: showData };
           }
+
+          case REMOVE_REFRESH_MODULE: {
+            return {
+              ...state,
+              refreshModule: null
+            };
+          }
         default:
             return state;
     }
+
+        
+
 }
 
 export default features;

@@ -1,13 +1,14 @@
-// import React, { useState, useEffect } from "react";
+// import React, { useState } from "react";
 // import { makeStyles } from "@material-ui/core/styles";
-// import Grid from "@material-ui/core/Grid";
-// import Chip from "@material-ui/core/Chip";
-// import Select from "@material-ui/core/Select";
 // import InputLabel from "@material-ui/core/InputLabel";
+// import FormControl from "@material-ui/core/FormControl";
+// import Select from "@material-ui/core/Select";
+// import Chip from "@material-ui/core/Chip";
+// import Grid from "@material-ui/core/Grid";
 // import Input from "@material-ui/core/Input";
 // import MenuItem from "@material-ui/core/MenuItem";
-// import FormControl from "@material-ui/core/FormControl";
 // import RoleOperationService from "../../../../../services/role/RoleOperationService";
+// // import AlertDescription from "../../../../common/AlertDescription";
 // import { GenericButton } from "@application";
 
 // const useStyles = makeStyles(theme => ({
@@ -27,42 +28,38 @@
 //   }
 // }));
 
-// function RoleFeatureMapping(props) {
-//   let featureList = props.indexPageData.FEATURELIST;
-//   let roleList = props.indexPageData.ROLELIST;
-//   let roleFeatureMappingList = props.indexPageData.ROLEFEATUREMAPPING;
+// function UserRoleMapping(props) {
+//   console.log(props);
+//   let userAndRole =
+//     props && props.indexPageData ? props.indexPageData.USERANDROLE : false;
+//   let userCodeList = Object.keys(userAndRole);
+
+//   let roleObjectList = props.indexPageData.ROLELIST;
 
 //   const classes = useStyles();
-//   const [feaureList, setFeaureList] = useState([]);
-//   const [roleId, setroleId] = useState();
+//   const [userCode, setUserCode] = useState();
+//   const [roleIds, setroleIds] = useState([]);
 //   // const [successMessage, setSuccessMessage] = useState();
 
-//   const roleOnChange = event => {
-//     let currentSelectedroleId = event.target.value;
-//     setroleId(currentSelectedroleId);
-//     // userAndRole[currentSelectedUserCode];
-//     let roleAssignedFeatureList = roleFeatureMappingList.filter(function(
-//       roleFeaturemapping
-//     ) {
-//       return roleFeaturemapping["ROLE"]["roleId"] === currentSelectedroleId;
-//     });
-//     let currentSelectedFeatureCodeList = [];
-//     roleAssignedFeatureList[0]["FEATURELIST"].map(feature => {
-//       currentSelectedFeatureCodeList.push(feature["featureCode"]);
-//     });
-
-//     setFeaureList(currentSelectedFeatureCodeList);
+//   const userCodeOnChange = event => {
+//     let currentSelectedUserCode = event.target.value;
+//     setUserCode(currentSelectedUserCode);
+//     let currentSelectedUserRoleList = Object.keys(
+//       userAndRole[currentSelectedUserCode]
+//     );
+//     debugger;
+//     setroleIds(currentSelectedUserRoleList);
 //   };
 
 //   const handleChangeMultiple = event => {
-//     setFeaureList(event.target.value);
+//     setroleIds(event.target.value);
 //   };
 
-//   const assignFeatureToRole = () => {
-//     RoleOperationService.roleFeatureMaping(roleId, feaureList)
+//   const assignRoleToUser = () => {
+//     RoleOperationService.assignRoleToUser(userCode, roleIds)
 //       .then(data => {
 //         //setSuccessMessage("ROles has assigned to user =" + userCode);
-//         alert("Feature has assigned to role");
+//         alert("Role has assigned to user");
 //         props.refreshCurrentModule();
 //       })
 //       .catch(err => {});
@@ -71,37 +68,39 @@
 //   return (
 //     <div style={{ marginTop: "1%" }}>
 //       <Grid container justify="center" alignItems="center" spacing={3}>
-//         <Grid item md={2}>
+//         <Grid item md={3}>
 //           <FormControl className={classes.formControl} fullWidth={true}>
-//             <InputLabel htmlFor="age-native-simple">Select Role</InputLabel>
+//             <InputLabel htmlFor="age-native-simple">
+//               Select User Code
+//             </InputLabel>
 //             <Select
 //               native
-//               value={roleId ? roleId : ""}
-//               onChange={roleOnChange}
+//               value={userCode}
+//               onChange={userCodeOnChange}
 //               inputProps={{
-//                 name: "roleId",
-//                 id: "roleId"
+//                 name: "userCode",
+//                 id: "userCode"
 //               }}
 //             >
 //               <option aria-label="None" value="" />
-//               {roleList.map((role, index) => {
+//               {userCodeList.map((user, index) => {
 //                 return (
-//                   <option key={role["roleId"]} value={role["roleId"]}>
-//                     {role["roleName"]}
+//                   <option key={user} value={user}>
+//                     {user}
 //                   </option>
 //                 );
 //               })}
 //             </Select>
 //           </FormControl>
 //         </Grid>
-//         <Grid item md={7}>
+//         <Grid item md={4}>
 //           <FormControl className={classes.formControl} fullWidth={true}>
-//             <InputLabel id="userRoleLabel">Feature</InputLabel>
+//             <InputLabel id="userRoleLabel">User Roles</InputLabel>
 //             <Select
 //               labelId="role-mutiple-chip-label"
 //               id="userRole"
 //               multiple
-//               value={feaureList}
+//               value={roleIds}
 //               onChange={handleChangeMultiple}
 //               input={<Input id="select-multiple-chip" />}
 //               renderValue={selected => (
@@ -112,24 +111,21 @@
 //                 </div>
 //               )}
 //             >
-//               {featureList.map(feature => (
-//                 <MenuItem
-//                   key={feature["featureCode"]}
-//                   value={feature["featureCode"]}
-//                 >
-//                   {feature["featureName"]}
+//               {roleObjectList.map(role => (
+//                 <MenuItem key={role.roleId} value={role.roleId}>
+//                   {role.roleName}
 //                 </MenuItem>
 //               ))}
 //             </Select>
 //           </FormControl>
 //         </Grid>
-//         <Grid item md={2}>
+//         <Grid item md={3}>
 //           <GenericButton
 //             variant="contained"
 //             color="primary"
-//             onClick={assignFeatureToRole}
+//             onClick={assignRoleToUser}
 //           >
-//             Assign Feature
+//             Assign Role
 //           </GenericButton>
 //         </Grid>
 //       </Grid>
@@ -138,4 +134,4 @@
 //   );
 // }
 
-// export default RoleFeatureMapping;
+// export default UserRoleMapping;

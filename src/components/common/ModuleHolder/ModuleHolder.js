@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSelectedModule, addToBreadcrumbs, addToOpenTabs } from 'redux/features/features.actions';
+import ModuleDataContainer from 'components/common/modules/moduleDataContainer/ModuleDataContainer';
 import ModuleFrame from './ModuleFrame';
 
 const ModuleHolder = ({feature, module}) => {
@@ -49,7 +50,18 @@ const ModuleHolder = ({feature, module}) => {
     return(
         <div>
             {!module.hasChildren?(
-                <h1 className="text-red-700 pt-20 font-bold text-5xl" >{module.moduleName}</h1>
+                <>
+                    {module.presentationCategory!==null?(
+                        <ModuleDataContainer 
+                            moduleCode={module.moduleCode} 
+                            moduleURL={module.moduleURL}
+                            presentationCategory={module.presentationCategory}
+                            moduleId={module.uniqueNo}
+                        />
+                    ):(
+                        <h1>{module.moduleName}</h1>
+                    )}
+                </>
                 
             ):(
                 <div>

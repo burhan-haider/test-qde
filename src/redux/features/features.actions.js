@@ -14,7 +14,8 @@ import {
     REMOVE_FROM_BREADCRUMBS,
     ADD_TO_OPENTABS,
     REMOVE_FROM_OPENTABS,
-    PUT_MAP_CLICK_DATA_IN_FEATURES
+    PUT_MAP_CLICK_DATA_IN_FEATURES,
+    REMOVE_REFRESH_MODULE
 } from './features.types'
 
 
@@ -217,11 +218,11 @@ export const putMapClickedDataInFeatures = data => {
 //   };
 // };
 
-// export const removerFromRefreshModule = () => {
-//   return {
-//     type: REMOVE_REFRESH_MODULE
-//   };
-// };
+export const removerFromRefreshModule = () => {
+  return {
+    type: REMOVE_REFRESH_MODULE
+  };
+};
 
 // //for mega jump of pinned module or hover modules
 // export const showDirectFinalModule = (moduledata, featureCode) => {
