@@ -136,26 +136,6 @@ const reducer = (state = initialState, action) => {
                     return item;
                 })},
             };
-        case ADD_TO_PINNED_MODULES:
-            return{
-                ...state,
-                pinnedModules:[...state.pinnedModules, action.payload],
-            }
-        case REMOVE_FROM_PINNED_MODULES:
-            return{
-                ...state,
-                pinnedModules:[...state.pinnedModules.filter(item=>item !== action.payload)],
-            }
-        case ADD_TO_OPEN_FEATURES:
-            return {
-                ...state,
-                newFeatures: {...state.newFeatures, features: [...state.newFeatures.features, action.payload]},
-            };
-        case REMOVE_FROM_OPEN_FEATURES:
-            return {
-                ...state,
-                openFeatures: [...state.openFeatures.filter(item=>item !== action.payload)],
-            };
         default: return state;
     }
 }

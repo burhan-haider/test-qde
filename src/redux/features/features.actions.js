@@ -14,7 +14,10 @@ import {
     REMOVE_FROM_BREADCRUMBS,
     ADD_TO_OPENTABS,
     REMOVE_FROM_OPENTABS,
-    PUT_MAP_CLICK_DATA_IN_FEATURES
+    PUT_MAP_CLICK_DATA_IN_FEATURES,
+    ADD_TO_PINNED_MODULES,
+    REMOVE_FROM_PINNED_MODULES,
+    OPEN_PINNED_MODULE,
 } from './features.types'
 
 
@@ -134,6 +137,33 @@ export const putMapClickedDataInFeatures = data => {
     payload: data
   };
 };
+
+export const addToPinnedModules = (module) => {
+  return dispatch => {
+    return dispatch({
+      type: ADD_TO_PINNED_MODULES,
+      payload: module
+    });
+  }
+}
+
+export const removeFromPinnedModules = (module) => {
+  return dispatch => {
+    return dispatch({
+      type: REMOVE_FROM_PINNED_MODULES,
+      payload: module 
+    });
+  }
+}
+
+export const openPinnedModule = (featureCode, module) => {
+  return dispatch => {
+    return dispatch({
+      type: OPEN_PINNED_MODULE,
+      payload: { featureCode, module }
+    });
+  }
+}
 
 // export const selectSpecificModule = (root, code) => {
 //   return dispatch => {

@@ -9,7 +9,9 @@ import actionManagement from 'assets/icons/feature/actionManagement.png'
 import scenarios from 'assets/icons/feature/scenarios.png'
 import scanning from 'assets/icons/feature/scanning.png'
 import labelsFeature from 'assets/icons/feature/labelsFeature.png'
-import features from 'assets/icons/feature/features.png'
+import features from 'assets/icons/feature/features.png';
+import closeBlue from 'assets/icons/close_blue.png';
+import closeWhite from 'assets/icons/close_white.png';
 
 
 const icons = {
@@ -23,7 +25,9 @@ const icons = {
     scenarios,
     scanning,
     labelsFeature,
-    features
+    features,
+    closeBlue,
+    closeWhite,
 }
 
 const getIconByKey = (key) => {

@@ -7,7 +7,8 @@ import {
     MenuItem,
     Button,
     IconButton,
-    Grid
+    Grid, 
+    Link
 } from '@mui/material';
 import { MdPushPin, MdBookmark, MdArrowDropDown } from 'react-icons/md'
 import ComponentHolder from 'components/common/componentHolder/ComponentHolder';
@@ -20,10 +21,14 @@ import {
     addToOpenTabs, 
     removeFromOpenTabs,
     putMapClickedDataInFeatures,
-    fetchModuleDetails 
+    fetchModuleDetails,
+    addToPinnedModules,
+    removeFromPinnedModules,
+    openPinnedModule,
 } from 'redux/features/features.actions';
 import getIconByKey from 'assets';
 import ModuleChartFrame from 'components/common/modules/moduleDataSearchFrame/ModuleChartFrame'
+import { handleBreakpoints } from '@mui/system';
 
 const FeatureHolder = ({feature}) => {
 
@@ -58,7 +63,7 @@ const FeatureHolder = ({feature}) => {
             }
         })
       }
-  })
+  },[selectedFeature,feature])
 
   
 
@@ -208,6 +213,29 @@ const FeatureHolder = ({feature}) => {
       }) 
   }
 
+  const handlePin = () => {
+      const currentModuleName = feature.modules.filter(e => e.uniqueNo === feature.showModule)[0].moduleName;
+      if(pinnedModules.filter(e=>e.selectedModule===feature.showModule).length<1){
+        dispatch(addToPinnedModules({
+            featureCode: selectedFeature,
+            selectedModule: feature.showModule,
+            moduleName: currentModuleName,
+            module: feature
+        }))
+      }
+  }
+
+  const handleOpenPin = (item) => {
+      dispatch(openPinnedModule(item.featureCode, item.module));
+      handleBookmarkClose();
+  }
+
+  const handleRemovePin = (item) => {
+    if(pinnedModules.filter(e=>e===item).length>0){
+        dispatch(removeFromPinnedModules(item));
+    }
+  }
+
 //   const handleClickPin = () => {
 //       const label = feature.modules.filter(e=>e.uniqueNo===feature.selectedModule)[0].moduleName
 //       if(selectedFeature === feature.featureCode){
@@ -215,52 +243,89 @@ const FeatureHolder = ({feature}) => {
 //       }
 //   }
 
-  return(
-      <div>
-        <div>
-            {feature.openTabs.length>0&&(
-                <Box className="px-4 pt-1 text-left mx-5" style={{backgroundColor: '#fff'}} >
-                    {feature.openTabs.length>0 && feature.openTabs.map((item)=>(
-                        <>
-                            {feature.showModule===item.id ? (
-                                <Chip key={item.id} style={{backgroundColor: '#83a3bb',}} className="text-xs py-2m-1 text-white" label={item.label} size="small" onDelete={()=>handleDelete(item)} />
-                            ):(
-                                <Chip key={item.id} style={{border: '1px solid #83a3bb'}} className=" bg-transparent hover:bg-light-grey hover:text-white text-xs py-2  m-1" size="small" label={item.label} onClick={()=>handleClick(item)}  onDelete={()=>handleDelete(item)} />
-                            )}
-                        </>
-                    ))}
-                </Box>
-            )}
-            
-            
-            <Box className="flex justify-between border-4 border-solid border-white text-white items-center px-1 mx-5 text-left" style={{backgroundColor: '#052a4f'}} >
-                <div className='flex justify-start items-center' >
-                    <IconButton style={{backgroundColor: '#cccc00'}} className="rounded-full p-1 m-1" >
-                        <img src={getIconByKey('pinBlack')} alt="pin Icon" className="w-4 h-auto m-0" />
-                    </IconButton>
-                    <Breadcrumbs className="text-white text-sm" >
-                        {feature.breadCrumbs.map((item)=>(
-                            <p 
-                                onClick={()=>handleClickBreadcrumb(item)} 
-                                className="cursor-pointer my-1 text-white"
-                                key={item.id}
-                            > 
-                                {item.label}{feature.breadCrumbs.indexOf(item) === feature.breadCrumbs.length-1&&' /'}
-                            </p>
+    return(
+    <div>
+        
+        <div className="flex justify-start w-100" >
+            <div className="w-full" >
+                {feature.openTabs.length>0&&(
+                    <Box className="px-1 pt-1 bottom-1 text-left ml-5" style={{backgroundColor: '#fff'}} >
+                        {feature.openTabs.length>0 && feature.openTabs.map((item)=>(
+                            <>
+                                {feature.showModule===item.id ? (
+                                    <Chip key={item.id} style={{backgroundColor: '#83a3bb',}} className="text-xs m-1 text-white" label={item.label} size="small" onDelete={()=>handleDelete(item)} />
+                                ):(
+                                    <Chip key={item.id} style={{border: '1px solid #83a3bb'}} className=" bg-transparent hover:bg-light-grey hover:text-white text-xs m-1" size="small" label={item.label} onClick={()=>handleClick(item)}  onDelete={()=>handleDelete(item)} />
+                                )}
+                            </>
                         ))}
-                    </Breadcrumbs>
-                </div>
-            </Box>
-          </div>
-          <ComponentHolder index={feature.featureCode} type={'main'} value={feature.showModule}>
-              <MainPage key={feature.featureCode} feature={feature} getModuleChartData={getModuleChartData} />
-          </ComponentHolder>
-          {feature.modules.length > 0 && feature.modules.map((item)=>(
-              <ComponentHolder index={item.uniqueNo} key={item.uniqueNo} type={'main'} value={feature.showModule}  >
-                  <ModuleHolder feature={feature} module={item} getModuleChartData={getModuleChartData} />
-              </ComponentHolder>
-          ))}
-      </div>
+                    </Box>
+                )}
+                
+                
+                <Box className="flex justify-between border-4 border-solid border-white text-white items-center px-1 ml-5 text-left" style={{backgroundColor: '#052a4f'}} >
+                    <div className='flex justify-start items-center' >
+                        {feature.breadCrumbs.length>1 &&(
+                            <IconButton style={{backgroundColor: '#cccc00'}} onClick={()=>handlePin()} className="rounded-full p-1 m-1" >
+                                <img src={getIconByKey('pinBlack')} alt="pin Icon" className="w-4 h-auto m-0" />
+                            </IconButton>
+                        )}
+                        
+                        <Breadcrumbs className="text-white text-sm" >
+                            {feature.breadCrumbs.map((item)=>(
+                                <p 
+                                    onClick={()=>handleClickBreadcrumb(item)} 
+                                    className="cursor-pointer my-1 text-white"
+                                    key={item.id}
+                                > 
+                                    {item.label}{feature.breadCrumbs.indexOf(item) === feature.breadCrumbs.length-1&&' /'}
+                                </p>
+                            ))}
+                        </Breadcrumbs>
+                    </div>
+                </Box>
+            </div>
+            <IconButton id="basic-button"
+                aria-controls={open ? 'basic-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? 'true' : undefined}
+                onClick={handleBookmark} 
+                className="rounded-full w-9 h-9 ml-2 mr-4" 
+                style={{background: '#cccc00'}} 
+            >
+                <img src={getIconByKey('pinned')} alt="Pinned Modules Logo" className="w-4 h-auto m-0"  />
+            </IconButton>
+            <Menu
+            id="basic-menu"
+            anchorEl={bookMark}
+            open={open}
+            onClose={handleBookmarkClose}
+            MenuListProps={{
+            'aria-labelledby': 'basic-button',
+            }}
+            >
+                {pinnedModules.length>0 ? pinnedModules.map((item)=>(
+                    <MenuItem disableRipple>
+                        <Link component="button" onClick={()=>handleOpenPin(item)} className="text-2xl" underline='false' >{item.moduleName}</Link>
+                        &nbsp;&nbsp;
+                        <IconButton sx={{width: '14px', height: '14px'}} className="p-1" onClick={()=>handleRemovePin(item)} >
+                            <img src={getIconByKey('closeBlue')} alt="closeIcon" style={{width: '10px', height: '10px'}} className="ml-5" />
+                        </IconButton>
+                    </MenuItem>
+                )):(<p>&nbsp;&nbsp;No Pinned Modules!&nbsp;&nbsp;</p>)}
+                
+                
+            </Menu>
+        </div>
+            <ComponentHolder index={feature.featureCode} type={'main'} value={feature.showModule}>
+                <MainPage key={feature.featureCode} feature={feature} getModuleChartData={getModuleChartData} />
+            </ComponentHolder>
+            {feature.modules.length > 0 && feature.modules.map((item)=>(
+                <ComponentHolder index={item.uniqueNo} key={item.uniqueNo} type={'main'} value={feature.showModule}  >
+                    <ModuleHolder feature={feature} module={item} getModuleChartData={getModuleChartData} />
+                </ComponentHolder>
+            ))}
+    </div>
   )
 }
 

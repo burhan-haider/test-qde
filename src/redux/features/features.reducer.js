@@ -11,7 +11,10 @@ import {
     REMOVE_FROM_BREADCRUMBS,
     ADD_TO_OPENTABS,
     REMOVE_FROM_OPENTABS,
-    PUT_MAP_CLICK_DATA_IN_FEATURES
+    PUT_MAP_CLICK_DATA_IN_FEATURES,
+    ADD_TO_PINNED_MODULES,
+    REMOVE_FROM_PINNED_MODULES,
+    OPEN_PINNED_MODULE,
 } from 'redux/features/features.types';
 import _ from "lodash";
 
@@ -220,6 +223,30 @@ const features = (state = initialState, action) => {
       
             return { ...state, features: showData };
           }
+        case ADD_TO_PINNED_MODULES: {
+            return{
+                ...state,
+                pinnedModules: [...state.pinnedModules, action.payload]
+            }
+        }
+        case REMOVE_FROM_PINNED_MODULES: {
+            return{
+                ...state,
+                pinnedModules: state.pinnedModules.filter(item => item !== action.payload)
+            }
+        }
+        case OPEN_PINNED_MODULE: {
+            return{
+                ...state,
+                featureCode: action.payload.featureCode,
+                features: state.features.map(item => {
+                    if(item.featureCode === action.payload.featureCode){
+                        return action.payload.module
+                    }
+                    return item;
+                })
+            }
+        }
         default:
             return state;
     }
