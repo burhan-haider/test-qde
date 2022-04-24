@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-import ModuleComponentConfig from "./ModuleComponentConfig";
-import CommonService from "../../../services/common/commonService";
-import LinearLoading from "../../common/dataLoading/LinearLoading";
-import Error from "../../common/errorPages/Error";
+import ModuleComponentConfig from "components/common/modules/moduleDataContainer/ModuleComponentConfig";
+import CommonService from "services/common/commonService";
+import LinearLoading from "components/common/dataLoading/LinearLoading";
+import Error from "components/common/errorPages/Error";
 
-import { removerFromRefreshModule } from "../../../store/actions/features/features.actions";
+import { removerFromRefreshModule } from "redux/features/features.actions";
 
 export default function ModuleDataContainer(props) {
   const { moduleCode, moduleURL, presentationCategory, moduleId } = props.data;

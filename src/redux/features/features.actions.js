@@ -18,6 +18,7 @@ import {
     ADD_TO_PINNED_MODULES,
     REMOVE_FROM_PINNED_MODULES,
     OPEN_PINNED_MODULE,
+    REMOVE_REFRESH_MODULE
 } from './features.types'
 
 
@@ -247,11 +248,11 @@ export const openPinnedModule = (featureCode, module) => {
 //   };
 // };
 
-// export const removerFromRefreshModule = () => {
-//   return {
-//     type: REMOVE_REFRESH_MODULE
-//   };
-// };
+export const removerFromRefreshModule = () => {
+  return {
+    type: REMOVE_REFRESH_MODULE
+  };
+};
 
 // //for mega jump of pinned module or hover modules
 // export const showDirectFinalModule = (moduledata, featureCode) => {

@@ -6,7 +6,7 @@ import { Typography, MenuItem, Grid } from "@material-ui/core";
 import {
   CheckboxFormsy,
   SelectFormsy
-} from "../../../../common/formsyComponents";
+} from "components/common/formsyComponents";
 const useStyles = makeStyles(theme => ({
   MuiSvgIcon: {
     color: "#7b666e",

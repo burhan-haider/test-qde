@@ -2,15 +2,15 @@ import { MasterComponent } from "./modulePages";
 import { RoleComponent, RoleFeatureMapping } from "./modulePages";
 
 import { UserList, TempUserList, UserRoleMapping } from "./modulePages";
-import { SingleRowEntity } from "./modulePages";
+// import { SingleRowEntity } from "./modulePages";
 //import { UserRoleAssign } from "./modulePages";
 
-import { ActionMasterComponent } from "./modulePages";
-import { CaseWorkflowComponent } from "./modulePages";
+// import { ActionMasterComponent } from "./modulePages";
+// import { CaseWorkflowComponent } from "./modulePages";
 
-import Error_404 from "../../common/errorPages/Error_404";
+import Error_404 from "components/common/errorPages/Error_404";
 import { FeaturesComponent } from "./modulePages";
-import { LabelsComponent } from "./modulePages";
+// import { LabelsComponent } from "./modulePages";
 import { ReportAndScenariosComponent } from "./modulePages";
 import { RealtimeScanningComponent } from "./modulePages";
 
@@ -23,13 +23,13 @@ const moduleComponentConfig = {
   roleComponent: RoleComponent,
   roleFeatureMapping: RoleFeatureMapping,
   userOperations: UserList,
-  singleRowEntity: SingleRowEntity,
+  // singleRowEntity: SingleRowEntity,
   userRoleMapping: UserRoleMapping,
   Error_404: Error_404,
-  actionManagement: ActionMasterComponent,
-  caseworkflow: CaseWorkflowComponent,
+  // actionManagement: ActionMasterComponent,
+  // caseworkflow: CaseWorkflowComponent,
   allFeatures: FeaturesComponent,
-  allLabels: LabelsComponent,
+  // allLabels: LabelsComponent,
   allScenarios: ReportAndScenariosComponent,
   allReports: ReportAndScenariosComponent,
   rtScanning: RealtimeScanningComponent,

@@ -15,6 +15,7 @@ import {
     ADD_TO_PINNED_MODULES,
     REMOVE_FROM_PINNED_MODULES,
     OPEN_PINNED_MODULE,
+    REMOVE_REFRESH_MODULE
 } from 'redux/features/features.types';
 import _ from "lodash";
 
@@ -247,9 +248,19 @@ const features = (state = initialState, action) => {
                 })
             }
         }
+
+        case REMOVE_REFRESH_MODULE: {
+            return {
+                ...state,
+                refreshModule: null
+            };
+        }
         default:
             return state;
     }
+
+        
+
 }
 
 export default features;
