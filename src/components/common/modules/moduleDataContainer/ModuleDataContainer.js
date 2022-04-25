@@ -9,7 +9,7 @@ import Error from "components/common/errorPages/Error";
 import { removerFromRefreshModule } from "redux/features/features.actions";
 
 export default function ModuleDataContainer(props) {
-  const { moduleCode, moduleURL, presentationCategory, moduleId } = props.data;
+  const { moduleCode, moduleURL, presentationCategory, moduleId } = props;
   console.log("moduleCode", moduleCode);
   const [indexPageData, setindexPageData] = useState(null);
   const [dataLoading, setDataLoading] = useState(true);

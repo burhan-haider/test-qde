@@ -1,18 +1,19 @@
 import React, { useState, useEffect, useCallback } from "react";
 import {
-  makeStyles,
   Typography,
   Grid,
   Accordion,
   AccordionDetails,
   AccordionSummary
-} from "@material-ui/core";
+} from "@mui/material";
+import { makeStyles } from "@mui/styles";
 import {
   GenericButton,
   GenericDialog,
-  RTSGenericDatatable
+  // RTSGenericDatatable
 } from "@application";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+// import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { MdExpandMore as ExpandMoreIcon } from 'react-icons/md'
 import RTSCommentForm from "./RTSCommentForm";
 import RTSUserDataTable from "./RTSUserDataTable";
 import RTSAttachEvidenceForm from "./RTSAttachEvidenceForm";
@@ -218,7 +219,7 @@ function RTScannningData(props) {
               {Object.keys(scanListObject).map((scanListObjectKey, index) => {
                 return (
                   <Grid item xs={12} key={index}>
-                    <RTSGenericDatatable
+                    {/* <RTSGenericDatatable
                       moduleName={
                         scanListObjectKey.split("$" || "^")[0].split("~")[1]
                       }
@@ -240,7 +241,7 @@ function RTScannningData(props) {
                       fileImport={FileImport}
                       userCode={LoggedUser}
                       eachRecord={setEachRecord}
-                    ></RTSGenericDatatable>
+                    ></RTSGenericDatatable> */}
                   </Grid>
                 );
               })}

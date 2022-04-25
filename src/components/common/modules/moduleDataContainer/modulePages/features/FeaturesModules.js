@@ -1,17 +1,18 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@mui/styles";
 import commonService from "services/common/commonService";
 import featureService from "services/features/featureService";
 import { GenericDialog, GenericButton } from "@application";
-import SpeedDialIcon from "@material-ui/lab/SpeedDialIcon";
-import { TextField, Grid, Slider, Typography } from "@material-ui/core";
-import { Remove } from "@material-ui/icons";
+import SpeedDialIcon from "@mui/material/SpeedDialIcon";
+import { TextField, Grid, Slider, Typography } from "@mui/material";
+// import { Remove } from "@material-ui/icons";
+import { MdRemove as Remove } from 'react-icons/md'
 import ModulesDropDown from "./ModulesDropDown";
 import SortableTree from "react-sortable-tree";
 import "react-sortable-tree/style.css";
 import * as TDU from "@application/util/TreeDataUtils";
-import * as MessageActions from "../../../../../../app/store/actions/message";
+import * as MessageActions from "redux/message/message.actions";
 
 const useStyles = makeStyles({
   root: {

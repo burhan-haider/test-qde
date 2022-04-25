@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Typography, Button } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core";
-import rtScanningService from "../../../../../services/realTimeScanning/rtScanningService";
+import { Typography, Button } from "@mui/material";
+import { makeStyles } from "@mui/material";
+import rtScanningService from "services/realTimeScanning/rtScanningService";
 import clsx from "clsx";
 import Formsy from "formsy-react";
-import { TextFieldFormsy } from "../../../../common/formsyComponents";
+import { TextFieldFormsy } from "components/common/formsyComponents";
 import { GenericButton } from "@application";
 
 const useStyles = makeStyles(theme => ({

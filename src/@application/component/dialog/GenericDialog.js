@@ -7,7 +7,7 @@ import {
   DialogTitle,
 } from "@mui/material";
 import { MdClose as CloseIcon } from 'react-icons/md';
-// import { Typography } from "@material-ui/core";
+// import { Typography } from "@mui/material";
 
 function GenericDialog(props) {
   //console.log(props);

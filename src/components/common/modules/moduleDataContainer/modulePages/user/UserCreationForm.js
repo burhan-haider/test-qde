@@ -1,6 +1,6 @@
 // import React from "react";
 // import { FormHelper } from "../../../../common/FormHelper";
-// import Switch from "@material-ui/core/Switch";
+// import Switch from "@mui/material/Switch";
 
 // import {
 //   DialogContent,
@@ -8,7 +8,7 @@
 //   FormControl,
 //   TextField,
 //   DialogActions
-// } from "@material-ui/core";
+// } from "@mui/material";
 // import { GenericButton } from "@application";
 
 // export default function UserCreationForm(props) {

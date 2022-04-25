@@ -6,7 +6,7 @@ import {
   SelectFormsy,
   CheckboxFormsy,
   ViewFieldFormsy
-} from "../../../../common/formsyComponents";
+} from "components/common/formsyComponents";
 import {
   MenuItem,
   FormControl,
@@ -19,16 +19,19 @@ import {
   FormControlLabel,
   Radio,
   RadioGroup
-} from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+} from "@mui/material";
+import { makeStyles } from "@mui/styles";
 import clsx from "clsx";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import SearchButtonIcon from "@material-ui/icons/SearchOutlined";
-import commonService from "../../../../../services/common/commonService";
+// import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+// import SearchButtonIcon from "@material-ui/icons/SearchOutlined";
+import { 
+  MdExpandMore as ExpandMoreIcon, 
+  MdOutlineSearch as SearchButtonIcon,
+} from "react-icons/md"
+import commonService from "services/common/commonService";
 import { useDispatch, useSelector } from "react-redux";
-import GenericDatatable from "../../../../../../@application/datatable/GenericDatatable";
-import { GenericDetailsBottomContainer } from "../common/bottomPages";
-import GenericButton from "../../../../../../@application/button/GenericButton";
+import { GenericDatatable, GenericButton } from "@application";
+import { GenericDetailsBottomContainer } from "components/common/modules/moduleDataContainer/modulePages/common/bottomPages";
 
 const useStyles = makeStyles(theme => ({
   root: {

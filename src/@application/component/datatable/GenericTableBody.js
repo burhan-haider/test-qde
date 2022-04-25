@@ -1,6 +1,6 @@
 // //Created by Vivek - 20.04.2020
 // import React from "react";
-// import { makeStyles } from "@material-ui/core/styles";
+// import { makeStyles } from "@mui/styles";
 // import {
 //   TableBody,
 //   TableCell,
@@ -9,9 +9,9 @@
 // } from "@mui/material";
 // import GenericTooltip from "../tooltip/GenericTooltip";
 // import masterModuleHyperlinks from "../hyperlinks/MasterModuleHyperlinks";
-// import Link from "@material-ui/core/Link";
+// import Link from "@mui/material/Link";
 // import InfoIcon from "@mui/icons-material/InfoOutlined";
-// import Radio from "@material-ui/core/Radio";
+// import Radio from "@mui/material/Radio";
 // import { useDispatch } from "react-redux";
 // import * as ActionManagementActions from "../../../app/store/actions/actionManagement";
 

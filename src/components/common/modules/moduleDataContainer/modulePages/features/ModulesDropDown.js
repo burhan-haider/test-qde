@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/styles";
 import {
   List,
   ListItem,
@@ -7,7 +7,7 @@ import {
   ListItemIcon,
   Checkbox,
   Radio
-} from "@material-ui/core";
+} from "@mui/material";
 import { GenericButton } from "@application";
 
 const useStyles = makeStyles({

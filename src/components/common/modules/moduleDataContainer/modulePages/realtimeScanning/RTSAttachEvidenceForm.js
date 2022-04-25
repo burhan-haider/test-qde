@@ -3,14 +3,14 @@ import Formsy from "formsy-react";
 import {
   Grid,
   Typography,
-  makeStyles,
   TextField,
   Button,
   Table,
   TableCell,
   TableHead,
   TableBody
-} from "@material-ui/core";
+} from "@mui/material";
+import { makeStyles } from "@mui/styles";
 import clsx from "clsx";
 const useStyles = makeStyles(theme => ({
   muiTyphography: {

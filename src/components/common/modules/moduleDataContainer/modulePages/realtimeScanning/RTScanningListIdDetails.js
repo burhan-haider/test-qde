@@ -6,7 +6,7 @@ import {
   TableBody,
   TableRow,
   makeStyles
-} from "@material-ui/core";
+} from "@mui/material";
 const useStyles = makeStyles(theme => ({
   headCell: {
     border: "#2b6cb0"

@@ -1,7 +1,8 @@
 import React from "react";
-import AttachFile from "@material-ui/icons/AttachFileRounded";
-import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Button, MenuItem, Grid } from "@material-ui/core";
+// import AttachFile from "@material-ui/icons/AttachFileRounded";
+import { MdAttachFile as AttachFile } from 'react-icons/md'
+import { makeStyles } from "@mui/styles";
+import { Typography, Button, MenuItem, Grid } from "@mui/material";
 import { GenericButton } from "@application";
 import SelectFormsy from "components/common/formsyComponents/SelectFormsy";
 import clsx from "clsx";

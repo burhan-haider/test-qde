@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/styles";
 import { useDispatch } from "react-redux";
 import httpService from "../../../../../../services/httpservice/httpService";
 import {
@@ -10,7 +10,7 @@ import {
   TextField,
   Select,
   InputLabel
-} from "@material-ui/core";
+} from "@mui/material";
 import { GenericDatatable, GenericButton } from "@application";
 
 const useStyles = makeStyles(theme => ({

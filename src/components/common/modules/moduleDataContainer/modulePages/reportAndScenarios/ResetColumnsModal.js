@@ -1,7 +1,7 @@
 // import React, { useState, useEffect, useRef } from "react";
 // import { useDispatch } from "react-redux";
-// import { makeStyles } from "@material-ui/core/styles";
-// import { Grid, FormControl, Typography } from "@material-ui/core";
+// import { makeStyles } from "@mui/styles";
+// import { Grid, FormControl, Typography } from "@mui/material";
 // import { GenericButton, DraggableList, GenericDialog } from "@application";
 // import reportsService from "../../../../../services/reports/reportsService";
 // import Formsy from "formsy-react";

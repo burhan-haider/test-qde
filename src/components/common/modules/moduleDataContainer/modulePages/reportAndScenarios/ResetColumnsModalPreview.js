@@ -1,11 +1,11 @@
 // import React, { useEffect, useState } from "react";
-// import { makeStyles } from "@material-ui/core/styles";
+// import { makeStyles } from "@mui/styles";
 // import {
 //   Grid,
 //   FormControlLabel,
 //   TextField,
 //   Typography
-// } from "@material-ui/core";
+// } from "@mui/material";
 // import { GenericButton, GenericSwitch } from "@application";
 // import _ from "lodash";
 

@@ -1,13 +1,13 @@
 // //Created by Vivek - 18.04.2020
 // import React from "react";
 // import PropTypes from "prop-types";
-// import TableCell from "@material-ui/core/TableCell";
-// import TableHead from "@material-ui/core/TableHead";
-// import TableRow from "@material-ui/core/TableRow";
-// import TableSortLabel from "@material-ui/core/TableSortLabel";
-// import Checkbox from "@material-ui/core/Checkbox";
-// import { makeStyles } from "@material-ui/core/styles";
-// import { Typography } from "@material-ui/core";
+// import TableCell from "@mui/material/TableCell";
+// import TableHead from "@mui/material/TableHead";
+// import TableRow from "@mui/material/TableRow";
+// import TableSortLabel from "@mui/material/TableSortLabel";
+// import Checkbox from "@mui/material/Checkbox";
+// import { makeStyles } from "@mui/styles";
+// import { Typography } from "@mui/material";
 
 // const useStyles = makeStyles(theme => ({
 //   visuallyHidden: {

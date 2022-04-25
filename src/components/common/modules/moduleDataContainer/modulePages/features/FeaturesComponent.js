@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { makeStyles } from "@material-ui/core/styles";
-import SpeedDial from "@material-ui/lab/SpeedDial";
-import SpeedDialIcon from "@material-ui/lab/SpeedDialIcon";
-import SpeedDialAction from "@material-ui/lab/SpeedDialAction";
-import EditIcon from "@material-ui/icons/Edit";
+import { makeStyles } from "@mui/styles";
+import SpeedDial from "@mui/material/SpeedDial";
+import SpeedDialIcon from "@mui/material/SpeedDialIcon";
+import SpeedDialAction from "@mui/material/SpeedDialAction";
+// import EditIcon from "@material-ui/icons/Edit";
+import { MdEdit as EditIcon } from 'react-icons/md'
 import { GenericDatatable, GenericDialog } from "@application";
 import FeaturesModules from "components/common/modules/moduleDataContainer/modulePages/features/FeaturesModules";
-import * as MessageActions from "../../../../../../app/store/actions/message";
+import * as MessageActions from "redux/message/message.actions";
 
 const useStyles = makeStyles(theme => ({
   root: {

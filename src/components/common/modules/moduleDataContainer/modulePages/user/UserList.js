@@ -1,11 +1,11 @@
 // import React, { useState } from "react";
-// import Fab from "@material-ui/core/Fab";
+// import Fab from "@mui/material/Fab";
 // import AddIcon from "@material-ui/icons/Add";
 // import GenericDatatable from "../../../../../../@application/datatable/GenericDatatable";
 // import UserCreationForm from "./UserCreationForm";
-// import Dialog from "@material-ui/core/Dialog";
-// import Grid from "@material-ui/core/Grid";
-// import { AppBar, Toolbar, Typography } from "@material-ui/core";
+// import Dialog from "@mui/material/Dialog";
+// import Grid from "@mui/material/Grid";
+// import { AppBar, Toolbar, Typography } from "@mui/material";
 // import userOperationService from "../../../../../services/user/UserOperationService";
 
 // export default function UserComponent(props) {

@@ -53,7 +53,7 @@ const ModuleHolder = ({feature, module}) => {
                 <>
                     {module.presentationCategory!==null?(
                         <ModuleDataContainer 
-                            moduleCode={module.moduleCode} 
+                            moduleCode={module.module_Id}
                             moduleURL={module.moduleURL}
                             presentationCategory={module.presentationCategory}
                             moduleId={module.uniqueNo}

@@ -1,7 +1,7 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Typography, Grid } from "@material-ui/core";
-import TextFieldFormsy from "app/components/common/formsyComponents/TextFieldFormsy";
+import { makeStyles } from "@mui/styles";
+import { Typography, Grid } from "@mui/material";
+import TextFieldFormsy from "components/common/formsyComponents/TextFieldFormsy";
 const useStyles = makeStyles(theme => ({
   MuiOutlinedInput: {
     "&:-webkit-autofill": {

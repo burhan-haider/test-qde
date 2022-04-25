@@ -1,10 +1,10 @@
 // import React, { useState, useEffect } from "react";
-// import Fab from "@material-ui/core/Fab";
+// import Fab from "@mui/material/Fab";
 // import AddIcon from "@material-ui/icons/Add";
 // import { GenericDatatable } from "@application";
 // import RoleCreationForm from "../role/RoleCreationForm";
-// import Dialog from "@material-ui/core/Dialog";
-// import { AppBar, Toolbar, Typography } from "@material-ui/core";
+// import Dialog from "@mui/material/Dialog";
+// import { AppBar, Toolbar, Typography } from "@mui/material";
 // import roleOperationService from "../../../../../services/role/RoleOperationService";
 
 // function RoleComponent(props) {

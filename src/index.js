@@ -9,10 +9,14 @@ import { Provider } from 'react-redux';
 import { store, persistor } from './redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { StyledEngineProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/styles';
+import { createTheme } from '@mui/material/styles';
 import { Router } from 'react-router-dom'
 import history from 'services/history';
 import Authentication from 'components/auth/Authentication';
 import Authorization from 'components/auth/Authorization';
+
+const theme = createTheme();
 
 ReactDOM.render(
   <React.StrictMode>
@@ -21,12 +25,14 @@ ReactDOM.render(
         <Router history={history}>
           <Authentication history={history}>
             <Authorization history={history}>
-              <StyledEngineProvider injectFirst>
-                <Layout>
-                  {/* <h1>Featuers</h1> */}
-                  <App />
-                </Layout>
-              </StyledEngineProvider>
+              <ThemeProvider theme={theme}>
+                <StyledEngineProvider injectFirst>
+                  <Layout>
+                    {/* <h1>Featuers</h1> */}
+                    <App />
+                  </Layout>
+                </StyledEngineProvider>
+              </ThemeProvider>
             </Authorization>
           </Authentication>
         </Router>

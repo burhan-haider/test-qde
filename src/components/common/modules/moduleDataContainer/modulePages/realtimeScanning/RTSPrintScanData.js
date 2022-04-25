@@ -5,7 +5,8 @@ import {
   Table,
   TableCell,
   TableRow
-} from "@material-ui/core";
+} from "@mui/material";
+
 function RTSPrintScanData(props) {
   const { completeData, moduleName, currentDate, loggedUser } = props;
 

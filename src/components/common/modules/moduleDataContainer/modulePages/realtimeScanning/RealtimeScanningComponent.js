@@ -4,9 +4,9 @@ import RTSDataEntryForm from "./RTSDataEntryForm";
 import RTSBulkScreeningForm from "./RTSBulkScreeningForm";
 import Formsy from "formsy-react";
 import { GenericButton, GenericDialog } from "@application";
-import rtScanningService from "../../../../../services/realTimeScanning/rtScanningService";
-import { makeStyles } from "@material-ui/core";
-import RTScannningData from "./RTScannningData";
+import rtScanningService from "services/realTimeScanning/rtScanningService";
+import { makeStyles } from "@mui/styles";
+import RTScannningData from "./RTScanningData";
 const useStyles = makeStyles(theme => ({
   MuiButton: {
     textTransform: "initial",
