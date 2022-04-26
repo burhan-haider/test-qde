@@ -31,8 +31,9 @@ class featureService {
   fetchAllModules = async () => {
     return new Promise((resolve, reject) => {
       httpService.get(`/common/feature/all`).then(response => {
+        console.table(response);
         if (response.status === 200) {
-          //console.log(response.data);
+          console.log("hit");
           resolve(response.data);
         } else {
           reject(response.data.err);
