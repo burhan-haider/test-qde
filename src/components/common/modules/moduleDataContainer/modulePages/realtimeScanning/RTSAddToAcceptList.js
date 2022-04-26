@@ -6,8 +6,9 @@ import clsx from "clsx";
 import Formsy from "formsy-react";
 import { TextFieldFormsy } from "components/common/formsyComponents";
 import { GenericButton } from "@application";
+import { useClasses } from "@application";
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   MuiOutlinedInput: {
     paddingLeft: "10px"
   },
@@ -26,10 +27,10 @@ const useStyles = makeStyles(theme => ({
       color: "white"
     }
   }
-}));
+});
 
 function RTSAddToAcceptList(props) {
-  const classes = useStyles();
+  const classes = useClasses(styles);
   const [record, setRecordData] = useState(props.data);
   const [dataResponse, setDataResponse] = useState(false);
   const [datasel, setdataSel] = useState();

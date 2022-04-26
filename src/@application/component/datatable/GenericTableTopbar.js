@@ -111,7 +111,7 @@
 
 //   //const exportIconsSet = require.context("../assets/icons", true);
 
-//   const classes = useStyles();
+//   const classes = useClasses(styles);
 
 //   const headerObject = headers.map((each, index) => {
 //     return each.label;

@@ -7,7 +7,9 @@ import {
   TableRow,
   makeStyles
 } from "@mui/material";
-const useStyles = makeStyles(theme => ({
+import { useClasses } from "@application";
+
+const styles = theme => ({
   headCell: {
     border: "#2b6cb0"
   },
@@ -15,12 +17,12 @@ const useStyles = makeStyles(theme => ({
     fontSize: "inherit",
     fontFamily: "inherit"
   }
-}));
+});
 function RTScanningListIdDetails(props) {
   const [header, setHeader] = useState([]);
   const [data, setData] = useState([]);
   const singleData = data ? data[0] : [];
-  const classes = useStyles();
+  const classes = useClasses(styles);
   useEffect(() => {
     if (props.data.dataSet !== undefined) {
       props.data.dataSet.then(response => {

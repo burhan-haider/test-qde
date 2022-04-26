@@ -12,11 +12,12 @@ import commonService from "services/common/commonService";
 import TableContainer from "@mui/material/TableContainer";
 import Grid from "@mui/material/Grid";
 import { GenericDetailsBottomPanel } from "../bottomPages";
+import { useClasses } from "@application";
 
 // import SearchButtonIcon from "@mui/icons-material/SearchOutlined";
 import { MdOutlineSearch as SearchButtonIcon } from 'react-icons/md'
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   table: {
     minWidth: 750,
     cursor: "pointer"
@@ -37,12 +38,12 @@ const useStyles = makeStyles(theme => ({
     fontWeight: "bold",
     color: "#353535"
   }
-}));
+});
 
 function GenericDetailsBottomContainer(props) {
   //console.log(props);
   const { headers, row, changeComponentView, bottomAction } = props;
-  const classes = useStyles();
+  const classes = useClasses(styles);
 
   const dataSet = {
     "Customer Details": commonService.fetchModuleDetails(

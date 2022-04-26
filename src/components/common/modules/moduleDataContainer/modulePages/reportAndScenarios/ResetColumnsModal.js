@@ -71,7 +71,7 @@
 
 // function ResetColumnsModal(props) {
 //   //console.log(props);
-//   const classes = useStyles();
+//   const classes = useClasses(styles);
 //   const dispatch = useDispatch();
 //   const { reportId, reportName, reportSerialNo } = props;
 //   const [dataList, setDataList] = useState([]);

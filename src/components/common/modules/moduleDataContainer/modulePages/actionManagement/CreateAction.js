@@ -17,8 +17,9 @@ import { ActionsBottomContainer } from "../common/bottomPages";
 import * as Actions from "redux/caseWorkflow/cwfbottomframedata/cwfbottomframedata.actions";
 import caseWorkflowService from "services/caseWorkflow/caseWorkflowService";
 import ActionDetailsForm from "./ActionDetailsForm";
+import { useClasses } from "@application";
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   root: {
     width: "100%"
   },
@@ -30,10 +31,10 @@ const useStyles = makeStyles(theme => ({
     fontSize: theme.typography.pxToRem(18),
     fontWeight: "500"
   }
-}));
+});
 
 export default function CreateAction(props) {
-  const classes = useStyles();
+  const classes = useClasses(styles);
   const paramObj = props.data;
   const dataMap = props.fieldMap;
 

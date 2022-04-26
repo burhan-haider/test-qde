@@ -12,11 +12,13 @@ import {
 import { makeStyles } from "@mui/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "redux/auth/user/user.actions";
+import { useClasses } from "@application";
+
 // import { GenericDialog } from "@application";
 // import UserProfile from "components/layout/header/userMenu/UserProfile";
 // import VivekImage from "assets/Vivek.jpg";
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   Buttonroot: {
     zIndex: 99,
   },
@@ -42,10 +44,10 @@ const useStyles = makeStyles(theme => ({
       marginTop: "5px",
     }
   }
-}));
+});
 
 function UserMenuList() {
-  const classes = useStyles();
+  const classes = useClasses(styles);
   const [open, setOpen] = useState(false);
   const anchorRef = React.useRef(null);
 

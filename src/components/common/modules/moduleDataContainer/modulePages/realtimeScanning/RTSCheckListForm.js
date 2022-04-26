@@ -12,7 +12,9 @@ import {
   CheckboxFormsy,
   SelectFormsy
 } from "components/common/formsyComponents";
-const useStyles = makeStyles(theme => ({
+import { useClasses } from "@application";
+
+const styles = theme => ({
   MuiSvgIcon: {
     color: "#7b666e",
     marginLeft: "8px",
@@ -39,7 +41,7 @@ const useStyles = makeStyles(theme => ({
   CircleUnchecked: {
     color: "#4a5568"
   }
-}));
+});
 
 function RTSChecklistForm(props) {
   const [rejectList, setRejectList] = useState(true);
@@ -62,7 +64,7 @@ function RTSChecklistForm(props) {
     setSelectList(event.target.value);
   };
 
-  const classes = useStyles();
+  const classes = useClasses(styles);
   return (
     <div className="m-8">
       <Typography className={classes.MuiTypoGraphy}>CheckList Form</Typography>
@@ -86,9 +88,9 @@ function RTSChecklistForm(props) {
                 classes={{
                   root: classes.MuiSvgIcon
                 }}
-                icon={<CircleUnchecked />}
+                icon={<CircleUnchecked size={24} color={'#333'} />}
                 checkedIcon={
-                  <CircleChecked classes={{ root: classes.CircleUnchecked }} />
+                  <CircleChecked size={24} color={'#333'} classes={{ root: classes.CircleUnchecked }} />
                 }
               />
             </Grid>
@@ -109,9 +111,9 @@ function RTSChecklistForm(props) {
                 classes={{
                   root: classes.MuiSvgIcon
                 }}
-                icon={<CircleUnchecked />}
+                icon={<CircleUnchecked size={24} color={'#333'} />}
                 checkedIcon={
-                  <CircleChecked classes={{ root: classes.CircleUnchecked }} />
+                  <CircleChecked size={24} color={'#333'} classes={{ root: classes.CircleUnchecked }} />
                 }
               />
             </Grid>
@@ -132,9 +134,9 @@ function RTSChecklistForm(props) {
                 classes={{
                   root: classes.MuiSvgIcon
                 }}
-                icon={<CircleUnchecked />}
+                icon={<CircleUnchecked size={24} color={'#333'} />}
                 checkedIcon={
-                  <CircleChecked classes={{ root: classes.CircleUnchecked }} />
+                  <CircleChecked size={24} color={'#333'} classes={{ root: classes.CircleUnchecked }} />
                 }
               />
             </Grid>
@@ -154,8 +156,8 @@ function RTSChecklistForm(props) {
                 classes={{
                   root: classes.MuiSvgIcon
                 }}
-                icon={<CircleUnchecked />}
-                checkedIcon={<CircleChecked />}
+                icon={<CircleUnchecked size={24} color={'#333'} />}
+                checkedIcon={<CircleChecked size={24} color={'#333'} />}
               />
             </Grid>
           </Grid>
@@ -167,7 +169,7 @@ function RTSChecklistForm(props) {
             </Grid>
             <Grid xs={6} item className={classes.TextAlignment}>
               <SelectFormsy
-                className="w-full py-1 ml-3 bg-white rounded-lg"
+                className="w-full bg-white rounded-full"
                 value=""
                 onChange={() => {}}
                 name="SelectedBlackList"

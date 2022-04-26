@@ -130,7 +130,7 @@
 //   const emptyRows =
 //     rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
-//   const classes = useStyles();
+//   const classes = useClasses(styles);
 
 //   function getColumnIndex(columnName) {
 //     for (var i = 0; i < headers.length; i++) {

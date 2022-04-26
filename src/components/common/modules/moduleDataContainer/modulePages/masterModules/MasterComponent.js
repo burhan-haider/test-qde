@@ -32,8 +32,9 @@ import commonService from "services/common/commonService";
 import { useDispatch, useSelector } from "react-redux";
 import { GenericDatatable, GenericButton } from "@application";
 import { GenericDetailsBottomContainer } from "components/common/modules/moduleDataContainer/modulePages/common/bottomPages";
+import { useClasses } from "@application";
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   root: {
     width: "100%",
 
@@ -62,12 +63,12 @@ const useStyles = makeStyles(theme => ({
   rowDesign: {
     paddingTop: 15
   }
-}));
+});
 
 let searchFormData = {};
 
 export default function MasterComponent(props) {
-  const classes = useStyles();
+  const classes = useClasses(styles);
   const [moduleHeader, setModuleHeader] = useState([]);
 
   const paramObj =

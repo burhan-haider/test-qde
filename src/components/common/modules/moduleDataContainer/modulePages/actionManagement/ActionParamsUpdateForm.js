@@ -18,8 +18,9 @@ import caseWorkflowService from "services/caseWorkflow/caseWorkflowService";
 import { GenericButton } from "@application";
 // import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { MdExpandMore as ExpandMoreIcon } from 'react-icons/md'
+import { useClasses } from "@application";
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   root: {
     width: "100%"
   },
@@ -43,10 +44,10 @@ const useStyles = makeStyles(theme => ({
     fontSize: theme.typography.pxToRem(18),
     fontWeight: "500"
   }
-}));
+});
 
 function ActionParamsUpdateForm(props) {
-  const classes = useStyles();
+  const classes = useClasses(styles);
 
   const [isFormValid, setIsFormValid] = useState(false);
   const [showStaticValuesField, setShowStaticValuesField] = useState(false);

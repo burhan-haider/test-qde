@@ -14,7 +14,9 @@ import {
 } from "redux/actions/features/features.actions";
 import ModuleChartFrame from "./ModuleChartFrame";
 import ModuleDataContainer from "../moduleDataContainer/ModuleDataContainer";
-const useStyles = makeStyles(theme => ({
+import { useClasses } from "@application";
+
+const styles = theme => ({
   mainContentContainer: {
     minHeight: "100%",
     // minHeight: "450px",
@@ -46,10 +48,10 @@ const useStyles = makeStyles(theme => ({
     width: "16px",
     outline: "none"
   }
-}));
+});
 function MainModulesFrame() {
   const dispatch = useDispatch();
-  const classes = useStyles();
+  const classes = useClasses(styles);
 
   const [selectedUserFeature, setSelectedUserFeature] = useState(null);
   const [selectedFeature, setSelectedFeature] = useState(null);

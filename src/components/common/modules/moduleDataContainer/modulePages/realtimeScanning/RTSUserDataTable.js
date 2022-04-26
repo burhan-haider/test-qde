@@ -14,7 +14,9 @@ import {
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import clsx from "clsx";
-const useStyles = makeStyles(theme => ({
+import { useClasses } from "@application";
+
+const styles = theme => ({
   MuiAccordionSummary: {
     backgroundColor: "#003463",
     content: {
@@ -32,7 +34,7 @@ const useStyles = makeStyles(theme => ({
   muiTableRow: {
     backgroundColor: "#f4f5fa"
   }
-}));
+});
 function RTSUserDataTable(props) {
   const [userData, setUserData] = useState({});
   const userInputData = props.data;
@@ -40,7 +42,7 @@ function RTSUserDataTable(props) {
     setUserData(userInputData);
   }, [userInputData]);
 
-  const classes = useStyles();
+  const classes = useClasses(styles);
   let searchParamValues = userData["SEARCHPARAMETERSVALUE"];
   let searchParamNames = userData["SEARCHPARAMETERSNAME"];
   let searchParamNames1 = [];

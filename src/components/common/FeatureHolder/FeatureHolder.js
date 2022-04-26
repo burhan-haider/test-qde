@@ -290,10 +290,10 @@ const FeatureHolder = ({feature}) => {
                 aria-haspopup="true"
                 aria-expanded={open ? 'true' : undefined}
                 onClick={handleBookmark} 
-                className="rounded-full w-9 h-9 ml-2 mr-4" 
+                className="rounded-full w-12 h-12 ml-2 mr-4" 
                 style={{background: '#cccc00'}} 
             >
-                <img src={getIconByKey('pinned')} alt="Pinned Modules Logo" className="w-4 h-auto m-0"  />
+                <img src={getIconByKey('pinned')} alt="Pinned Modules Logo" className="w-5 h-auto m-0"  />
             </IconButton>
             <Menu
             id="basic-menu"
@@ -313,8 +313,7 @@ const FeatureHolder = ({feature}) => {
                         </IconButton>
                     </MenuItem>
                 )):(<p>&nbsp;&nbsp;No Pinned Modules!&nbsp;&nbsp;</p>)}
-                
-                
+
             </Menu>
         </div>
             <ComponentHolder index={feature.featureCode} type={'main'} value={feature.showModule}>

@@ -7,8 +7,9 @@ import { makeStyles } from "@mui/styles";
 import LineChart from "components/common/modules/chart/LineChart";
 import BarChart from "components/common/modules/chart/BarChart";
 import PieChart from "components/common/modules/chart/PieChart";
+import { useClasses } from "@application";
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   chartContentContainer: {
     width: "100%",
     margin: 0,
@@ -20,7 +21,7 @@ const useStyles = makeStyles(theme => ({
     // borderRadius: "8px"
     // backgroundColor: "gray"
   }
-}));
+});
 
 function ModuleChartFrame(props) {
   const { current } = props;
@@ -134,7 +135,7 @@ function ModuleChartFrame(props) {
         );
     }
   }
-  const classes = useStyles();
+  const classes = useClasses(styles);
   return (
     <Box className={classes.chartContentContainer}>
       {

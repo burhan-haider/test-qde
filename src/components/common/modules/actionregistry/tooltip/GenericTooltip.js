@@ -3,8 +3,9 @@ import React from "react";
 import { makeStyles } from "@mui/styles";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
+import { useClasses } from "@application";
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   arrow: {
     color: theme.palette.common.black
   },
@@ -15,10 +16,10 @@ const useStyles = makeStyles(theme => ({
     color: "#fff",
     marginBottom: "7px"
   }
-}));
+});
 
 function GenericTooltip(props) {
-  const classes = useStyles();
+  const classes = useClasses(styles);
   //return <Tooltip arrow classes={classes} {...props} />;
   return (
     <Tooltip

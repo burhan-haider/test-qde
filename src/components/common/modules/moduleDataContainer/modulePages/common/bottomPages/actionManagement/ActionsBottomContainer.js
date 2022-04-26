@@ -14,9 +14,10 @@ import Grid from "@mui/material/Grid";
 import { ActionsBottomPanel } from "components/common/modules/moduleDataContainer/modulePages/common/bottomPages";
 // import SearchButtonIcon from "@mui/icons-material/SearchOutlined";
 import { MdOutlineSearch as SearchButtonIcon } from 'react-icons/md'
+import { useClasses } from "@application";
 
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   table: {
     minWidth: 750,
     cursor: "pointer"
@@ -37,11 +38,11 @@ const useStyles = makeStyles(theme => ({
     fontWeight: "bold",
     color: "#353535"
   }
-}));
+});
 
 function ActionsBottomContainer(props) {
   const { headers, row, changeComponentView, bottomAction } = props;
-  const classes = useStyles();
+  const classes = useClasses(styles);
   const [dataSet, setDataSet] = useState({});
   //console.log(props.moduleName);
   const moduleName = props.moduleName;

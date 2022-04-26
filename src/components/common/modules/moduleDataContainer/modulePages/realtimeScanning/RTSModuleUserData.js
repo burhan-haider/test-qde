@@ -8,7 +8,9 @@ import {
 } from "@mui/material";
 import { makeStyles } from '@mui/styles'
 import clsx from "clsx";
-const useStyles = makeStyles(theme => ({
+import { useClasses } from "@application";
+
+const styles = theme => ({
   typographyH: {
     backgroundColor: "#003463",
     color: "white",
@@ -22,7 +24,7 @@ const useStyles = makeStyles(theme => ({
   muiTableRow: {
     backgroundColor: "#f4f5fa"
   }
-}));
+});
 function RTSModuleUserData(props) {
   const [userData, setUserData] = useState({});
   const userInputData = props.userData;
@@ -31,7 +33,7 @@ function RTSModuleUserData(props) {
     setUserData(userInputData);
   }, [userInputData]);
 
-  const classes = useStyles();
+  const classes = useClasses(styles);
   let searchParamValues = userData["SEARCHPARAMETERSVALUE"];
   let searchParamNames = userData["SEARCHPARAMETERSNAME"];
   let loggedUser = props.loggedUser;

@@ -1,17 +1,18 @@
 import React from "react";
 import { makeStyles } from "@mui/styles";
 import LinearProgress from "@mui/material/LinearProgress";
+import { useClasses } from "@application";
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   root: {
     width: "100%",
     "& > * + *": {
       marginTop: theme.spacing(2)
     }
   }
-}));
+});
 export default function LinearLoading() {
-  const classes = useStyles();
+  const classes = useClasses(styles);
   const [completed, setCompleted] = React.useState(0);
   const [buffer, setBuffer] = React.useState(10);
 

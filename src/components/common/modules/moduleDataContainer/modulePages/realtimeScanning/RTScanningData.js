@@ -17,7 +17,9 @@ import { MdExpandMore as ExpandMoreIcon } from 'react-icons/md'
 import RTSCommentForm from "./RTSCommentForm";
 import RTSUserDataTable from "./RTSUserDataTable";
 import RTSAttachEvidenceForm from "./RTSAttachEvidenceForm";
-const useStyles = makeStyles(_theme => ({
+import { useClasses } from "@application";
+
+const styles = theme => ({
   root: {
     "& .MuiAccordion-root.Mui-expanded": {
       margin: "0px"
@@ -51,7 +53,7 @@ const useStyles = makeStyles(_theme => ({
     color: "white",
     marginRight: "1%"
   }
-}));
+});
 function RTScannningData(props) {
   const [wholeData, setWholeData] = useState();
   const [dataSelected, setDataSelected] = useState([]);
@@ -66,7 +68,7 @@ function RTScannningData(props) {
   const [eachRecord, setEachRecord] = useState([]);
 
   const selectionIndex = "all";
-  const classes = useStyles();
+  const classes = useClasses(styles);
   useEffect(() => {
     if (props.data !== undefined) {
       props.data.then(response => {

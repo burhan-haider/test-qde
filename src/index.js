@@ -9,7 +9,8 @@ import { Provider } from 'react-redux';
 import { store, persistor } from './redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { StyledEngineProvider } from '@mui/material/styles';
-import { ThemeProvider } from '@mui/styles';
+import { ThemeProvider as MUIThemeProvider } from '@mui/styles';
+import { ThemeProvider } from '@emotion/react';
 import { createTheme } from '@mui/material/styles';
 import { Router } from 'react-router-dom'
 import history from 'services/history';
@@ -25,14 +26,17 @@ ReactDOM.render(
         <Router history={history}>
           <Authentication history={history}>
             <Authorization history={history}>
-              <ThemeProvider theme={theme}>
-                <StyledEngineProvider injectFirst>
-                  <Layout>
-                    {/* <h1>Featuers</h1> */}
-                    <App />
-                  </Layout>
-                </StyledEngineProvider>
-              </ThemeProvider>
+              <StyledEngineProvider injectFirst>
+                <MUIThemeProvider theme={theme}>
+                  <ThemeProvider theme={theme}>
+
+                    <Layout>
+                      {/* <h1>Featuers</h1> */}
+                      <App />
+                    </Layout>
+                  </ThemeProvider>
+                </MUIThemeProvider>
+              </StyledEngineProvider>
             </Authorization>
           </Authentication>
         </Router>

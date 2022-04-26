@@ -5,8 +5,9 @@ import {
   SelectFormsy
 } from "components/common/formsyComponents";
 import { MenuItem, FormControl, Grid } from "@mui/material";
+import { useClasses } from "@application";
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   root: {
     width: "100%"
   },
@@ -19,10 +20,10 @@ const useStyles = makeStyles(theme => ({
   rowDesign: {
     paddingTop: 15
   }
-}));
+});
 
 export default function ActionDetailsForm(props) {
-  const classes = useStyles();
+  const classes = useClasses(styles);
 
   const [assignedTrayEnable, setAssignedTrayEnable] = useState(true);
   const [assignedModuleEnable, setAssignedModuleEnable] = useState(true);

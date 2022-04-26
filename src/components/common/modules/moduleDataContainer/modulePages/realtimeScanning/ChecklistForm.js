@@ -11,7 +11,9 @@ import {
   CheckboxFormsy,
   SelectFormsy
 } from "components/common/formsyComponents";
-const useStyles = makeStyles(theme => ({
+import { useClasses } from "@application";
+
+const styles = theme => ({
   MuiSvgIcon: {
     color: "#7b666e",
     marginLeft: "8px",
@@ -39,7 +41,7 @@ const useStyles = makeStyles(theme => ({
   CircleUnchecked: {
     color: "#4a5568"
   }
-}));
+});
 
 export default function ChecklistForm(props) {
   const [rejectList, setRejectList] = useState(true);
@@ -55,7 +57,7 @@ export default function ChecklistForm(props) {
   function blackListHandler(event) {
     setBlackList(event.target.checked);
   }
-  const classes = useStyles();
+  const classes = useClasses(styles);
   return (
     <div className="m-8">
       <Typography className={classes.root}>CheckList Form</Typography>

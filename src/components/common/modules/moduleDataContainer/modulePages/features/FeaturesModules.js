@@ -13,8 +13,9 @@ import SortableTree from "react-sortable-tree";
 import "react-sortable-tree/style.css";
 import * as TDU from "@application/util/TreeDataUtils";
 import * as MessageActions from "redux/message/message.actions";
+import { useClasses } from "@application";
 
-const useStyles = makeStyles({
+const styles = theme => ({
   root: {
     paddingLeft: "20px",
     paddingRight: "20px"
@@ -75,7 +76,7 @@ const useStyles = makeStyles({
 });
 
 export default function FeaturesModules(props) {
-  const classes = useStyles();
+  const classes = useClasses(styles);
   const dispatch = useDispatch();
   const [allModules, setAllModules] = useState([]);
   const [allMasterModules, setAllMasterModules] = useState([]);
@@ -307,6 +308,7 @@ export default function FeaturesModules(props) {
     featureService.fetchAllModules().then(response => {
       setAllModules(response);
     });
+    console.log('FEATURES MODULE IS COMING BRO!')
   }, []);
 
   useEffect(() => {

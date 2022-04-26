@@ -12,7 +12,9 @@ import {
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import clsx from "clsx";
-const useStyles = makeStyles(theme => ({
+import { useClasses } from "@application";
+
+const styles = theme => ({
   muiTyphography: {
     fontFamily: "inherit",
     fontSize: "inherit",
@@ -68,9 +70,9 @@ const useStyles = makeStyles(theme => ({
       color: "white"
     }
   }
-}));
+});
 function RTSAttachEvidenceForm(props) {
-  const classes = useStyles();
+  const classes = useClasses(styles);
   return (
     <Formsy>
       <div className={classes.parentDiv}>

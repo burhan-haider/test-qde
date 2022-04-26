@@ -54,7 +54,7 @@
 
 // export default function ScenariosModalContainer(props) {
 //   //console.log(props);
-//   const classes = useStyles();
+//   const classes = useClasses(styles);
 //   const dispatch = useDispatch();
 //   const [wholeData, setWholeData] = useState([]);
 //   const [submitType, setSubmitType] = useState("");

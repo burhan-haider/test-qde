@@ -7,7 +7,8 @@ import { GenericButton, GenericDialog } from "@application";
 import rtScanningService from "services/realTimeScanning/rtScanningService";
 import { makeStyles } from "@mui/styles";
 import RTScannningData from "./RTScanningData";
-const useStyles = makeStyles(theme => ({
+import { useClasses } from "@application";
+const styles = theme => ({
   MuiButton: {
     textTransform: "initial",
     marginRight: "1%",
@@ -19,7 +20,7 @@ const useStyles = makeStyles(theme => ({
       color: "white"
     }
   }
-}));
+});
 
 function RealtimeScanningComponent(props) {
   const modalData = {
@@ -29,7 +30,7 @@ function RealtimeScanningComponent(props) {
     }
   };
 
-  const classes = useStyles();
+  const classes = useClasses(styles);
   const [openModal, setOpenModal] = useState(false);
   const [property, setProperty] = useState({});
   const [scanData, setScanData] = useState({});

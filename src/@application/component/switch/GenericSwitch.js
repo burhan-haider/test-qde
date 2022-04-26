@@ -43,7 +43,7 @@
 // }));
 
 // function GenericSwitch(props) {
-//   const classes = useStyles();
+//   const classes = useClasses(styles);
 //   return (
 //     <Switch
 //       focusVisibleClassName={classes.focusVisible}

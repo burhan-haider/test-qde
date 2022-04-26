@@ -2,15 +2,18 @@ import React from "react";
 import { makeStyles } from "@mui/styles";
 import { Typography, Grid } from "@mui/material";
 import TextFieldFormsy from "components/common/formsyComponents/TextFieldFormsy";
-const useStyles = makeStyles(theme => ({
+import { useClasses } from "@application";
+
+const styles = theme => ({
   MuiOutlinedInput: {
-    paddingLeft: "10px"
+    paddingLeft: "10px",
     //paddingright: "8px"
   },
   MuiGridRow: {
     backgroundColor: "#f1f2f3",
     borderRadius: "50px",
-    height: "8vh"
+    padding: '8px 0px'
+
   },
   MuiTypoGraphy: {
     float: "left",
@@ -20,11 +23,11 @@ const useStyles = makeStyles(theme => ({
     fontSize: "15px"
   },
   TestAlignment: {
-    alignSelf: "center"
+    alignSelf: "center",
   }
-}));
+});
 function RTSDataEntryForm(props) {
-  const classes = useStyles();
+  const classes = useClasses(styles);
   return (
     <div className="m-8">
       <Typography className={classes.MuiTypoGraphy}>Data Entry Form</Typography>
@@ -36,18 +39,19 @@ function RTSDataEntryForm(props) {
       >
         <Grid xs={4} item>
           <Grid container>
-            <Grid xs={5} item={true} className={classes.TestAlignment}>
+            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm']}>
               Name 1
             </Grid>
-            <Grid xs={7} item={true} className={classes.TestAlignment}>
+            <Grid xs={7} item={true} style={{border: 'none'}} className={classes.TestAlignment}>
               <TextFieldFormsy
                 size="small"
                 value="osama bin laden"
                 name="NAME1"
                 className="w-full rounded-full bg-white"
+                variant="standard"
                 InputProps={{
                   className: classes.MuiOutlinedInput,
-                  disableUnderline: true
+                  disableUnderline: true,
                 }}
               />
             </Grid>
@@ -55,7 +59,7 @@ function RTSDataEntryForm(props) {
         </Grid>
         <Grid xs={4} item>
           <Grid container>
-            <Grid xs={5} item={true} className={classes.TestAlignment}>
+            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm']}>
               Name 2
             </Grid>
             <Grid xs={7} item={true} className={classes.TestAlignment}>
@@ -63,6 +67,7 @@ function RTSDataEntryForm(props) {
                 size="small"
                 name="NAME2"
                 className="w-full rounded-full bg-white"
+                variant="standard"
                 InputProps={{
                   className: classes.MuiOutlinedInput,
                   disableUnderline: true
@@ -73,7 +78,7 @@ function RTSDataEntryForm(props) {
         </Grid>
         <Grid xs={4} item>
           <Grid container>
-            <Grid xs={5} item={true} className={classes.TestAlignment}>
+            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm']}>
               Name 3
             </Grid>
             <Grid xs={6} item={true} className={classes.TestAlignment}>
@@ -81,6 +86,7 @@ function RTSDataEntryForm(props) {
                 size="small"
                 name="NAME3"
                 className="w-full rounded-full bg-white"
+                variant="standard"
                 InputProps={{
                   className: classes.MuiOutlinedInput,
                   disableUnderline: true
@@ -99,7 +105,7 @@ function RTSDataEntryForm(props) {
       >
         <Grid xs={4} item>
           <Grid container>
-            <Grid xs={5} item={true} className={classes.TestAlignment}>
+            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm']}>
               Name 4
             </Grid>
             <Grid xs={7} item={true} className={classes.TestAlignment}>
@@ -107,6 +113,7 @@ function RTSDataEntryForm(props) {
                 size="small"
                 name="NAME4"
                 className="w-full rounded-full bg-white"
+                variant="standard"
                 InputProps={{
                   className: classes.MuiOutlinedInput,
                   disableUnderline: true
@@ -117,7 +124,7 @@ function RTSDataEntryForm(props) {
         </Grid>
         <Grid xs={4} item>
           <Grid container>
-            <Grid xs={5} item={true} className={classes.TestAlignment}>
+            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm']}>
               Name 5
             </Grid>
             <Grid xs={7} item={true} className={classes.TestAlignment}>
@@ -125,6 +132,7 @@ function RTSDataEntryForm(props) {
                 size="small"
                 name="NAME5"
                 className="w-full rounded-full bg-white"
+                variant="standard"
                 InputProps={{
                   className: classes.MuiOutlinedInput,
                   disableUnderline: true
@@ -135,13 +143,14 @@ function RTSDataEntryForm(props) {
         </Grid>
         <Grid xs={4} item>
           <Grid container>
-            <Grid xs={5} item={true} className={classes.TestAlignment}>
+            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm']}>
               Date of Birth
             </Grid>
             <Grid xs={6} item={true} className={classes.TestAlignment}>
               <TextFieldFormsy
                 size="small"
                 name="DATEOFBIRTH"
+                variant="standard"
                 className="w-full rounded-full bg-white"
                 InputProps={{
                   className: classes.MuiOutlinedInput,
@@ -161,13 +170,14 @@ function RTSDataEntryForm(props) {
       >
         <Grid xs={4} item>
           <Grid container>
-            <Grid xs={5} item={true} className={classes.TestAlignment}>
+            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm']}>
               Passport No
             </Grid>
             <Grid xs={7} item={true} className={classes.TestAlignment}>
               <TextFieldFormsy
                 size="small"
                 name="PASSPORTNO"
+                variant="standard"
                 className="w-full rounded-full bg-white"
                 InputProps={{
                   className: classes.MuiOutlinedInput,
@@ -179,7 +189,7 @@ function RTSDataEntryForm(props) {
         </Grid>
         <Grid xs={4} item>
           <Grid container>
-            <Grid xs={5} item={true} className={classes.TestAlignment}>
+            <Grid xs={5} item={true} className={[classes.TestAlignment, , 'text-sm']}>
               National Id value
             </Grid>
             <Grid xs={7} item={true} className={classes.TestAlignment}>
@@ -187,6 +197,7 @@ function RTSDataEntryForm(props) {
                 size="small"
                 name="PANNO"
                 className="w-full rounded-full bg-white"
+                variant="standard"
                 InputProps={{
                   className: classes.MuiOutlinedInput,
                   disableUnderline: true
@@ -197,7 +208,7 @@ function RTSDataEntryForm(props) {
         </Grid>
         <Grid xs={4} item>
           <Grid container>
-            <Grid xs={5} item={true} className={classes.TestAlignment}>
+            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm' ]}>
               Account No
             </Grid>
             <Grid xs={6} item={true} className={classes.TestAlignment}>
@@ -205,6 +216,7 @@ function RTSDataEntryForm(props) {
                 size="small"
                 name="ACCOUNTNO"
                 className="w-full rounded-full bg-white"
+                variant="standard"
                 InputProps={{
                   className: classes.MuiOutlinedInput,
                   disableUnderline: true
@@ -223,7 +235,7 @@ function RTSDataEntryForm(props) {
       >
         <Grid xs={4} item>
           <Grid container>
-            <Grid xs={5} item={true} className={classes.TestAlignment}>
+            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm']}>
               Customer Id
             </Grid>
             <Grid xs={7} item={true} className={classes.TestAlignment}>
@@ -231,6 +243,7 @@ function RTSDataEntryForm(props) {
                 size="small"
                 name="CUSTOMERID"
                 className="w-full rounded-full bg-white"
+                variant="standard"
                 InputProps={{
                   className: classes.MuiOutlinedInput,
                   disableUnderline: true
@@ -241,7 +254,7 @@ function RTSDataEntryForm(props) {
         </Grid>
         <Grid xs={4} item>
           <Grid container>
-            <Grid xs={5} item={true} className={classes.TestAlignment}>
+            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm']}>
               Address
             </Grid>
             <Grid xs={7} item={true} className={classes.TestAlignment}>
@@ -249,6 +262,7 @@ function RTSDataEntryForm(props) {
                 size="small"
                 name="ADDRESS"
                 className="w-full rounded-full bg-white"
+                variant="standard"
                 InputProps={{
                   className: classes.MuiOutlinedInput,
                   disableUnderline: true
@@ -259,7 +273,7 @@ function RTSDataEntryForm(props) {
         </Grid>
         <Grid xs={4} item>
           <Grid container>
-            <Grid xs={5} item={true} className={classes.TestAlignment}>
+            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm']}>
               Image File Path
             </Grid>
             <Grid xs={6} item={true} className={classes.TestAlignment}>
@@ -267,6 +281,7 @@ function RTSDataEntryForm(props) {
                 size="small"
                 name="IMAGEFILEPATH"
                 className="w-full rounded-full bg-white"
+                variant="standard"
                 InputProps={{
                   className: classes.MuiOutlinedInput,
                   disableUnderline: true
@@ -280,7 +295,7 @@ function RTSDataEntryForm(props) {
       <Grid container alignItems="center" className={classes.MuiGridRow}>
         <Grid xs={4} item>
           <Grid container>
-            <Grid xs={5} item={true} className={classes.TestAlignment}>
+            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm']}>
               Image Scan Threshold
             </Grid>
             <Grid xs={7} item={true} className={classes.TestAlignment}>
@@ -288,6 +303,7 @@ function RTSDataEntryForm(props) {
                 size="small"
                 name="IMAGESCANTHRESHOLD"
                 className="w-full rounded-full bg-white"
+                variant="standard"
                 InputProps={{
                   className: classes.MuiOutlinedInput,
                   disableUnderline: true

@@ -8,9 +8,10 @@ import {
 import { MenuItem, FormControl, Paper, Grid } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import httpService from "services/httpservice/httpService";
+import { useClasses } from "@application";
 import { CWFTabContent } from "../../moduleDataContainer/modulePages/common/modalContentPages";
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   root: {
     width: "100%"
   },
@@ -31,10 +32,10 @@ const useStyles = makeStyles(theme => ({
   rowDesign: {
     paddingTop: 15
   }
-}));
+});
 
 function CWFApproveCase(props) {
-  const classes = useStyles();
+  const classes = useClasses(styles);
   const formRef = useRef(null);
 
   const token = window.localStorage.getItem("cognifi_token");
