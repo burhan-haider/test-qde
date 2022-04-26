@@ -70,23 +70,23 @@ class AuthService {
     });
   };
 
-  // fetchAllLabels = async (lang, direction) => {
-  //   return await new Promise((resolve, reject) => {
-  //     if (!lang || !direction) {
-  //       reject("Language and direction not defined.");
-  //       return;
-  //     }
-  //     httpService
-  //       .get(`/api/common/labels/${lang}/${direction}`)
-  //       .then((response) => {
-  //         if (response.status === 200) {
-  //           resolve(response.data);
-  //         } else {
-  //           reject(response.data.err);
-  //         }
-  //       });
-  //   });
-  // };
+  fetchAllLabels = async (lang, direction) => {
+    return await new Promise((resolve, reject) => {
+      if (!lang || !direction) {
+        reject("Language and direction not defined.");
+        return;
+      }
+      httpService
+        .get(`/labels/${lang}/${direction}`)
+        .then((response) => {
+          if (response.status === 200) {
+            resolve(response.data);
+          } else {
+            reject(response.data.err);
+          }
+        });
+    });
+  };
 }
 const instance = new AuthService();
 

@@ -15,7 +15,7 @@ class commonService {
     };
     fetchAllLanguages = async () => {
       return await new Promise((resolve, reject) => {
-        httpService.get(`/common/labels/languages`).then((response) => {
+        httpService.get(`/labels/languages`).then((response) => {
           if (response.status === 200) {
             resolve(response.data);
           } else {
@@ -208,7 +208,7 @@ class commonService {
       const labelDataFormat = [labelData];
       return new Promise((resolve, reject) => {
         httpService
-          .post("/common/labels/create", labelDataFormat)
+          .post("/labels/create", labelDataFormat)
           .then((response) => {
             if (response.status === 200) {
               resolve(response.data);
