@@ -27,7 +27,7 @@ import {
     openPinnedModule,
 } from 'redux/features/features.actions';
 import getIconByKey from 'assets';
-import ModuleChartFrame from 'components/common/modules/moduleDataSearchFrame/ModuleChartFrame'
+import ModuleChartFrame from 'components/common/modules/mainModuleSearchFrame/ModuleChartFrame'
 import { handleBreakpoints } from '@mui/system';
 
 const FeatureHolder = ({feature}) => {
