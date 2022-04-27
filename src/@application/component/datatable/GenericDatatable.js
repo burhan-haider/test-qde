@@ -21,13 +21,14 @@ import masterModuleHyperlinks from "../hyperlinks/MasterModuleHyperlinks";
 import GenericDialog from "../dialog/GenericDialog";
 import HyperlinkModalContentConfig from "../hyperlinks/HyperlinkModalContentConfig";
 import _ from "lodash";
+import { useClasses } from "@application/hooks";
 
 // import SearchButtonIcon from "@mui/icons-material/SearchOutlined";
 // import { Button } from "@mui/material";
 
 import ActionRegistry from "components/common/modules/actionregistry";
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   root: {
     width: "100%"
   },
@@ -58,7 +59,7 @@ const useStyles = makeStyles(theme => ({
       color: "#353535"
     }
   }
-}));
+});
 
 const theme = createTheme({
   palette: {
@@ -72,7 +73,7 @@ const theme = createTheme({
 let tempPage = 0;
 
 function GenericDatatable(props) {
-  const classes = useStyles();
+  const classes = useClasses(styles);
   const [isDatatableShown, setIsDatatableShown] = useState(true);
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("");

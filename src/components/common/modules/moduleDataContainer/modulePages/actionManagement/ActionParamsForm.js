@@ -24,8 +24,9 @@ import { GenericButton } from "@application";
 import { GenericDatatable } from "@application";
 import { ActionsBottomContainer } from "../common/bottomPages";
 import store from "redux/store";
+import { useClasses } from "@application";
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   root: {
     width: "100%"
   },
@@ -46,10 +47,10 @@ const useStyles = makeStyles(theme => ({
     fontSize: theme.typography.pxToRem(18),
     fontWeight: "500"
   }
-}));
+});
 
 function ActionParamsForm(props) {
-  const classes = useStyles();
+  const classes = useClasses(styles);
   const allActionsList = props.allActionsList;
   const isCallFromActionDetails = props.fromDetails;
 

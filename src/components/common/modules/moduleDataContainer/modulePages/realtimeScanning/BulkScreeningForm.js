@@ -6,7 +6,9 @@ import { Typography, Button, MenuItem, Grid } from "@mui/material";
 import { GenericButton } from "@application";
 import SelectFormsy from "components/common/formsyComponents/SelectFormsy";
 import clsx from "clsx";
-const useStyles = makeStyles(theme => ({
+import { useClasses } from "@application";
+
+const styles = theme => ({
   MuiButton: {
     textTransform: "initial",
     borderRadius: "15px",
@@ -53,9 +55,9 @@ const useStyles = makeStyles(theme => ({
   TestAlignment: {
     alignSelf: "center"
   }
-}));
+});
 export default function BulkScreeningForm() {
-  const classes = useStyles();
+  const classes = useClasses(styles);
 
   return (
     <div className="m-8">

@@ -6,8 +6,9 @@ import { CWFTabPanel } from "../../modalContentPages";
 import AppBar from "@mui/material/AppBar";
 import MuiTabs from "@mui/material/Tabs";
 import MuiTab from "@mui/material/Tab";
+import { useClasses } from "@application";
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   root: {
     flexGrow: 1,
     width: "100%",
@@ -71,10 +72,10 @@ const useStyles = makeStyles(theme => ({
     textAlign: "left",
     paddingLeft: "10px"
   }
-}));
+});
 
 function CWFTabContent(props) {
-  const classes = useStyles();
+  const classes = useClasses(styles);
   const activeRole = useSelector(state => state.auth.user.roleName);
 
   const [modalFetchedData, setModalFetchedData] = useState([]);

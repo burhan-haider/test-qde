@@ -62,7 +62,7 @@
 // }));
 
 // export default function GenericPaginationActions(props) {
-//   const classes = useStyles();
+//   const classes = useClasses(styles);
 //   const { count, page, rowsPerPage, onChangePage } = props;
 //   const [goToPage, setGoToPage] = useState(0);
 //   const pagesCount = Math.ceil(count / rowsPerPage);

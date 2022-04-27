@@ -5,22 +5,23 @@ import { Snackbar, Alert as MuiAlert } from "@mui/material";
 // import MuiAlert from "@material-ui/lab/Alert";
 import { makeStyles } from "@mui/styles";
 import * as MessageActions from "redux/message/message.actions";
+import { useClasses } from '@application'
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   root: {
     width: "100%",
     "& > * + *": {
       marginTop: theme.spacing(2)
     }
   }
-}));
+});
 
 export default function GenericMessage(props) {
-  const classes = useStyles();
+  const classes = useClasses(styles);
   const dispatch = useDispatch();
 
   const state = useSelector(data => data.message.genericMessage.state);

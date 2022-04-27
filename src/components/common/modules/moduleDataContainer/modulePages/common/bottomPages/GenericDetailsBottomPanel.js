@@ -11,8 +11,9 @@ import Typography from "@mui/material/Typography";
 // import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { MdExpandMore as ExpandMoreIcon } from 'react-icons/md'
 import { GenericTabContent } from "../modalContentPages";
+import { useClasses } from "@application";
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   root: {
     flexGrow: 1,
     width: "100%",
@@ -24,10 +25,10 @@ const useStyles = makeStyles(theme => ({
     // flexBasis: "33.33%",
     // flexShrink: 0,
   }
-}));
+});
 
 function GenericDetailsDataPanel(props) {
-  const classes = useStyles();
+  const classes = useClasses(styles);
   const [expanded, setExpanded] = useState(false);
 
   const handleChange = panel => (event, isExpanded) => {

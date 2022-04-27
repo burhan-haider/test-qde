@@ -2,8 +2,9 @@
 import React from "react";
 import { makeStyles } from "@mui/styles";
 import { Button } from "@mui/material";
+import { useClasses } from "@application/hooks";
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   buttonRoot: {
     borderRadius: "25px",
     marginRight: "1%",
@@ -20,10 +21,10 @@ const useStyles = makeStyles(theme => ({
     textTransform: "capitalize"
     //color: "white"
   }
-}));
+});
 
 function GenericButton(props) {
-  const classes = useStyles();
+  const classes = useClasses(styles);
   return (
     <Button
       classes={{

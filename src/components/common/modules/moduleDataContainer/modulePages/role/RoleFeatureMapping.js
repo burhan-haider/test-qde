@@ -32,7 +32,7 @@
 //   let roleList = props.indexPageData.ROLELIST;
 //   let roleFeatureMappingList = props.indexPageData.ROLEFEATUREMAPPING;
 
-//   const classes = useStyles();
+//   const classes = useClasses(styles);
 //   const [feaureList, setFeaureList] = useState([]);
 //   const [roleId, setroleId] = useState();
 //   // const [successMessage, setSuccessMessage] = useState();

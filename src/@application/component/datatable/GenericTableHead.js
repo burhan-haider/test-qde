@@ -52,7 +52,7 @@
 //     isSelection,
 //     isMultipleSelect
 //   } = props;
-//   const classes = useStyles();
+//   const classes = useClasses(styles);
 //   const createSortHandler = property => event => {
 //     onRequestSort(event, property);
 //   };

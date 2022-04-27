@@ -4,8 +4,9 @@ import { makeStyles, withStyles } from "@mui/styles";
 import httpService from "services/httpservice/httpService";
 import CreateAction from "components/common/modules/moduleDataContainer/modulePages/actionManagement/CreateAction";
 import ActionParamsUpdateForm from "components/common/modules/moduleDataContainer/modulePages/actionManagement/ActionParamsUpdateForm";
+import { useClasses } from "@application";
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   root: {
     flexGrow: 1,
     width: "100%",
@@ -17,10 +18,10 @@ const useStyles = makeStyles(theme => ({
     // flexBasis: "33.33%",
     // flexShrink: 0,
   }
-}));
+});
 
 function ActionsDataPanel(props) {
-  const classes = useStyles();
+  const classes = useClasses(styles);
 
   const [paramsForAction, setParamsForAction] = useState({});
 

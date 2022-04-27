@@ -8,8 +8,9 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import MuiTabs from "@mui/material/Tabs";
 import MuiTab from "@mui/material/Tab";
+import { useClasses } from "@application";
 
-const useStyles = makeStyles({
+const styles = theme => ({
   root: {
     flexGrow: 1,
     width: "100%",
@@ -57,7 +58,7 @@ const useStyles = makeStyles({
 });
 
 function GenericDetailsTabContent(props) {
-  const classes = useStyles();
+  const classes = useClasses(styles);
   const [modalFetchedData, setModalFetchedData] = useState([]);
   const [modalTabNames, setModalTabNames] = useState([]);
   const [modalTabDisplay, setModalTabDisplay] = useState([]);

@@ -69,7 +69,7 @@
 
 // function ResetColumnsModalPreview(props) {
 //   //console.log(props);
-//   const classes = useStyles();
+//   const classes = useClasses(styles);
 //   const { previewData } = props;
 
 //   const finalData = _.orderBy(

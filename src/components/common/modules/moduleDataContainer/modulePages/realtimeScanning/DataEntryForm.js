@@ -2,7 +2,9 @@ import React from "react";
 import { makeStyles } from "@mui/styles";
 import { Typography, Grid } from "@mui/material";
 import TextFieldFormsy from "components/common/formsyComponents/TextFieldFormsy";
-const useStyles = makeStyles(theme => ({
+import { useClasses } from "@application";
+
+const styles = theme => ({
   MuiOutlinedInput: {
     "&:-webkit-autofill": {
       WebkitBoxShadow: "0 0 0 1000px white inset"
@@ -25,9 +27,9 @@ const useStyles = makeStyles(theme => ({
   TextAlignment: {
     alignSelf: "center"
   }
-}));
+});
 export default function DataEntryForm(props) {
-  const classes = useStyles();
+  const classes = useClasses(styles);
 
   return (
     <div className="m-8">

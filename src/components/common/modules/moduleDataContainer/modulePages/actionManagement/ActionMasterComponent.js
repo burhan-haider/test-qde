@@ -7,6 +7,7 @@ import MuiTabs from "@mui/material/Tabs";
 import MuiTab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import PropTypes from "prop-types";
+import { useClasses } from "@application";
 import ActionParamsForm from "./ActionParamsForm";
 
 function TabPanel(props) {
@@ -69,7 +70,7 @@ const Tab = withStyles(theme => ({
   selected: {}
 }))(MuiTab);
 
-const useStyles = makeStyles({
+const styles = theme =>({
   root: {
     flexGrow: 1,
     width: "100%",
@@ -117,7 +118,7 @@ const useStyles = makeStyles({
 });
 
 export default function ActionMasterComponent(props) {
-  const classes = useStyles();
+  const classes = useClasses(styles);
   const [paramsForAction, setParamsForAction] = useState({});
   const [allActionsList, setAllActionsList] = useState({});
   const [isFromDetails, setIsFromDetails] = useState(false);

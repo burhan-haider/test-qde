@@ -13,8 +13,9 @@ import {
 import { GenericTooltip } from "@application";
 import httpService from "services/httpservice/httpService";
 import CWFDetailsBottomPanel from "components/common/modules/moduleDataContainer/modulePages/common/bottomPages/caseWorkFlow/CWFDetailsBottomPanel";
+import { useClasses } from "@application";
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   table: {
     minWidth: 750,
     cursor: "pointer"
@@ -35,7 +36,7 @@ const useStyles = makeStyles(theme => ({
     fontWeight: "bold",
     color: "#353535"
   }
-}));
+});
 
 function CWFDetailsBottomContainer(props) {
   const {
@@ -46,7 +47,7 @@ function CWFDetailsBottomContainer(props) {
     reloadData,
     inputParams
   } = props;
-  const classes = useStyles();
+  const classes = useClasses(styles);
   const caseNo = row[0];
   const [tabDataSet, setTabDataSet] = new useState({});
 

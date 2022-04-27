@@ -42,7 +42,7 @@
 //   const { moduleName, headers, row, changeComponentView } = props;
 //   const [dataSelected, setDataSelected] = useState([]);
 //   const [dataSet, setDataSet] = useState([]);
-//   const classes = useStyles();
+//   const classes = useClasses(styles);
 //   const dispatch = useDispatch();
 
 //   let { bottomTableHeader, Url } = "";

@@ -6,7 +6,9 @@ import { Typography, Button, MenuItem, Grid } from "@mui/material";
 import { GenericButton } from "@application";
 import SelectFormsy from "components/common/formsyComponents/SelectFormsy";
 import clsx from "clsx";
-const useStyles = makeStyles(theme => ({
+import { useClasses } from "@application";
+
+const styles = theme => ({
   MuiButton: {
     textTransform: "initial",
     borderRadius: "15px",
@@ -53,9 +55,9 @@ const useStyles = makeStyles(theme => ({
   TestAlignment: {
     alignSelf: "center"
   }
-}));
+});
 function RTSBulkScreeningForm() {
-  const classes = useStyles();
+  const classes = useClasses(styles);
 
   return (
     <div className="m-8">
@@ -82,8 +84,9 @@ function RTSBulkScreeningForm() {
                   variant="outlined"
                   component="span"
                   className={classes.ButtonFileLoading}
+                  
                 >
-                  <AttachFile />
+                  <AttachFile size={24} color={'#333'} />
                 </Button>
               </label>
             </Grid>
@@ -97,7 +100,7 @@ function RTSBulkScreeningForm() {
             <Grid item={true} xs={7} className={classes.TestAlignment}>
               <SelectFormsy
                 name="bulkScanningImportFile"
-                className="w-full py-1 ml-3 bg-white rounded-lg "
+                className="w-full  bg-white rounded-full "
                 value=""
                 onChange={() => {}}
                 //  required={true}
@@ -125,7 +128,7 @@ function RTSBulkScreeningForm() {
                 onChange={() => {}}
                 // required={true}
                 className={clsx(
-                  "w-full py-1 ml-3 bg-white rounded-lg",
+                  "w-full  bg-white rounded-full",
                   classes.Muiselect
                 )}
                 disableUnderline={true}
@@ -146,7 +149,7 @@ function RTSBulkScreeningForm() {
             </Grid>
             <Grid item={true} xs={6} className={classes.TestAlignment}>
               <SelectFormsy
-                className="w-full ml-3 bg-white rounded-lg"
+                className="w-full bg-white rounded-full"
                 value=""
                 name="bulkScanningFileDelimeter"
                 onChange={() => {}}

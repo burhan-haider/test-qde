@@ -9,8 +9,9 @@ import { MdEdit as EditIcon } from 'react-icons/md'
 import { GenericDatatable, GenericDialog } from "@application";
 import FeaturesModules from "components/common/modules/moduleDataContainer/modulePages/features/FeaturesModules";
 import * as MessageActions from "redux/message/message.actions";
+import { useClasses } from "@application";
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   root: {
     transform: "translateZ(0px)",
     flexGrow: 1
@@ -34,10 +35,10 @@ const useStyles = makeStyles(theme => ({
   speedDialAction: {
     backgroundColor: "#d4d4d4"
   }
-}));
+});
 
 function FeaturesComponent(props) {
-  const classes = useStyles();
+  const classes = useClasses(styles);
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);

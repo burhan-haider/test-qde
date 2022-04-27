@@ -9,8 +9,9 @@ import MuiExpansionPanelSummary from "@mui/material/AccordionSummary";
 // import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { MdExpandMore as ExpandMoreIcon } from 'react-icons/md'
 import { CWFTabContent } from "../../modalContentPages";
+import { useClasses } from "@application";
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   root: {
     flexGrow: 1,
     width: "100%",
@@ -22,11 +23,11 @@ const useStyles = makeStyles(theme => ({
     // flexBasis: "33.33%",
     // flexShrink: 0,
   }
-}));
+});
 
 function CWFDetailsDataPanel(props) {
   //console.log("CWFDetailsDataPanel = ", props.data);
-  const classes = useStyles();
+  const classes = useClasses(styles);
   //const { actionDisplayHandler } = props;
   const { bottomAction, dataRow } = props;
   const [expanded, setExpanded] = useState(false);

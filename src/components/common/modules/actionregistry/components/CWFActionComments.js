@@ -16,8 +16,9 @@ import {
 import { makeStyles } from "@mui/styles";
 import caseWorkflowService from "services/caseWorkflow/caseWorkflowService";
 import { GenericButton } from "@application";
+import { useClasses } from "@application";
 
-const useStyles = makeStyles(theme => ({
+const styles = theme => ({
   root: {
     width: "100%",
 
@@ -46,10 +47,10 @@ const useStyles = makeStyles(theme => ({
   rowDesign: {
     paddingTop: 15
   }
-}));
+});
 
 function CWFActionComments(props) {
-  const classes = useStyles();
+  const classes = useClasses(styles);
   const paramObj = props && props.actionParams.length ? props.actionParams : [];
   const paramData = props.data;
   const caseNo = paramData.caseNo;

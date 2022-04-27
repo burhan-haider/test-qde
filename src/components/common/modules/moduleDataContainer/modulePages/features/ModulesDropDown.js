@@ -9,8 +9,9 @@ import {
   Radio
 } from "@mui/material";
 import { GenericButton } from "@application";
+import { useClasses } from "@application";
 
-const useStyles = makeStyles({
+const styles = theme =>({
   root: {
     paddingLeft: "20px",
     paddingRight: "20px"
@@ -78,7 +79,7 @@ function ModulesDropDown(props) {
   };
   //console.log(selectedCheckbox);
 
-  const classes = useStyles();
+  const classes = useClasses(styles);
   return (
     <React.Fragment>
       <List className={classes.root}>
