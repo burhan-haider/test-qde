@@ -10,7 +10,7 @@ import { UserList, TempUserList, UserRoleMapping } from "./modulePages";
 
 import Error_404 from "components/common/errorPages/Error_404";
 import { FeaturesComponent } from "./modulePages";
-// import { LabelsComponent } from "./modulePages";
+import { LabelsComponent } from "./modulePages";
 import { ReportAndScenariosComponent } from "./modulePages";
 import { RealtimeScanningComponent } from "./modulePages";
 
@@ -29,7 +29,7 @@ const moduleComponentConfig = {
   // actionManagement: ActionMasterComponent,
   // caseworkflow: CaseWorkflowComponent,
   allFeatures: FeaturesComponent,
-  // allLabels: LabelsComponent,
+  allLabels: LabelsComponent,
   allScenarios: ReportAndScenariosComponent,
   allReports: ReportAndScenariosComponent,
   rtScanning: RealtimeScanningComponent,

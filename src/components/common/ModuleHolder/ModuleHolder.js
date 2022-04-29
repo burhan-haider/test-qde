@@ -2,14 +2,15 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setSelectedModule, addToBreadcrumbs, addToOpenTabs } from 'redux/features/features.actions';
 import ModuleDataContainer from 'components/common/modules/moduleDataContainer/ModuleDataContainer';
-import ModuleChartFrame from 'components/common/modules/moduleDataSearchFrame/ModuleChartFrame'
-import ModuleFrame from './ModuleFrame';
+import ModuleChartFrame from 'components/common/modules/mainModuleSearchFrame/ModuleChartFrame';
+import { Grid } from '@mui/material';
+// import ModuleFrame from './ModuleFrame';
 
-const ModuleHolder = ({feature, module}) => {
+const ModuleHolder = ({feature, module, getModuleChartData}) => {
     const dispatch = useDispatch();
     // const allModules = useSelector(state=>state.routes.modules);
     const selectedFeature = useSelector(state=>state.features.features.featureCode);
-    let modules = feature.modules.filter(item=>item.parentModuleId === module.uniqueNo);
+    let modules = feature.modules.filter(item=>item.parentModule_Id === module.module_Id);
     
     // useEffect(() => {
     //     console.log(selectedFeature);
@@ -50,9 +51,9 @@ const ModuleHolder = ({feature, module}) => {
 
     return(
         <div>
-            {!module.hasChildren?(
+            {module.hasChildren==false ? (
                 <>
-                    {module.presentationCategory!==null?(
+                    {module.presentationCategory!==null ? (
                         <ModuleDataContainer 
                             moduleCode={module.module_Id}
                             moduleURL={module.moduleURL}
@@ -62,24 +63,40 @@ const ModuleHolder = ({feature, module}) => {
                     ):(
                         <>
                             {module.moduleChartDetails!=null?(
-                                <ModuleChartFrame current={module} />
+                                <ModuleChartFrame current={module} getModuleChartData={getModuleChartData} feature={feature} />
                             ):(
-                                <h1 className="text-red-700 pt-20 font-bold text-5xl" >{module.moduleName}</h1>
+                                <div>
+                                    <h1 className="text-red-700 pt-20 font-bold text-5xl" >{module.moduleName}</h1>
+                                    
+                                </div>
                             )}
                         </>
                     )}
                 </>
                 
             ):(
-                <div>
-                    <h1 className="text-red-700 pt-20 font-bold text-5xl" >{module.moduleName}</h1>
-                
-                    {modules.map(item=>(
-                        <button key={item.uniqueNo} onClick={()=>handleClick(item)} className=" m-5 text-white font-bold border-none bg-red-500 hover:bg-red-700 rounded-md p-3 cursor-pointer">
-                            {item.moduleName}
-                        </button>
-                    ))}
-                </div>
+                <Grid container className="px-5 py-3">
+                    {modules.map(item=>{
+                        if(item.moduleChartDetails!=null){
+                            return(
+                                <Grid item xs={6} >
+                                    <div className="rounded-md shadow-lg text-center m-4" >
+                                        <p>{item.moduleName}</p>
+                                        <ModuleChartFrame current={item} getModuleChartData={getModuleChartData} feature={feature} />
+                                    </div>
+                                </Grid>
+                            )
+                        }
+                        else{
+                            return(
+                                <button key={item.uniqueNo} onClick={()=>handleClick(item)} className=" m-5 text-white font-bold border-none bg-red-500 hover:bg-red-700 rounded-md p-3 cursor-pointer">
+                                    {item.moduleName}
+                                </button>
+                            )
+                        }
+                    })}
+                    
+                </Grid>
             )}
         </div>
     )

@@ -4,6 +4,7 @@ import routesReducer from "./routes/routes.reducer";
 import authReducer from "./auth";
 import message from "./message";
 import caseWorkflow from "./caseWorkflow";
+import actionMaster from './actionManagement';
 
 const rootReducer = combineReducers({
     features: featuresReducer,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
     auth: authReducer,
     message: message,
     caseWorkflow: caseWorkflow,
+    actionMaster: actionMaster,
 });
 
 export default rootReducer;

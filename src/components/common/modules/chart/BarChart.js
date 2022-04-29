@@ -16,7 +16,7 @@ export default function BarChart(props) {
     parentModule_Id,
     uniqueNo
   } = props;
-  function graphClickEvent(dataIndexArray) {
+  const graphClickEvent = (dataIndexArray) => {
     // const parentModule = props.module_Id;
     let hasMoreChild;
     let modulename;
@@ -113,7 +113,8 @@ export default function BarChart(props) {
     <div style={{ position: "relative" }}>
       <Bar
         data={cData}
-        getElementAtEvent={elms => graphClickEvent(elms)}
+        // getElementAtEvent={elms => graphClickEvent(elms)}
+        onClick={elms => graphClickEvent(elms)}
         options={{
           responsive: true,
           title: {

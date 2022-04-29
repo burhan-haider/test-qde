@@ -52,11 +52,12 @@ const FeatureHolder = ({feature}) => {
   }
 
   useEffect(()=>{
-      console.log("Feature:", feature)
+    //   console.log("Feature:", feature)
       if(feature.featureCode === selectedFeature){
             setModules(feature.modules);
       }
       if(feature.showModule === selectedFeature){
+        console.log('This UseEffect was Fired!!')
         feature.breadCrumbs.map(crumb=>{
             if(crumb.id!==feature.featureCode){
                 dispatch(removeFromBreadcrumbs(feature.featureCode, crumb))
@@ -357,17 +358,17 @@ const MainPage = ({feature, getModuleChartData}) =>{
     }
 
     return(
-      <Grid container className="px-5 py-3" >
+      <Grid container className="px-1 py-3" >
 
            {/* mapping all the modules inside a feature as button */}
         {feature.modules.length>0 && feature.modules.map((item)=>(
             <>
-                {item.moduleChartDetails!=null?(
+                {item.parentModuleId==null&&item.moduleChartDetails!=null?(
                 <Grid item xs={6} >
 
-                    <div className="rounded-md shadow-lg text-center m-4" >
+                    <div className="rounded-md shadow-lg text-center my-4" >
                         <p>{item.moduleName}</p>
-                        <ModuleChartFrame current={item} />
+                        <ModuleChartFrame current={item} getModuleChartData={getModuleChartData} feature={feature} />
                     </div>
                 </Grid>
 
@@ -375,7 +376,7 @@ const MainPage = ({feature, getModuleChartData}) =>{
                     <>
                         {item.parentModuleId==null&&(
                             <button key={item.id} onClick={()=>handleClick(item)} className=" m-5 text-white font-bold border-none bg-red-500 hover:bg-red-700 rounded-md p-3 cursor-pointer">
-                            {item.moduleName}
+                                {item.moduleName}
                             </button>
                         )}   
                     </>

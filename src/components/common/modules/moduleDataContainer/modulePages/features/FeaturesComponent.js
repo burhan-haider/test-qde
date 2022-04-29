@@ -82,7 +82,7 @@ function FeaturesComponent(props) {
   };
 
   return (
-    <div className="px-12">
+    <div className="px-5 py-2">
       <div>
         <GenericDatatable
           dataSet={props.indexPageData}

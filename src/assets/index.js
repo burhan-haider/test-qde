@@ -12,6 +12,10 @@ import labelsFeature from 'assets/icons/feature/labelsFeature.png'
 import features from 'assets/icons/feature/features.png';
 import closeBlue from 'assets/icons/close_blue.png';
 import closeWhite from 'assets/icons/close_white.png';
+import pdf from 'assets/icons/pdf_logo.png';
+import excel from 'assets/icons/excel_logo.png';
+import csv from 'assets/icons/csv_logo.png';
+import print from 'assets/icons/print_logo.png';
 
 
 const icons = {
@@ -28,6 +32,10 @@ const icons = {
     features,
     closeBlue,
     closeWhite,
+    pdf,
+    excel,
+    csv,
+    print
 }
 
 const getIconByKey = (key) => {

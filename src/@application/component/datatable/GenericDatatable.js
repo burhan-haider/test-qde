@@ -21,7 +21,7 @@ import masterModuleHyperlinks from "../hyperlinks/MasterModuleHyperlinks";
 import GenericDialog from "../dialog/GenericDialog";
 import HyperlinkModalContentConfig from "../hyperlinks/HyperlinkModalContentConfig";
 import _ from "lodash";
-import { useClasses } from "@application/hooks";
+import { useClasses } from "@application";
 
 // import SearchButtonIcon from "@mui/icons-material/SearchOutlined";
 // import { Button } from "@mui/material";
@@ -30,7 +30,8 @@ import ActionRegistry from "components/common/modules/actionregistry";
 
 const styles = theme => ({
   root: {
-    width: "100%"
+    width: "100%",
+    fontFamily: 'inherit',
   },
   container: {
     maxHeight: 400
@@ -44,7 +45,7 @@ const styles = theme => ({
     minWidth: 750
   },
   tablePaginationRoot: {
-    "& .MuiTablePagination-input": {
+    "&.MuiTablePagination-input": {
       minWidth: "50px",
       borderRadius: "10px",
       fontFamily: "inherit",
@@ -53,7 +54,7 @@ const styles = theme => ({
       color: "#353535",
       marginRight: "15px"
     },
-    "& .MuiTablePagination-caption": {
+    "&.MuiTablePagination-caption": {
       fontFamily: "inherit",
       fontSize: "inherit",
       color: "#353535"
@@ -373,8 +374,8 @@ function GenericDatatable(props) {
               count={rows.length}
               rowsPerPage={rowsPerPage}
               page={page}
-              onChangePage={handleChangePage}
-              onChangeRowsPerPage={handleChangeRowsPerPage}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
               ActionsComponent={GenericPaginationActions}
               classes={{
                 root: classes.tablePaginationRoot

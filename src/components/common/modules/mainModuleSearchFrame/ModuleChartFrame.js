@@ -3,11 +3,17 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Box from '@mui/material/Box'
 import { makeStyles } from "@mui/styles";
+import { useDispatch, useSelector } from 'react-redux'
 
 import LineChart from "components/common/modules/chart/LineChart";
 import BarChart from "components/common/modules/chart/BarChart";
 import PieChart from "components/common/modules/chart/PieChart";
 import { useClasses } from "@application";
+import {
+  setSelectedModule,
+  addToBreadcrumbs,
+  addToOpenTabs,
+} from 'redux/features/features.actions'
 
 const styles = theme => ({
   chartContentContainer: {
@@ -24,12 +30,88 @@ const styles = theme => ({
 });
 
 function ModuleChartFrame(props) {
-  const { current } = props;
 
-  function chartClickOperation(
-    module
-  ) {
+  const { current, getModuleChartData, feature } = props;
+
+  const dispatch = useDispatch();
+
+  const chartClickOperation = (module) => {
+
     console.log("chartClickOperations Triggered")
+    console.log("Module Element Name:",module)
+    console.log("Module Data:",current)
+    console.log("Chart Feature:", feature)
+    console.log('Feature BreadCrumbs:-',feature.breadCrumbs)
+
+    if(current.module_Id == module){
+
+      if(current.hasChildren == true){
+        dispatch(setSelectedModule(feature.featureCode, current.uniqueNo))
+        getModuleChartData(current);
+      }
+      else{
+        dispatch(setSelectedModule(feature.featureCode, current.uniqueNo))
+      }
+
+      const lastCrumbLevel = feature.breadCrumbs[feature.breadCrumbs.length-1].level;
+
+      
+      // feature.breadCrumbs.map(crumb=>{
+      //     if(crumb.level===lastCrumbLevel+1 && crumb.id!==current.uniqueNo){
+      //         dispatch(removeFromBreadcrumbs(feature.featureCode, crumb));
+      //         return crumb
+      //     }
+      //     return crumb;
+      // })
+      if(feature.openTabs.filter(e=>e.id===current.uniqueNo).length<1){
+        dispatch(addToOpenTabs(feature.featureCode, {id: current.uniqueNo, label: current.moduleName, level: lastCrumbLevel+1}));
+      }
+      // if(feature.breadCrumbs.filter(e=>e.id===current.uniqeNo).length<1){
+      //   dispatch(addToBreadcrumbs(feature.featureCode, {id: current.uniqueNo, label: current.moduleName, level: lastCrumbLevel+1}));
+      // }
+
+        feature.breadCrumbs.map(crumb=>{
+          if(feature.breadCrumbs.filter(e=>e.id===current.uniqueNo).length<1){
+            if(crumb.id === current.parentModuleId){
+              dispatch(addToBreadcrumbs(feature.featureCode, {
+                id: current.uniqueNo,
+                label: current.moduleName,
+                level: crumb.level+1
+              }))
+            }
+          }
+        })
+
+        if(feature.breadCrumbs.length<2){
+          if(feature.breadCrumbs.filter(e=>e.id===current.uniqueNo).length<1){
+            dispatch(addToBreadcrumbs(feature.featureCode, {
+              id: current.uniqueNo,
+              label: current.moduleName,
+              level: 1
+            }))
+          }
+        }
+
+      // feature.breadCrumbs.map(crumb=>{
+      //   if(current.parentModuleId === crumb.id){
+      //     console.log("Module Parent Matches Crumb")
+      //     dispatch(addToBreadcrumbs(feature.featureCode, {
+      //       id: current.uniqueNo, 
+      //       label: current.moduleName, 
+      //       level: crumb.level + 1,
+      //     }))
+      //     if(feature.openTabs.filter(e=>e.id===current.uniqueNo).length<1){
+      //       dispatch(addToOpenTabs(feature.featureCode, {
+      //           id: current.uniqueNo, 
+      //           label: current.moduleName,
+      //           level: crumb.level + 1,
+      //       }))
+      //     }
+      //   }
+      // })
+      // dispatch(setSelectedModule(feature.featureCode, current.uniqueNo))
+    }
+    
     // if (dataPointClick) {
     //   if (hasMoreChild) {
     //     // getModuleChartData(module_Id, parentModule);
