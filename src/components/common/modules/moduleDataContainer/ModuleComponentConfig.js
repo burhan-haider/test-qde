@@ -5,7 +5,7 @@ import { UserList, TempUserList, UserRoleMapping } from "./modulePages";
 // import { SingleRowEntity } from "./modulePages";
 //import { UserRoleAssign } from "./modulePages";
 
-// import { ActionMasterComponent } from "./modulePages";
+import { ActionMasterComponent } from "./modulePages";
 // import { CaseWorkflowComponent } from "./modulePages";
 
 import Error_404 from "components/common/errorPages/Error_404";
@@ -26,7 +26,7 @@ const moduleComponentConfig = {
   // singleRowEntity: SingleRowEntity,
   userRoleMapping: UserRoleMapping,
   Error_404: Error_404,
-  // actionManagement: ActionMasterComponent,
+  actionManagement: ActionMasterComponent,
   // caseworkflow: CaseWorkflowComponent,
   allFeatures: FeaturesComponent,
   allLabels: LabelsComponent,

@@ -16,14 +16,15 @@ import {
   IconButton,
   Divider
 } from "@mui/material";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import DeleteIcon from "@mui/icons-material/Delete";
-import AddIcon from "@mui/icons-material/Add";
+// import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+// import DeleteIcon from "@mui/icons-material/Delete";
+// import AddIcon from "@mui/icons-material/Add";
+import { MdAdd as AddIcon, MdDelete as DeleteIcon, MdExpandMore as ExpandMoreIcon } from 'react-icons/md'
 import caseWorkflowService from "services/caseWorkflow/caseWorkflowService";
 import { GenericButton } from "@application";
 import { GenericDatatable } from "@application";
 import { ActionsBottomContainer } from "../common/bottomPages";
-import store from "redux/store";
+import { store } from "redux/store";
 import { useClasses } from "@application";
 
 const styles = theme => ({
