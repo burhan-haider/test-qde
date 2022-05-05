@@ -91,7 +91,7 @@ export default function PieChart(props) {
   };
 
   return (
-    <div style={{ position: "relative" }}>
+    <div style={{ position: "relative"}}>
       <Pie
         data={cData}
         getElementAtEvent={elms => graphClickEvent(elms)}
@@ -102,6 +102,7 @@ export default function PieChart(props) {
             display: true,
             text: props.moduleChartDetail.chartName
           },
+          aspectRatio: 2,
           legend: {
             display: true
           },
@@ -111,7 +112,7 @@ export default function PieChart(props) {
               right: 15,
               top: 20,
               bottom: 20
-            }
+            },
           }
         }}
       />

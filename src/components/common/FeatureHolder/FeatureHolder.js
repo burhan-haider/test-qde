@@ -8,7 +8,8 @@ import {
     Button,
     IconButton,
     Grid, 
-    Link
+    Link,
+    CircularProgress,
 } from '@mui/material';
 import { MdPushPin, MdBookmark, MdArrowDropDown } from 'react-icons/md'
 import ComponentHolder from 'components/common/componentHolder/ComponentHolder';
@@ -38,7 +39,9 @@ const FeatureHolder = ({feature}) => {
 
   const dispatch =  useDispatch();
   const selectedFeature = useSelector(state => state.features.features.featureCode);
-//   const selectedNewFeature = useSelector(state=> state.features.features.featureCode)
+  //   const selectedNewFeature = useSelector(state=> state.features.features.featureCode)
+  const isLoading = useSelector(state=>state.features.features.isLoading);
+
   const pinnedModules = useSelector(state => state.features.features.pinnedModules);
   const features = useSelector(state => state.features.features);
 
@@ -142,6 +145,7 @@ const FeatureHolder = ({feature}) => {
       }
       makeApiCallUrl(uniqueNo, module_Id, parentModule_Id).then(res => {
       console.log("TRAIL----->",trail)
+      console.log('URL----->',res);
         dispatch(
           fetchModuleDetails(
             res,
@@ -317,14 +321,21 @@ const FeatureHolder = ({feature}) => {
 
             </Menu>
         </div>
-            <ComponentHolder index={feature.featureCode} type={'main'} value={feature.showModule}>
-                <MainPage key={feature.featureCode} feature={feature} getModuleChartData={getModuleChartData} />
-            </ComponentHolder>
-            {feature.modules.length > 0 && feature.modules.map((item)=>(
-                <ComponentHolder index={item.uniqueNo} key={item.uniqueNo} type={'main'} value={feature.showModule}  >
-                    <ModuleHolder feature={feature} module={item} getModuleChartData={getModuleChartData} />
+        {isLoading?(
+            <CircularProgress />
+        ):(
+            <>
+                <ComponentHolder index={feature.featureCode} type={'main'} value={feature.showModule}>
+                    <MainPage key={feature.featureCode} feature={feature} getModuleChartData={getModuleChartData} />
                 </ComponentHolder>
-            ))}
+                {feature.modules.length > 0 && feature.modules.map((item)=>(
+                    <ComponentHolder index={item.uniqueNo} key={item.uniqueNo} type={'main'} value={feature.showModule}  >
+                        <ModuleHolder feature={feature} module={item} getModuleChartData={getModuleChartData} />
+                    </ComponentHolder>
+                ))}
+            </>
+        )}
+            
     </div>
   )
 }
@@ -358,7 +369,7 @@ const MainPage = ({feature, getModuleChartData}) =>{
     }
 
     return(
-      <Grid container className="px-1 py-3" >
+      <Grid container direction={'row'} justifyContent={'flex-start'} alignItems={'flex-start'} className="px-5 py-3" >
 
            {/* mapping all the modules inside a feature as button */}
         {feature.modules.length>0 && feature.modules.map((item)=>(
@@ -366,7 +377,7 @@ const MainPage = ({feature, getModuleChartData}) =>{
                 {item.parentModuleId==null&&item.moduleChartDetails!=null?(
                 <Grid item xs={6} >
 
-                    <div className="rounded-md shadow-lg text-center my-4" >
+                    <div className="text-center mx-2 my-0" >
                         <p>{item.moduleName}</p>
                         <ModuleChartFrame current={item} getModuleChartData={getModuleChartData} feature={feature} />
                     </div>

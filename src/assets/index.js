@@ -17,6 +17,9 @@ import excel from 'assets/icons/excel_logo.png';
 import csv from 'assets/icons/csv_logo.png';
 import print from 'assets/icons/print_logo.png';
 
+import viewMatches from 'assets/icons/View_Matches.png'
+import addToAccept from 'assets/icons/Add_To_Acceptlist.png'
+
 
 const icons = {
     searchOne,
@@ -35,7 +38,9 @@ const icons = {
     pdf,
     excel,
     csv,
-    print
+    print,
+    viewMatches,
+    addToAccept,
 }
 
 const getIconByKey = (key) => {

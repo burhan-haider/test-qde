@@ -1,5 +1,5 @@
 import React from "react";
-import Paper from "@mui/material/Paper";
+import { Card, Paper } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Box from '@mui/material/Box'
 import { makeStyles } from "@mui/styles";
@@ -17,9 +17,9 @@ import {
 
 const styles = theme => ({
   chartContentContainer: {
-    width: "100%",
+    width: "auto",
     margin: 0,
-    overflow: "auto"
+    height: "450px"
   },
   root: {
     flexGrow: 1,
@@ -222,9 +222,9 @@ function ModuleChartFrame(props) {
     <Box className={classes.chartContentContainer}>
       {
             current.moduleChartDetails !== null ? (
-                <Paper elevation={3}>
+                <Card elevation={2} className="max-h-[450px]">
                   {selectSpecificChart(current)}
-                </Paper>
+                </Card>
             ) : (
               <Grid item md={4} lg={6} key={current.module_Id}>
                 {/* <Paper

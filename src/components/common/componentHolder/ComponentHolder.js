@@ -7,7 +7,7 @@ const ComponentHolder = (props) => {
             role="componentHolder"
             id={`componentHolder-${index}`}
             hidden={value !== index}
-            className={type === 'main' && 'bg-white m-5 mt-6 rounded-md min-h-screen'}
+            className={type === 'main' && 'bg-white m-5 mt-4 pb-2 pt-2 rounded-md min-h-[75vh]'}
             style={{transition: 'all 0.3s ease-in'}}
             {...other}
         >

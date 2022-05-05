@@ -10,7 +10,7 @@ import { makeStyles } from "@mui/styles";
 import {
   GenericButton,
   GenericDialog,
-  // RTSGenericDatatable
+  RTSGenericDatatable
 } from "@application";
 // import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { MdExpandMore as ExpandMoreIcon } from 'react-icons/md'
@@ -62,7 +62,7 @@ function RTScannningData(props) {
   const [openModal, setOpenModal] = useState(false);
   const [property, setProperty] = useState({});
   const [commentData, setCommentData] = useState({});
-  const [rtURResponse, setURResponse] = useState();
+  const [rtURResponse, setURResponse] = useState(null);
   const [scanListObject, setScanListObject] = useState({});
 
   const [eachRecord, setEachRecord] = useState([]);
@@ -78,7 +78,7 @@ function RTScannningData(props) {
   }, [props.data]);
 
   useEffect(() => {
-    if (rtURResponse !== undefined) {
+    if (rtURResponse !== null) {
       let uniqueElement = {};
       let scanObjList = {};
       const ResultedRecords = rtURResponse["ReportData"]["ResultedRecords"];
@@ -158,7 +158,7 @@ function RTScannningData(props) {
     let FileName = "";
     let FileImport = "";
     const LoggedUser = wholeData["LOGGEDUSER"]["username"];
-    if (rtURResponse !== undefined) {
+    if (rtURResponse !== null) {
       resultedRecordsRTS = rtURResponse["ReportData"]["ResultedRecords"];
       FileName = rtURResponse["ReportData"]["FileName"];
       FileImport = rtURResponse["ReportData"]["FileImport"];
@@ -221,7 +221,7 @@ function RTScannningData(props) {
               {Object.keys(scanListObject).map((scanListObjectKey, index) => {
                 return (
                   <Grid item xs={12} key={index}>
-                    {/* <RTSGenericDatatable
+                    <RTSGenericDatatable
                       moduleName={
                         scanListObjectKey.split("$" || "^")[0].split("~")[1]
                       }
@@ -243,7 +243,7 @@ function RTScannningData(props) {
                       fileImport={FileImport}
                       userCode={LoggedUser}
                       eachRecord={setEachRecord}
-                    ></RTSGenericDatatable> */}
+                    ></RTSGenericDatatable>
                   </Grid>
                 );
               })}

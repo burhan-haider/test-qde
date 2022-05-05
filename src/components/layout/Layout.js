@@ -6,7 +6,7 @@ const Layout = ({ children }) => {
     
     return (
         <Box sx={{
-            minHeight: '100vh',
+            minHeight: '99vh',
             background: '#052a4f',
             paddingBottom: 1
         }} >

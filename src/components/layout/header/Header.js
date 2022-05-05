@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Tabs, Tab} from 'components/common/CustomTabs';
 import TabScrollButton from '@mui/material/TabScrollButton';
+import { Skeleton } from '@mui/material';
 import { styled } from '@mui/system';
 import Icon from 'components/Icon';
 import getIconByKey from 'assets';
@@ -39,9 +40,10 @@ const Header = () => {
     // const currentFeatures = useSelector(state => state.routes.newFeatures.userFeatures);
     const newFeatures = useSelector(state => state.features.features.userFeatures);
     // const openFeatures = useSelector(state => state.routes.newFeatures.features);
-    const user = useSelector(state => state.auth.user)
+    const user = useSelector(state => state.auth.user);
     // const [newFeatures, setNewFeatures] = useState(currentFeatures);
-    const features = useSelector(state=>state.features.features.features)
+    const features = useSelector(state=>state.features.features.features);
+    const isLoading = useSelector(state=>state.features.features.isLoading);
 
     const dispatch = useDispatch();
 

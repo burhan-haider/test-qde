@@ -27,6 +27,7 @@ const initialState = {
     pinnedModules: [],
     success: true,
     refreshModule: true,
+    isLoading: true,
 }
 
 const features = (state = initialState, action) => {
@@ -35,6 +36,7 @@ const features = (state = initialState, action) => {
             return {
                 ...state,
                 userFeatures: action.payload,
+                isLoading: false,
             };
 
         case FETCH_USER_FEATURES_ERROR:

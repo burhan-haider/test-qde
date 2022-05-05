@@ -6,6 +6,12 @@ export { default as GenericTableBody } from "./datatable/GenericTableBody";
 export { default as GenericTableHead } from "./datatable/GenericTableHead";
 export { default as GenericTableTopbar } from "./datatable/GenericTableTopbar";
 
+export { default as RTSGenericDatatable } from "./rtsdatatable/RTSGenericDatatable";
+export { default as RTSGenericPaginationActions } from "./rtsdatatable/RTSGenericPaginationActions";
+export { default as RTSGenericTableBody } from "./rtsdatatable/RTSGenericTableBody";
+export { default as RTSGenericTableHead } from "./rtsdatatable/RTSGenericTableHead";
+export { default as RTSGenericTableTopbar } from "./rtsdatatable/RTSGenericTableTopbar";
+
 export { default as GenericDialog } from "./dialog/GenericDialog";
 export { default as GenericButton } from "./button/GenericButton";
 export { default as GenericTooltip } from "./tooltip/GenericTooltip";

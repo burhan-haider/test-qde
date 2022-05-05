@@ -44,7 +44,9 @@ const ModuleHolder = ({feature, module, getModuleChartData}) => {
                 }
             }
         })
+
         dispatch(setSelectedModule(feature.featureCode, item.uniqueNo))
+        getModuleChartData(item);
     }
 
     
@@ -75,12 +77,12 @@ const ModuleHolder = ({feature, module, getModuleChartData}) => {
                 </>
                 
             ):(
-                <Grid container className="px-5 py-3">
+                <Grid container className="px-5 py-3" >
                     {modules.map(item=>{
                         if(item.moduleChartDetails!=null){
                             return(
                                 <Grid item xs={6} >
-                                    <div className="rounded-md shadow-lg text-center m-4" >
+                                    <div className="text-center m-4" >
                                         <p>{item.moduleName}</p>
                                         <ModuleChartFrame current={item} getModuleChartData={getModuleChartData} feature={feature} />
                                     </div>

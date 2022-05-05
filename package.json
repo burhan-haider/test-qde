@@ -21,6 +21,7 @@
     "crypto-browserify": "^3.12.0",
     "formsy-react": "^2.2.5",
     "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.5.23",
     "lodash": "^4.17.21",
     "material-ui-pickers": "^2.2.4",
     "moment": "^2.29.3",
