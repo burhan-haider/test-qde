@@ -162,24 +162,37 @@ const FeatureHolder = ({feature}) => {
   const handleClick = (item) => {
       dispatch(setSelectedModule(feature.featureCode, item.id));
     //   console.log("Item in Tabs", item)
-      const currentModule = feature.modules.filter(e => e.uniqueNo === item.id)[0];
+
+    const currentModule = feature.modules.filter(e => e.uniqueNo === item.id)[0];
+    const parentModule = feature.modules.filter(e=>e.uniqueNo===currentModule.parentModuleId)[0];
+      
       // to check if there is any value in array 
       if(feature.breadCrumbs.filter(e=>e.id===item.id).length<1){
 
-          if(currentModule.parentModuleId!==null){
+        if(currentModule.parentModuleId!==null){
 
-              const parentModule = feature.modules.filter(e=>e.uniqueNo === currentModule.parentModuleId)[0];
+            let tempCurrentModule = currentModule;
+            let tempParentModule = parentModule;
+            let itemLevel = item.level;
 
-              if(feature.breadCrumbs.filter(e=>e.id===parentModule.uniqueNo).length<1){
-                  dispatch(addToBreadcrumbs(feature.featureCode, {id: parentModule.uniqueNo, label: parentModule.moduleName, level: item.level-1}))
-              }
+            while(tempCurrentModule.parentModuleId!==null){
+                
 
-              dispatch(addToBreadcrumbs(feature.featureCode, {id: item.id, label: item.label, level: item.level}));
-          }
-          else{
+                if(feature.breadCrumbs.filter(e=>e.id===tempParentModule.uniqueNo).length<1){
+                    dispatch(addToBreadcrumbs(feature.featureCode, {id: tempParentModule.uniqueNo, label: tempParentModule.moduleName, level: itemLevel-1}));   
+                }
+                tempCurrentModule = tempParentModule;
+                tempParentModule = feature.modules.filter(e=>e.uniqueNo===tempParentModule.parentModuleId)[0];
+                itemLevel--; 
+                
+            }
 
-              dispatch(addToBreadcrumbs(feature.featureCode, {id: item.id, label: item.label, level: item.level}));
-          }
+            dispatch(addToBreadcrumbs(feature.featureCode, {id: item.id, label: item.label, level: item.level}));
+        }
+        else{
+
+            dispatch(addToBreadcrumbs(feature.featureCode, {id: item.id, label: item.label, level: item.level}));
+        }
       }
 
     //   //  if there is any breadcrumb with level higer than selected breadcrumb, it will be removed
@@ -277,7 +290,7 @@ const FeatureHolder = ({feature}) => {
                         )}
                         
                         <Breadcrumbs className="text-white text-sm" >
-                            {feature.breadCrumbs.map((item)=>(
+                            {feature.breadCrumbs.sort((a, b) => a.level > b.level ? 1:-1).map((item)=>(
                                 <p 
                                     onClick={()=>handleClickBreadcrumb(item)} 
                                     className="cursor-pointer my-1 text-white"
