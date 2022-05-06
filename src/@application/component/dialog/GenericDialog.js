@@ -66,7 +66,7 @@ function GenericDialog(props) {
             <div className="clearfix">
               {props.property.title}
               <Button onClick={props.closeModal} style={{ float: "right" }}>
-                <CloseIcon />
+                <CloseIcon size={24} color="#333" />
               </Button>
             </div>
           </DialogTitle>

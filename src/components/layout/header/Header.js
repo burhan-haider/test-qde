@@ -18,6 +18,7 @@ import logo from 'assets/header/cognifi-logo.png';
 import headerBar from 'assets/header/header-bar.png'
 import UserMenuList from './userMenu/UserMenu';
 import commonService from 'services/common/commonService'
+import HeaderMenu from './headerMenu/HeaderMenu';
 
 const MyTabScrollButton = styled(TabScrollButton)({
     display: 'none',
@@ -101,22 +102,24 @@ const Header = () => {
                 {/* <Tab label="Item Four" /> */}
                 
             </Tabs>
-            <img src={headerBar} alt="header-bar" className="h-9 w-auto m-auto" />
-            <IconButton onClick={()=>{}} color="primary" className="mx-2 m-auto" >
-                <img src={getIconByKey('searchOne')} alt={'search_icon'} className="h-5 w-auto " />
-            </IconButton>
-            <Divider sx={{borderColor: '#e2e8f0', marginTop: '16px', marginBottom: '16px'}} orientation='vertical' variant='middle' flexItem />
-            <img src={getIconByKey('menu')} alt={'menu icon'} className="h-4 w-auto mx-4 m-auto" />
-            {/*<div className="flex justify-start align-middle w-100" >
-                <p className="text-white" >Vivek Raj</p>
-                    </div>*/}
-            <div>
-                <ul className="p-0 m-0 mt-1 mr-2">
-                    <li className="inline-block z-50">
-                        <UserMenuList />
-                    </li>
-                </ul>
+            <div className="flex justify-end align-middle ml-auto" >
+                <img src={headerBar} alt="header-bar" className="h-9 w-auto m-auto" />
+                <IconButton onClick={()=>{}} color="primary" className="ml-2 m-auto" >
+                    <img src={getIconByKey('searchOne')} alt={'search_icon'} className="h-4 w-auto " />
+                </IconButton>
+                {/*<div className="flex justify-start align-middle w-100" >
+                    <p className="text-white" >Vivek Raj</p>
+                        </div>*/}
+                    <HeaderMenu />
+                <div>
+                    <ul className="p-0 m-0 mt-1 mr-2">
+                        <li className="inline-block z-50">
+                            <UserMenuList />
+                        </li>
+                    </ul>
+                </div>
             </div>
+            
         </Box>
     );
 }

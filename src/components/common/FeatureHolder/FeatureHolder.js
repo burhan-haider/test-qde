@@ -388,7 +388,7 @@ const MainPage = ({feature, getModuleChartData}) =>{
         {feature.modules.length>0 && feature.modules.map((item)=>(
             <>
                 {item.parentModuleId==null&&item.moduleChartDetails!=null?(
-                <Grid item xs={6} >
+                <Grid item xs={6} className="sm:max-h-[300px] lg:min-h-[450px]" >
 
                     <div className="text-center mx-2 my-0" >
                         <p>{item.moduleName}</p>
@@ -399,7 +399,7 @@ const MainPage = ({feature, getModuleChartData}) =>{
                 ):(
                     <>
                         {item.parentModuleId==null&&(
-                            <button key={item.id} onClick={()=>handleClick(item)} className=" m-5 text-white font-bold border-none bg-red-500 hover:bg-red-700 rounded-md p-3 cursor-pointer">
+                            <button key={item.id} onClick={()=>handleClick(item)} className="m-5 text-white font-bold border-none bg-red-500 hover:bg-red-700 rounded-md p-3 cursor-pointer">
                                 {item.moduleName}
                             </button>
                         )}   

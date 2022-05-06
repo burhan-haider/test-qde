@@ -14,8 +14,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "redux/auth/user/user.actions";
 import { useClasses } from "@application";
 
-// import { GenericDialog } from "@application";
-// import UserProfile from "components/layout/header/userMenu/UserProfile";
+import { GenericDialog } from "@application";
+import UserProfile from "components/layout/header/userMenu/UserProfile";
 // import VivekImage from "assets/Vivek.jpg";
 
 const styles = theme => ({
@@ -177,6 +177,13 @@ function UserMenuList() {
         )}
       </Popper>
 
+      <GenericDialog
+        closeModal={handleCloseModal}
+        state={openModal}
+        property={property}
+      >
+        <UserProfile closeModal={handleCloseModal} />
+      </GenericDialog>
     </div>
   );
 }
