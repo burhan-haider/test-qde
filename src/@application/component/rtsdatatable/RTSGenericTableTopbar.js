@@ -31,13 +31,14 @@ const styles = theme => ({
   parentDiv: {
     backgroundColor: "#f4f5fa",
     borderTopLeftRadius: 12,
-    borderTopRightRadius: 12
+    borderTopRightRadius: 12,
+    padding: "10px",
   },
   moduleNameDiv: {
     maxHeight: "40px",
     alignItems: "center",
     color: "#353535",
-    marginTop: "12px"
+    marginTop: "12px",
   },
   textFieldRoot: {
     width: "100%",
@@ -62,12 +63,15 @@ const styles = theme => ({
     borderRadius: "25px",
     fontSize: "13px",
     marginRight: "5px",
-    color: "#353535"
+    color: "#353535",
+    width: "100%"
   },
   formControl: {
-    width: 50,
+    width: 120,
+    borderBottom: '1px solid #3a3a3a',
     "& .MuiInputLabel-formControl": {
-      fontSize: "0.75Rem"
+      fontSize: "0.75Rem",
+      marginTop: "8px"
     }
     // "& .MuiSelect-iconOutlined-226": {
     //   right: -16
@@ -217,7 +221,7 @@ function RTSGenericTableTopbar(props) {
   };
 
   return (
-    <div className={clsx("clearfix justify-start my-2 p-2", classes.parentDiv)}>
+    <div className={clsx("flex justify-start items-center p-2", classes.parentDiv)}>
       <div className={clsx("flex pl-6 float-left", classes.moduleNameDiv)}>
         <Typography className={classes.moduleTyphography}>
           <b>Source Info: </b>
@@ -274,7 +278,7 @@ function RTSGenericTableTopbar(props) {
           ""
         )}
       </div>
-      <div className="flex pr-6 items-center float-right">
+      <div >
         {action === "viewMatches" ? (
           <GenericDialog
             state={openModal}
@@ -333,7 +337,7 @@ function RTSGenericTableTopbar(props) {
         ) : (
           ""
         )}
-        <div className="flex mr-2">
+        <div style={{display: 'flex', justifyContent: 'flex-end', flexDirection: "row", marginRight: '1rem', marginBottom: '10px', alignItems: 'flex-start'}}>
           <img
             src={getIconByKey("print")}
             className={classes.exportIcons}
@@ -377,70 +381,73 @@ function RTSGenericTableTopbar(props) {
           </CsvDownloader>
         </div>
 
-        <div>
-          <TextField
-            id="outlined-basic"
-            label="Filter"
-            variant="outlined"
-            type="search"
-            size="small"
-            onChange={filterData}
-            classes={{
-              root: classes.textFieldRoot,
-              label: classes.textFieldLabel
-            }}
-            InputProps={{
-              className: classes.MuiOutlinedInput
-            }}
-          />
-        </div>
-        <div>
-          <FormControl className={classes.formControl}>
-            <InputLabel
-              id="demo-mutiple-checkbox-label"
-              style={{ textAlign: "center", marginTop: "-6px" }}
-            >
-              Reset
-            </InputLabel>
-            <Select
-              classes={{ icon: classes.icon }}
-              labelId="demo-mutiple-checkbox-label"
-              id="demo-mutiple-checkbox"
-              multiple
-              value={resetColumns}
-              onChange={handleResetChange}
-              input={<Input />}
+        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}} >
+          <div>
+            <TextField
+              id="outlined-basic"
+              label="Filter"
               variant="outlined"
-              renderValue={selected => selected.length}
-              MenuProps={MenuProps}
-              disableUnderline={true}
-            >
-              {resetColumnHeaders.map(eachHeader => (
-                <MenuItem
-                  key={eachHeader.split("~!!~")[0]}
-                  value={eachHeader.split("~!!~")[1]}
-                  // disabled={
-                  //   ["0", "1"].includes(eachHeader.split("~!!~")[0])
-                  //     ? true
-                  //     : false
-                  // }
-                >
-                  <Checkbox
-                    checked={
-                      resetColumns.indexOf(eachHeader.split("~!!~")[1]) > -1
-                    }
-                    size="small"
-                    classes={{
-                      root: classes.checkboxRoot,
-                      checked: classes.checked
-                    }}
-                  />
-                  <ListItemText primary={eachHeader.split("~!!~")[2]} />
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+              type="search"
+              size="small"
+              onChange={filterData}
+              classes={{
+                root: classes.textFieldRoot,
+                label: classes.textFieldLabel
+              }}
+              InputProps={{
+                className: classes.MuiOutlinedInput
+              }}
+            />
+          </div>
+          <div>
+            <FormControl className={classes.formControl}>
+              <InputLabel
+                id="demo-mutiple-checkbox-label"
+                style={{ textAlign: "center", marginTop: "-6px" }}
+              >
+                Reset
+              </InputLabel>
+              <Select
+                classes={{ icon: classes.icon }}
+                labelId="demo-mutiple-checkbox-label"
+                id="demo-mutiple-checkbox"
+                multiple
+                value={resetColumns}
+                onChange={handleResetChange}
+                input={<Input />}
+                variant="outlined"
+                renderValue={selected => selected.length}
+                MenuProps={MenuProps}
+                disableUnderline={true}
+              >
+                {resetColumnHeaders.map(eachHeader => (
+                  <MenuItem
+                    key={eachHeader.split("~!!~")[0]}
+                    value={eachHeader.split("~!!~")[1]}
+                    // disabled={
+                    //   ["0", "1"].includes(eachHeader.split("~!!~")[0])
+                    //     ? true
+                    //     : false
+                    // }
+                  >
+                    <Checkbox
+                      checked={
+                        resetColumns.indexOf(eachHeader.split("~!!~")[1]) > -1
+                      }
+                      size="small"
+                      classes={{
+                        root: classes.checkboxRoot,
+                        checked: classes.checked
+                      }}
+                    />
+                    <ListItemText primary={eachHeader.split("~!!~")[2]} />
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </div>
         </div>
+        
       </div>
     </div>
   );

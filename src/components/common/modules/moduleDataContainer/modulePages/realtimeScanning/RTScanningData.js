@@ -21,11 +21,18 @@ import { useClasses } from "@application";
 
 const styles = theme => ({
   root: {
-    "& .MuiAccordion-root.Mui-expanded": {
-      margin: "0px"
+    "&.MuiAccordion-root.Mui-expanded": {
+      margin: "0px",
+      minHeight: '0px',
     },
-    "& .MuiAccordionSummary-content.Mui-expanded ": {
-      margin: "0px"
+    "&.MuiAccordionSummary-content.Mui-expanded ": {
+      margin: "0px",
+      padding: "0px"
+    },
+    "&.MuiButtonBase-root.MuiAccordionSummary-root.Mui-expanded ": {
+      paddingRight: "12px",
+      paddingLeft: "12px",
+      minHeight: '0px'
     },
     backgroundColor: "#003463"
   },
@@ -52,6 +59,9 @@ const styles = theme => ({
     // backgroundColor: "#003463",
     color: "white",
     marginRight: "1%"
+  },
+  expandedPanel:{
+    margin: '0px',
   }
 });
 function RTScannningData(props) {
@@ -158,8 +168,9 @@ function RTScannningData(props) {
     let FileName = "";
     let FileImport = "";
     const LoggedUser = wholeData["LOGGEDUSER"]["username"];
-    if (rtURResponse !== null) {
+    if (rtURResponse !== null && rtURResponse !== undefined) {
       resultedRecordsRTS = rtURResponse["ReportData"]["ResultedRecords"];
+      console.log("Updated Response->",rtURResponse)
       FileName = rtURResponse["ReportData"]["FileName"];
       FileImport = rtURResponse["ReportData"]["FileImport"];
     } else {
@@ -206,7 +217,7 @@ function RTScannningData(props) {
           <AccordionSummary
             classes={{
               root: classes.root,
-              expanded: classes.expanedPanel
+              expanded: classes.expandedPanel
             }}
             expandIcon={<ExpandMoreIcon style={{ color: "white" }} />}
             aria-controls="scanResult"
@@ -381,7 +392,7 @@ function RTScannningData(props) {
 
   return (
     <div>
-      {wholeData ? (
+      {wholeData && wholeData !== null && wholeData !== undefined ? (
         constructTable()
       ) : (
         <div>

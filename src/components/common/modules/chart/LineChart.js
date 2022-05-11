@@ -65,7 +65,9 @@ function LineChart(props) {
         borderWidth: 1,
         hoverBackgroundColor: "rgba(255,99,132,0.4)",
         hoverBorderColor: "rgba(255,99,132,1)",
-        data: props.moduleChartDetail && props.moduleChartDetail.yaxis
+        data: props.moduleChartDetail && props.moduleChartDetail.yaxis,
+        xAxisID: 'xAxes',
+        yAxisID: 'yAxes',
       },
       {
         label: "30+%",
@@ -77,7 +79,9 @@ function LineChart(props) {
         borderWidth: 1,
         hoverBackgroundColor: "rgba(255,99,132,0.4)",
         hoverBorderColor: "rgba(255,99,132,1)",
-        data: props.moduleChartDetail && props.moduleChartDetail.yaxis_1
+        data: props.moduleChartDetail && props.moduleChartDetail.yaxis_1,
+        xAxisID: 'xAxes',
+        yAxisID: 'yAxes',
       },
       {
         label: "60+%",
@@ -89,7 +93,9 @@ function LineChart(props) {
         borderWidth: 1,
         hoverBackgroundColor: "rgba(255,99,132,0.4)",
         hoverBorderColor: "rgba(255,99,132,1)",
-        data: props.moduleChartDetail && props.moduleChartDetail.yaxis_2
+        data: props.moduleChartDetail && props.moduleChartDetail.yaxis_2,
+        xAxisID: 'xAxes',
+        yAxisID: 'yAxes',
       },
       {
         label: "90+%",
@@ -101,14 +107,16 @@ function LineChart(props) {
         borderWidth: 1,
         hoverBackgroundColor: "rgba(255,99,132,0.4)",
         hoverBorderColor: "rgba(255,99,132,1)",
-        data: props.moduleChartDetail && props.moduleChartDetail.yaxis_3
+        data: props.moduleChartDetail && props.moduleChartDetail.yaxis_3,
+        xAxisID: 'xAxes',
+        yAxisID: 'yAxes',
       }
     ]
   };
   // console.log(props);
   // console.log(cData)
   return (
-    <div style={{ position: "relative" }}>
+    <div style={{ position: "relative", padding: '10px' }}>
       <Line
         data={cData}
         // getElementAtEvent={elms => graphClickEvent(elms)}
@@ -130,12 +138,11 @@ function LineChart(props) {
             }
           },
           scales: {
-            yAxes: [
-              {
+            yAxes: {
                 //stacked: true,
-                gridLines: {
+                grid: {
                   display: true,
-                  color: "E0E0EB"
+                  color: "#e0e0e0"
                 },
                 scaleLabel: {
                   display: true,
@@ -145,12 +152,11 @@ function LineChart(props) {
                 ticks: {
                   beginAtZero: true
                 }
-              }
-            ],
-            xAxes: [
-              {
-                gridLines: {
-                  display: true
+            },
+            xAxes: {
+                grid: {
+                  display: true,
+                  color: "#e0e0e0"
                 },
                 scaleLabel: {
                   display: true,
@@ -158,9 +164,7 @@ function LineChart(props) {
                     props.moduleChartDetail && props.moduleChartDetail.xaxisName
                 },
                 ticks: {}
-              }
-            ],
-            scaleShowGridLines: true
+            },
           }
         }}
       />

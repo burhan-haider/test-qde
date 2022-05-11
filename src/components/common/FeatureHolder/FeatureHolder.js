@@ -268,14 +268,14 @@ const FeatureHolder = ({feature}) => {
             <div className="w-full" >
                 {feature.openTabs.length>0&&(
                     <Box className="px-1 pt-1 bottom-1 text-left ml-5" style={{backgroundColor: '#fff'}} >
-                        {feature.openTabs.length>0 && feature.openTabs.map((item)=>(
-                            <>
+                        {feature.openTabs.length>0 && feature.openTabs.map((item, index)=>(
+                            <span key={index} >
                                 {feature.showModule===item.id ? (
                                     <Chip key={item.id} style={{backgroundColor: '#83a3bb',}} className="text-xs m-1 text-white" label={item.label} size="small" onDelete={()=>handleDelete(item)} />
                                 ):(
                                     <Chip key={item.id} style={{border: '1px solid #83a3bb'}} className=" bg-transparent hover:bg-light-grey hover:text-white text-xs m-1" size="small" label={item.label} onClick={()=>handleClick(item)}  onDelete={()=>handleDelete(item)} />
                                 )}
-                            </>
+                            </span>
                         ))}
                     </Box>
                 )}
@@ -385,16 +385,15 @@ const MainPage = ({feature, getModuleChartData}) =>{
       <Grid container direction={'row'} justifyContent={'flex-start'} alignItems={'flex-start'} className="px-5 py-3" >
 
            {/* mapping all the modules inside a feature as button */}
-        {feature.modules.length>0 && feature.modules.map((item)=>(
-            <>
+        {feature.modules.length>0 && feature.modules.map((item, index)=>(
+            <Grid item key={index} xs={6} className="sm:max-h-[300px] lg:min-h-[450px]" >
+
                 {item.parentModuleId==null&&item.moduleChartDetails!=null?(
-                <Grid item xs={6} className="sm:max-h-[300px] lg:min-h-[450px]" >
 
                     <div className="text-center mx-2 my-0" >
                         <p>{item.moduleName}</p>
                         <ModuleChartFrame current={item} getModuleChartData={getModuleChartData} feature={feature} />
                     </div>
-                </Grid>
 
                 ):(
                     <>
@@ -405,7 +404,8 @@ const MainPage = ({feature, getModuleChartData}) =>{
                         )}   
                     </>
                 )}
-            </>
+            </Grid>
+
         ))}
         
         </Grid>
