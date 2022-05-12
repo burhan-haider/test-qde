@@ -7,13 +7,13 @@ import {
   SelectFormsy,
   CheckboxFormsy,
   ViewFieldFormsy
-} from "../../../../common/formsyComponents";
+} from "components/common/formsyComponents";
 import {
   MenuItem,
   FormControl,
-  ExpansionPanel,
-  ExpansionPanelSummary,
-  ExpansionPanelDetails,
+  Accordion as ExpansionPanel,
+  AccordionSummary as ExpansionPanelSummary,
+  AccordionDetails as ExpansionPanelDetails,
   Typography,
   Paper,
   Grid,
@@ -27,7 +27,7 @@ import clsx from "clsx";
 // import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { MdExpandMore as ExpandMoreIcon } from 'react-icons/md'
 import commonService from "services/common/commonService";
-import scenariosService from "app/services/scenarios/scenariosService";
+import scenariosService from "services/scenarios/scenariosService";
 import { GenericButton } from "@application";
 import * as MessageActions from "redux/message/message.actions";
 

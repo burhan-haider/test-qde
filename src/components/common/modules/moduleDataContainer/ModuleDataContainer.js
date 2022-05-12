@@ -9,7 +9,7 @@ import Error from "components/common/errorPages/Error";
 import { removerFromRefreshModule } from "redux/features/features.actions";
 
 export default function ModuleDataContainer(props) {
-  const { moduleCode, moduleURL, presentationCategory, moduleId } = props;
+  const { moduleCode, moduleURL, presentationCategory, moduleId, feature } = props;
   console.log("moduleCode", moduleCode);
   const [indexPageData, setindexPageData] = useState(null);
   const [dataLoading, setDataLoading] = useState(true);
@@ -45,7 +45,7 @@ export default function ModuleDataContainer(props) {
 
     let errorDetails = {};
 
-    moduleURL &&
+    if(moduleURL && moduleId === feature.showModule){
       CommonService.fetchIndexPageData(moduleURL)
         .then(data => {
           setindexPageData(data);
@@ -64,10 +64,12 @@ export default function ModuleDataContainer(props) {
           setError(errorDetails);
           setDataLoading(false);
         });
+    }
+      
     return () => {
       setindexPageData(null);
     };
-  }, [moduleCode, moduleURL, refreshModule]);
+  }, [moduleCode, moduleURL, refreshModule, feature]);
 
   let PageComponent = ModuleComponentConfig[presentationCategory]
     ? ModuleComponentConfig[presentationCategory]

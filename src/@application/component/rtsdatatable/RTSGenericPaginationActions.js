@@ -64,7 +64,7 @@ const styles = theme => ({
 
 export default function RTSGenericPaginationActions(props) {
   const classes = useClasses(styles);
-  const { count, page, rowsPerPage, onChangePage } = props;
+  const { count, page, rowsPerPage, onPageChange } = props;
   const [goToPage, setGoToPage] = useState(0);
   const pagesCount = Math.ceil(count / rowsPerPage);
 
@@ -117,7 +117,7 @@ export default function RTSGenericPaginationActions(props) {
         count={pagesCount}
         siblingCount={1}
         boundaryCount={2}
-        onChange={onChangePage}
+        onChange={onPageChange}
         page={page + 1}
         className={clsx("self-center", classes.paginationRoot)}
       />
@@ -139,7 +139,7 @@ export default function RTSGenericPaginationActions(props) {
           }}
         />
         <IconButton
-          onClick={event => onChangePage(event, goToPage)}
+          onClick={event => onPageChange(event, goToPage)}
           style={{ padding: "0", marginRight: "10px" }}
         >
           <KeyboardArrowRight />

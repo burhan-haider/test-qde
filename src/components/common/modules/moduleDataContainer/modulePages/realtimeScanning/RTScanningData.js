@@ -81,7 +81,9 @@ function RTScannningData(props) {
   const classes = useClasses(styles);
   useEffect(() => {
     if (props.data !== undefined) {
+      console.log("RTS Props:-",props)
       props.data.then(response => {
+        console.log('Props Data', response)
         setWholeData(response);
       });
     }
@@ -168,15 +170,20 @@ function RTScannningData(props) {
     let FileName = "";
     let FileImport = "";
     const LoggedUser = wholeData["LOGGEDUSER"]["username"];
-    if (rtURResponse !== null && rtURResponse !== undefined) {
-      resultedRecordsRTS = rtURResponse["ReportData"]["ResultedRecords"];
+    if (rtURResponse !== null && rtURResponse !== undefined ) {
+      if(rtURResponse["ReportData"] != null){
+        resultedRecordsRTS = rtURResponse["ReportData"]["ResultedRecords"];
+      }
       console.log("Updated Response->",rtURResponse)
       FileName = rtURResponse["ReportData"]["FileName"];
       FileImport = rtURResponse["ReportData"]["FileImport"];
     } else {
-      resultedRecordsRTS = wholeData["REPORTDATA"]["ResultedRecords"];
-      FileName = wholeData["REPORTDATA"]["FileName"];
-      FileImport = wholeData["REPORTDATA"]["FileImport"];
+      if(wholeData["REPORTDATA"] != null){
+        resultedRecordsRTS = wholeData["REPORTDATA"]["ResultedRecords"];
+        FileName = wholeData["REPORTDATA"]["FileName"];
+        FileImport = wholeData["REPORTDATA"]["FileImport"];
+        console.log("Whole Data:-",wholeData)
+      }
     }
 
     let uniqueNameElm = {};

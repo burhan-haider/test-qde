@@ -372,8 +372,8 @@ function RTSGenericDatatable(props) {
               // selectedPage={selectedPage}
               page={page}
               // selected={setSelectedPage}
-              onChangePage={handleChangePage}
-              onChangeRowsPerPage={handleChangeRowsPerPage}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
               ActionsComponent={RTSGenericPaginationActions}
               classes={{
                 root: classes.tablePaginationRoot

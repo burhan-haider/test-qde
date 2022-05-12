@@ -7,19 +7,13 @@ import { Grid } from '@mui/material';
 // import ModuleFrame from './ModuleFrame';
 
 const ModuleHolder = ({feature, module, getModuleChartData}) => {
+    
     const dispatch = useDispatch();
-    // const allModules = useSelector(state=>state.routes.modules);
     const selectedFeature = useSelector(state=>state.features.features.featureCode);
+    
     let modules = feature.modules.filter(item=>item.parentModule_Id === module.module_Id);
     
-    // useEffect(() => {
-    //     console.log(selectedFeature);
-    //     if(selectedFeature === feature.featureCode){
-    //         console.log("SubFeature Modules:-",modules)
-    //         console.log('Feature:-', feature)
-    //     }
-        
-    // });
+    
 
     const handleClick = (item) => {
         // if(feature.modules.filter(e=>e.uniqueNo === item.uniqueNo).length<1){
@@ -46,7 +40,10 @@ const ModuleHolder = ({feature, module, getModuleChartData}) => {
         })
 
         dispatch(setSelectedModule(feature.featureCode, item.uniqueNo))
-        getModuleChartData(item);
+        console.log("Clicked Module:-", item)
+        if(item.hasChildren == true){
+            getModuleChartData(item);
+        }
     }
 
     
@@ -61,6 +58,7 @@ const ModuleHolder = ({feature, module, getModuleChartData}) => {
                             moduleURL={module.moduleURL}
                             presentationCategory={module.presentationCategory}
                             moduleId={module.uniqueNo}
+                            feature={feature}
                         />
                     ):(
                         <>
