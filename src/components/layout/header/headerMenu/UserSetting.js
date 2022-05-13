@@ -103,7 +103,7 @@ function UserSettings(props) {
     ) {
       dispatch(getDesiredLabels(labelLanguage, labelDirection));
       httpService
-        .post(`/api/common/systemTimeout/${applicationTimeout}`)
+        .post(`/common/systemTimeout/${applicationTimeout}`)
         .then(response => {
           props.closeModal();
         });

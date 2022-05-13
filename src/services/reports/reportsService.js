@@ -11,7 +11,7 @@ class reportsService {
       const result = await new Promise((resolve, reject) => {
         httpService
           .post(
-            `/api/reports/reportBenchMarkDetails/${group}/${viewType}/${reportId}/${reportSerialNo}`
+            `/reports/reportBenchMarkDetails/${group}/${viewType}/${reportId}/${reportSerialNo}`
           )
           .then(response => {
             if (response.status === 200) {
@@ -31,7 +31,7 @@ class reportsService {
     return new Promise((resolve, reject) => {
       httpService
         .post(
-          `/api/reports/reportBenchMarkParameters/${actionType}`,
+          `/reports/reportBenchMarkParameters/${actionType}`,
           {
             headers: {
               Authorization: `Bearer ${window.localStorage.getItem(
@@ -58,7 +58,7 @@ class reportsService {
     return new Promise((resolve, reject) => {
       httpService
         .post(
-          `/api/reports/reportWithBenchMarks/generate`,
+          `/reports/reportWithBenchMarks/generate`,
           {
             headers: {
               Authorization: `Bearer ${window.localStorage.getItem(
@@ -113,7 +113,7 @@ class reportsService {
     if (reportId !== null) {
       const result = await new Promise((resolve, reject) => {
         httpService
-          .get(`/api/reports/resetReportColumnsDetails/${reportId}`)
+          .get(`/reports/resetReportColumnsDetails/${reportId}`)
           .then(response => {
             if (response.status === 200) {
               resolve(response.data);
@@ -132,7 +132,7 @@ class reportsService {
       const result = await new Promise((resolve, reject) => {
         httpService
           .post(
-            `/api/reports/resetReportColumns/${reportId}`,
+            `/reports/resetReportColumns/${reportId}`,
             // VIVEK - sent the below data as request body
             data,
             {

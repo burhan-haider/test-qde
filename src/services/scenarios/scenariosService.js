@@ -6,7 +6,7 @@ class scenariosService {
       const result = await new Promise((resolve, reject) => {
         httpService
           .post(
-            `/api/scenarios/alertBenchMarkDetails/${viewType}/${alertId}/${alertSerialNo}`
+            `/scenarios/alertBenchMarkDetails/${viewType}/${alertId}/${alertSerialNo}`
           )
           .then(response => {
             if (response.status === 200) {
@@ -26,7 +26,7 @@ class scenariosService {
     return new Promise((resolve, reject) => {
       httpService
         .post(
-          `/api/scenarios/alertBenchMarkParameters/${actionType}`,
+          `/scenarios/alertBenchMarkParameters/${actionType}`,
           {
             headers: {
               Authorization: `Bearer ${window.localStorage.getItem(
@@ -53,7 +53,7 @@ class scenariosService {
     return new Promise((resolve, reject) => {
       httpService
         .post(
-          `/api/scenarios/alertWithBenchMarks/${actionType}`,
+          `/scenarios/alertWithBenchMarks/${actionType}`,
           {
             headers: {
               Authorization: `Bearer ${window.localStorage.getItem(

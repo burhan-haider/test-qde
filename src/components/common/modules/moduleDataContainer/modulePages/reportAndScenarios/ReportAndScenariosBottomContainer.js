@@ -49,10 +49,10 @@ function ReportAndScenariosBottomContainer(props) {
   let { bottomTableHeader, Url } = "";
   if (moduleName.includes("Reports")) {
     const group = commonService.makeUpperCaseString(moduleName);
-    Url = `/api/reports/reportBenchMarksList/${group}/ALL/${row[0]}`;
+    Url = `/reports/reportBenchMarksList/${group}/ALL/${row[0]}`;
     bottomTableHeader = "Assigned Report Parameters List";
   } else if (moduleName.includes("Alerts")) {
-    Url = `/api/scenarios/alertBenchMarksList/ALL/${row[0]}`;
+    Url = `/scenarios/alertBenchMarksList/ALL/${row[0]}`;
     bottomTableHeader = "Assigned Alert Parameters List";
   }
 

@@ -33,7 +33,7 @@ function ActionsDataPanel(props) {
   }, []);
 
   const getActionParams = async () => {
-    const result = await httpService.get(`/api/action/getActionParams`);
+    const result = await httpService.get(`/action/getActionParams`);
     setParamsForAction(result.data);
     //console.log(result.data);
   };

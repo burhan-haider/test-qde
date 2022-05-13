@@ -4,7 +4,7 @@ class featureService {
   fetchFeaturesmodulesList = async featureCode => {
     console.log(featureCode);
     return await new Promise((resolve, reject) => {
-      // httpService.get(`/api/common/feature/${featureCode}`).then(response => {
+      // httpService.get(`/common/feature/${featureCode}`).then(response => {
       httpService.get(`/common/feature/${featureCode}`).then(response => {
         if (response.status === 200) {
           //console.log(response.data);
@@ -46,7 +46,7 @@ class featureService {
   //   //console.log(featurecode);
   //   return new Promise((resolve, reject) => {
   //     httpService
-  //       .get(`/api/features/getFeaturesHierarchy/${featurecode}`)
+  //       .get(`/features/getFeaturesHierarchy/${featurecode}`)
   //       .then(response => {
   //         if (response.status === 200) {
   //           //console.log(response.data);

@@ -3,7 +3,7 @@ import httpService from "../httpservice/httpService";
 class caseWorkflowService {
   searchAction = paramData => {
     return new Promise((resolve, reject) => {
-      httpService.post("/api/action/searchAction", paramData).then(response => {
+      httpService.post("/action/searchAction", paramData).then(response => {
         if (response.status === 200) {
           resolve(response.data);
         } else {
@@ -15,7 +15,7 @@ class caseWorkflowService {
 
   createAction = paramData => {
     return new Promise((resolve, reject) => {
-      httpService.post("/api/action/create", paramData).then(response => {
+      httpService.post("/action/create", paramData).then(response => {
         if (response.status === 200) {
           resolve(response.data);
           //console.log(response.data);
@@ -30,7 +30,7 @@ class caseWorkflowService {
     // console.log(paramData);
     return new Promise((resolve, reject) => {
       httpService
-        .post("/api/action/searchActionParams", paramData)
+        .post("/action/searchActionParams", paramData)
         .then(response => {
           if (response.status === 200) {
             //console.log(response.data);
@@ -45,7 +45,7 @@ class caseWorkflowService {
   saveActionParams = paramData => {
     return new Promise((resolve, reject) => {
       httpService
-        .post("/api/action/saveActionParams", paramData)
+        .post("/action/saveActionParams", paramData)
         .then(response => {
           if (response.status === 200) {
             resolve(response.data);
@@ -84,7 +84,7 @@ class caseWorkflowService {
 
   updateAction = paramData => {
     return new Promise((resolve, reject) => {
-      httpService.post("/api/action/updateAction", paramData).then(response => {
+      httpService.post("/action/updateAction", paramData).then(response => {
         if (response.status === 200) {
           resolve(response.data);
         } else {
@@ -123,7 +123,7 @@ class caseWorkflowService {
   updateActionParams = paramData => {
     return new Promise((resolve, reject) => {
       httpService
-        .post("/api/action/updateActionParams", paramData)
+        .post("/action/updateActionParams", paramData)
         .then(response => {
           if (response.status === 200) {
             resolve(response.data);
@@ -138,7 +138,7 @@ class caseWorkflowService {
     return new Promise((resolve, reject) => {
       httpService
         .post(
-          "/api/caseworkflow/searchCases",
+          "/caseworkflow/searchCases",
           {
             headers: {
               Authorization: `Bearer ${window.localStorage.getItem(
@@ -163,7 +163,7 @@ class caseWorkflowService {
     return new Promise((resolve, reject) => {
       httpService
         .post(
-          "/api/caseworkflow/saveCWFCaseAndCommentsDetails",
+          "/caseworkflow/saveCWFCaseAndCommentsDetails",
           {
             headers: {
               Authorization: `Bearer ${window.localStorage.getItem(
@@ -187,7 +187,7 @@ class caseWorkflowService {
     return new Promise((resolve, reject) => {
       httpService
         .post(
-          "/api/caseworkflow/saveCWFCaseAndCommentsDetails",
+          "/caseworkflow/saveCWFCaseAndCommentsDetails",
           {
             headers: {
               Authorization: `Bearer ${window.localStorage.getItem(
@@ -210,7 +210,7 @@ class caseWorkflowService {
   // postCase = (data) => {
   //   return new Promise((resolve, reject) => {
   //     httpService
-  //       .post("/api/caseworkflow/saveCWFCaseAndCommentsDetails", data)
+  //       .post("/caseworkflow/saveCWFCaseAndCommentsDetails", data)
   //       .then((response) => {
   //         if (response.status === 200) {
   //           resolve(response.data);
@@ -224,7 +224,7 @@ class caseWorkflowService {
   // postAndCloseCase = (data) => {
   //   return new Promise((resolve, reject) => {
   //     httpService
-  //       .post("/api/caseworkflow/saveCWFCaseAndCommentsDetails", data)
+  //       .post("/caseworkflow/saveCWFCaseAndCommentsDetails", data)
   //       .then((response) => {
   //         if (response.status === 200) {
   //           resolve(response.data);

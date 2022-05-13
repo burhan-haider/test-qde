@@ -83,7 +83,7 @@ function ModuleParamValue(props) {
     // console.log(searchParams);
     const result = await new Promise((resolve, reject) => {
       httpService
-        .post("/api/common/searchModuleParamValue", searchParams)
+        .post("/common/searchModuleParamValue", searchParams)
         .then(response => {
           if (response.status === 200) {
             resolve(response.data);

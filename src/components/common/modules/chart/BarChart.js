@@ -133,8 +133,7 @@ export default function BarChart(props) {
             }
           },
           scales: {
-            yAxes: [
-              {
+            yAxes: {
                 //stacked: true,
                 gridLines: {
                   display: true,
@@ -147,9 +146,8 @@ export default function BarChart(props) {
                 ticks: {
                   beginAtZero: true
                 }
-              }
-            ],
-            xAxes: [
+              },
+            xAxes: 
               {
                 gridLines: {
                   display: true
@@ -160,9 +158,8 @@ export default function BarChart(props) {
                 },
                 //barPercentage: 0.3,
                 ticks: {}
-              }
-            ],
-            scaleShowGridLines: true
+              },
+            // scaleShowGridLines: true
           }
         }}
       />

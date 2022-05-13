@@ -138,14 +138,14 @@ export default function ActionMasterComponent(props) {
   }, []);
 
   const getActionParams = async () => {
-    const result = await httpService.get(`/api/action/getActionParams`);
+    const result = await httpService.get(`/action/getActionParams`);
     setParamsForAction(result.data);
     //console.log(result.data);
   };
   //getActionParams();
 
   const getAllActionsList = async () => {
-    const result = await httpService.get(`/api/action/getAllActionsList`);
+    const result = await httpService.get(`/action/getAllActionsList`);
     setAllActionsList(result.data);
     //console.log(result.data);
   };

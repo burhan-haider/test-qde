@@ -23,7 +23,7 @@
 
 //   function addNewRole(newRoleDetails) {
 //     roleOperationService
-//       .createNewRole("/api/role/", newRoleDetails)
+//       .createNewRole("/role/", newRoleDetails)
 //       .then(data => {
 //         setOpen(false);
 //         props.refreshCurrentModule();
