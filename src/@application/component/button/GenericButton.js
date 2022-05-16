@@ -15,12 +15,9 @@ const styles = theme => ({
     "&:hover, &:focus": {
       color: "#fff",
       backgroundColor: "#052a4f"
-    }
+    },
+    textTransform: "none"
   },
-  buttonLabel: {
-    textTransform: "capitalize"
-    //color: "white"
-  }
 });
 
 function GenericButton(props) {

@@ -14,7 +14,8 @@ import {
   AccordionSummary as ExpansionPanelSummary,
   Typography,
   IconButton,
-  Divider
+  Divider,
+  Button
 } from "@mui/material";
 // import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 // import DeleteIcon from "@mui/icons-material/Delete";
@@ -47,6 +48,12 @@ const styles = theme => ({
     color: "#052a4f",
     fontSize: theme.typography.pxToRem(18),
     fontWeight: "500"
+  },
+  margin: {
+    borderRadius: "25px",
+    color: '#052a4f',
+    borderColor: '#052a4f',
+    textTransform: "none",
   }
 });
 
@@ -171,9 +178,10 @@ function ActionParamsForm(props) {
   };
 
   const handleRemoveFields = index => {
-    const values = [...inputFields];
-    values.splice(index, 1);
-    setInputFields(values);
+      const values = [...inputFields];
+      values.splice(index, 1);
+      setInputFields(values);
+    
   };
 
   const handleInputChange = (index, eventName, event, nextEvent) => {
@@ -311,17 +319,29 @@ function ActionParamsForm(props) {
             classes={{
               root: classes.root,
               expanded: classes.expandedPanel
-            }}
+            }}styles={{display: 'flex', justifyContent: "flex-end", flexDirection: 'row', alignItems: 'center'}}
           >
-            <Typography className={classes.heading} id="actionParamHeader">
+            <Typography sx={{display: 'flex', alignItems: 'center'}} className={classes.heading} id="actionParamHeader" >
               Action Parameter Master
             </Typography>
+           
           </ExpansionPanelSummary>
           <ExpansionPanelDetails
             align="left"
             id="actionParamExpansionPanelDetails"
-            style={{ padding: 5 }}
+            style={{ padding: 10 }}
           >
+             <Button
+              type="button"
+              aria-label="remove"
+              className={classes.margin}
+              color="primary"
+              variant="outlined"
+              onClick={() => handleAddFields()}
+            >
+              Add Field <AddIcon className="ml-2" color={'#052a4f'} size={25} />
+            </Button>
+            
             <Formsy
               onValid={() => setIsFormValid(true)}
               onInvalid={() => setIsFormValid(false)}
@@ -793,20 +813,17 @@ function ActionParamsForm(props) {
                     <Grid item xs={12}>
                       <Grid
                         container
-                        alignItems="flex-start"
-                        justify="flex-end"
-                        direction="row"
-                        style={{ marginRight: 15 }}
+                        style={{ marginRight: 15, display: "flex", justifyContent: "flex-end", flexDirection: "row" }}
                       >
-                        <IconButton
+                        {/* <IconButton
                           type="button"
                           aria-label="remove"
                           className={classes.margin}
                           color="primary"
                           onClick={() => handleAddFields()}
                         >
-                          <AddIcon fontSize="large" />
-                        </IconButton>
+                          <AddIcon color={'#3f51b5'} size={45} />
+                        </IconButton> */}
                         <IconButton
                           type="button"
                           aria-label="remove"
@@ -814,7 +831,7 @@ function ActionParamsForm(props) {
                           color="secondary"
                           onClick={() => handleRemoveFields(index)}
                         >
-                          <DeleteIcon fontSize="large" />
+                          <DeleteIcon color={'#f50057'} size={45} />
                         </IconButton>
                       </Grid>
                     </Grid>
@@ -823,10 +840,7 @@ function ActionParamsForm(props) {
               ))}
               <Grid
                 container
-                alignItems="flex-start"
-                justify="flex-end"
-                direction="row"
-                style={{ marginRight: 15 }}
+                style={{ marginRight: 15, display: "flex", justifyContent: "flex-end", flexDirection: "row" }}
               >
                 <GenericButton
                   type="button"

@@ -47,7 +47,7 @@ function SelectFormsy(props) {
     switch (importedProps.variant) {
       case "outlined":
         return (
-          <OutlinedInput labelWidth={props.label.length * 11} id={props.name} />
+          <OutlinedInput fullWidth={true} id={props.name} />
         );
       case "filled":
         return <FilledInput id={props.name} />;

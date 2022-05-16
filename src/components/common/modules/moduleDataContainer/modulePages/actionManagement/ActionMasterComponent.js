@@ -42,7 +42,8 @@ function selectedTabProps(index) {
 const Tabs = withStyles(theme => ({
   root: {
     minHeight: theme.typography.pxToRem("30"),
-    backgroundColor: "#f4f5fa"
+    backgroundColor: "#f4f5fa",
+    padding: '10px 10px'
   },
   indicator: {
     backgroundColor: "transparent"
@@ -139,6 +140,7 @@ export default function ActionMasterComponent(props) {
 
   const getActionParams = async () => {
     const result = await httpService.get(`/action/getActionParams`);
+    
     setParamsForAction(result.data);
     //console.log(result.data);
   };
