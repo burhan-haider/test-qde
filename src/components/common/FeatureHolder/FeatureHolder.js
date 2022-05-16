@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import { MdPushPin, MdBookmark, MdArrowDropDown } from 'react-icons/md'
 import ComponentHolder from 'components/common/componentHolder/ComponentHolder';
-import ModuleHolder from 'components/common/ModuleHolder'
+import ModuleHolder from 'components/common/ModuleHolder';
 import {useDispatch, useSelector} from 'react-redux';
 import { 
     setSelectedModule, 
@@ -40,9 +40,9 @@ const FeatureHolder = ({feature}) => {
   const dispatch =  useDispatch();
   const selectedFeature = useSelector(state => state.features.features.featureCode);
   //   const selectedNewFeature = useSelector(state=> state.features.features.featureCode)
-  const isLoading = useSelector(state=>state.features.features.isLoading);
+  const isLoading = useSelector(state=>state.features.features.isLoading)
 
-  const pinnedModules = useSelector(state => state.features.features.pinnedModules);
+  const pinnedModules = useSelector(state => state.features.features.pinnedModules)
   const features = useSelector(state => state.features.features);
 
   const open = Boolean(bookMark);
@@ -160,7 +160,7 @@ const FeatureHolder = ({feature}) => {
   
   
   const handleClick = (item) => {
-      dispatch(setSelectedModule(feature.featureCode, item.id));
+    dispatch(setSelectedModule(feature.featureCode, item.id));
     //   console.log("Item in Tabs", item)
 
     const currentModule = feature.modules.filter(e => e.uniqueNo === item.id)[0];
