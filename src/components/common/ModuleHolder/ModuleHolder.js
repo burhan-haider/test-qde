@@ -89,7 +89,7 @@ const ModuleHolder = ({feature, module, getModuleChartData}) => {
                         }
                         else{
                             return(
-                                <button key={item.uniqueNo} onClick={()=>handleClick(item)} className=" m-5 text-white font-bold border-none bg-red-500 hover:bg-red-700 rounded-md p-3 cursor-pointer">
+                                <button key={item.uniqueNo} onClick={()=>handleClick(item)} className=" m-5 text-white font-bold border-none bg-red-500 hover:bg-red-700 rounded-md p-3 cursor-pointer max-h-12">
                                     {item.moduleName}
                                 </button>
                             )
