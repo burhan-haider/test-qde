@@ -6,6 +6,7 @@ import pinned from './icons/pinned.png'
 
 import dashboard from './icons/feature/dashboard.png'
 import actionManagement from './icons/feature/actionManagement.png'
+import userAndRole from './icons/feature/userAndRole.png'
 import scenarios from './icons/feature/scenarios.png'
 import scanning from './icons/feature/scanning.png'
 import labelsFeature from './icons/feature/labelsFeature.png'
@@ -42,6 +43,7 @@ const icons = {
     actionManagement,
     scenarios,
     scanning,
+    userAndRole,
     labelsFeature,
     features,
     closeBlue,
