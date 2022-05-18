@@ -6,6 +6,8 @@ import pinned from './icons/pinned.png'
 
 import dashboard from './icons/feature/dashboard.png'
 import actionManagement from './icons/feature/actionManagement.png'
+import drsCaseWorkflow from './icons/feature/drsCaseWorkflow.png';
+import masterFeature from './icons/feature/allMaster.png'
 import userAndRole from './icons/feature/userAndRole.png'
 import scenarios from './icons/feature/scenarios.png'
 import scanning from './icons/feature/scanning.png'
@@ -63,7 +65,9 @@ const icons = {
     settings,
     speak,
     trace,
-    search1
+    search1,
+    drsCaseWorkflow,
+    masterFeature
 }
 
 const getIconByKey = (key) => {

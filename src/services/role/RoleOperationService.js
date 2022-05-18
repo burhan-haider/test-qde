@@ -24,7 +24,7 @@ class RoleOperationService {
   assignRoleToUser = async (userCode, roleIds) => {
     return await new Promise((resolve, reject) => {
       httpService
-        .post("/api/user/assignRole/" + userCode, roleIds)
+        .post("/user/assignRole/" + userCode, roleIds)
         .then(response => {
           if (response.status === 200) {
             resolve(response.data);
@@ -41,7 +41,7 @@ class RoleOperationService {
   roleFeatureMaping = async (roleId, featureCodes) => {
     return await new Promise((resolve, reject) => {
       httpService
-        .post("/api/role/feature/" + roleId, featureCodes)
+        .post("/role/feature/" + roleId, featureCodes)
         .then(response => {
           if (response.status === 200) {
             resolve(response.data);

@@ -20,7 +20,7 @@ class UserOperationService {
   verifyUser = data => {
     return new Promise((resolve, reject) => {
       httpService
-        .post("/api/user/verify/", data)
+        .post("/user/verify/", data)
         .then(response => {
           if (response.status === 200) {
             resolve(response.data);
