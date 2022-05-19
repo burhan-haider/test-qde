@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { makeStyles } from "@mui/styles";
+// import { makeStyles } from "@mui/styles";
 import {
   Table,
   TableHead,
@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { GenericTooltip } from "@application";
 import httpService from "services/httpservice/httpService";
-import CWFDetailsBottomPanel from "components/common/modules/moduleDataContainer/modulePages/common/bottomPages/caseWorkFlow/CWFDetailsBottomPanel";
+import CWFDetailsBottomPanel from "./CWFDetailsBottomPanel";
 import { useClasses } from "@application";
 
 const styles = theme => ({
