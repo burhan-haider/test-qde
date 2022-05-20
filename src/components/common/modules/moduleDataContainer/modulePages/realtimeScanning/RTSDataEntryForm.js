@@ -39,7 +39,7 @@ function RTSDataEntryForm(props) {
       >
         <Grid xs={4} item>
           <Grid container>
-            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm']}>
+            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm'].join(" ")}>
               Name 1
             </Grid>
             <Grid xs={7} item={true} style={{border: 'none'}} className={classes.TestAlignment}>
@@ -59,7 +59,7 @@ function RTSDataEntryForm(props) {
         </Grid>
         <Grid xs={4} item>
           <Grid container>
-            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm']}>
+            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm'].join(" ")}>
               Name 2
             </Grid>
             <Grid xs={7} item={true} className={classes.TestAlignment}>
@@ -78,7 +78,7 @@ function RTSDataEntryForm(props) {
         </Grid>
         <Grid xs={4} item>
           <Grid container>
-            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm']}>
+            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm'].join(" ")}>
               Name 3
             </Grid>
             <Grid xs={6} item={true} className={classes.TestAlignment}>
@@ -105,7 +105,7 @@ function RTSDataEntryForm(props) {
       >
         <Grid xs={4} item>
           <Grid container>
-            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm']}>
+            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm'].join(" ")}>
               Name 4
             </Grid>
             <Grid xs={7} item={true} className={classes.TestAlignment}>
@@ -124,7 +124,7 @@ function RTSDataEntryForm(props) {
         </Grid>
         <Grid xs={4} item>
           <Grid container>
-            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm']}>
+            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm'].join(" ")}>
               Name 5
             </Grid>
             <Grid xs={7} item={true} className={classes.TestAlignment}>
@@ -143,7 +143,7 @@ function RTSDataEntryForm(props) {
         </Grid>
         <Grid xs={4} item>
           <Grid container>
-            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm']}>
+            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm'].join(" ")}>
               Date of Birth
             </Grid>
             <Grid xs={6} item={true} className={classes.TestAlignment}>
@@ -170,7 +170,7 @@ function RTSDataEntryForm(props) {
       >
         <Grid xs={4} item>
           <Grid container>
-            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm']}>
+            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm'].join(" ")}>
               Passport No
             </Grid>
             <Grid xs={7} item={true} className={classes.TestAlignment}>
@@ -189,7 +189,7 @@ function RTSDataEntryForm(props) {
         </Grid>
         <Grid xs={4} item>
           <Grid container>
-            <Grid xs={5} item={true} className={[classes.TestAlignment, , 'text-sm']}>
+            <Grid xs={5} item={true} className={[classes.TestAlignment, , 'text-sm'].join(" ")}>
               National Id value
             </Grid>
             <Grid xs={7} item={true} className={classes.TestAlignment}>
@@ -208,7 +208,7 @@ function RTSDataEntryForm(props) {
         </Grid>
         <Grid xs={4} item>
           <Grid container>
-            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm' ]}>
+            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm' ].join(" ")}>
               Account No
             </Grid>
             <Grid xs={6} item={true} className={classes.TestAlignment}>
@@ -235,7 +235,7 @@ function RTSDataEntryForm(props) {
       >
         <Grid xs={4} item>
           <Grid container>
-            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm']}>
+            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm'].join(" ")}>
               Customer Id
             </Grid>
             <Grid xs={7} item={true} className={classes.TestAlignment}>
@@ -254,7 +254,7 @@ function RTSDataEntryForm(props) {
         </Grid>
         <Grid xs={4} item>
           <Grid container>
-            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm']}>
+            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm'].join(" ")}>
               Address
             </Grid>
             <Grid xs={7} item={true} className={classes.TestAlignment}>
@@ -273,7 +273,7 @@ function RTSDataEntryForm(props) {
         </Grid>
         <Grid xs={4} item>
           <Grid container>
-            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm']}>
+            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm'].join(" ")}>
               Image File Path
             </Grid>
             <Grid xs={6} item={true} className={classes.TestAlignment}>
@@ -295,7 +295,7 @@ function RTSDataEntryForm(props) {
       <Grid container alignItems="center" className={classes.MuiGridRow}>
         <Grid xs={4} item>
           <Grid container>
-            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm']}>
+            <Grid xs={5} item={true} className={[classes.TestAlignment, 'text-sm'].join(" ")}>
               Image Scan Threshold
             </Grid>
             <Grid xs={7} item={true} className={classes.TestAlignment}>

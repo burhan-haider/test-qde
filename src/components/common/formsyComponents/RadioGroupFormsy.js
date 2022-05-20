@@ -24,7 +24,7 @@ function RadioGroupFormsy(props) {
   const value = props.value;
 
   function changeValue(event, value) {
-    console.log(event, value);
+    // console.log(event, value);
     props.setValue(value);
     if (props.onChange) {
       props.onChange(event);

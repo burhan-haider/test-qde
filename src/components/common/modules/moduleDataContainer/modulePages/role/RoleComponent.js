@@ -30,7 +30,7 @@ function RoleComponent(props) {
         props.refreshCurrentModule();
       })
       .catch(err => {
-        console.log(err);
+        console.log("Role Operation Service Error:-",err);
       });
   }
   return (

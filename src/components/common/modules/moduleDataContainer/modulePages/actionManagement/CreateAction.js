@@ -78,7 +78,7 @@ export default function CreateAction(props) {
         setIsFormValid(true);
       })
       .catch(error => {
-        console.log(error);
+        console.log("caseworkflow Service Error:-",error);
       });
   };
 
@@ -108,7 +108,7 @@ export default function CreateAction(props) {
           //setShowActionForm2(true);
         })
         .catch(error => {
-          console.log(error);
+          console.log("caseworkflow Service Error:-",error);
         });
     } else if (submitType === "update") {
       caseWorkflowService
@@ -117,7 +117,7 @@ export default function CreateAction(props) {
           alert(data);
         })
         .catch(error => {
-          console.log(error);
+          console.log("caseworkflow Service Error:-",error);
         });
     }
   };

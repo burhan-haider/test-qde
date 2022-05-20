@@ -50,7 +50,6 @@ const Header = () => {
 
     useEffect(() => {
         dispatch(fetchUserFeature(user))
-        console.log("selectedFeature", selectedFeature);
         if(selectedFeature==null){
             dispatch(setSelectedFeature('dashboard'))
             dispatch(fetchFeatureModules('dashboard'))

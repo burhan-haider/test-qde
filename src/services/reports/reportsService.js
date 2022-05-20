@@ -71,7 +71,7 @@ class reportsService {
         .then(response => {
           if (response.status === 200) {
             resolve(response.data);
-            console.log(response.headers);
+            // console.log(response.headers);
             if (window.navigator && window.navigator.msSaveOrOpenBlob) {
               // IE variant
               window.navigator.msSaveOrOpenBlob(

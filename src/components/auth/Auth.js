@@ -5,7 +5,7 @@ function Auth(props) {
   return (
     <React.Fragment>
       {props.children}
-      {console.log("through auth", props)}
+      {/* {console.log("through auth", props)} */}
     </React.Fragment>
   );
 }

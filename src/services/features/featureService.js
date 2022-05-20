@@ -2,7 +2,7 @@ import httpService from "../httpservice/httpService";
 
 class featureService {
   fetchFeaturesmodulesList = async featureCode => {
-    console.log(featureCode);
+    // console.log(featureCode);
     return await new Promise((resolve, reject) => {
       // httpService.get(`/common/feature/${featureCode}`).then(response => {
       httpService.get(`/common/feature/${featureCode}`).then(response => {

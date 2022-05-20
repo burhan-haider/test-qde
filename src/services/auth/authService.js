@@ -16,14 +16,14 @@ class AuthService {
         .then((response) => {
           if (response.status === 200) {
             this.setSession(response.data.token);
-            console.log("response :"+response.data.token);
+            // console.log("response :"+response.data.token);
             resolve(response.data.token);
           } else {
             reject(response.data.message);
           }
         })
         .catch((error) => {
-          console.log(error);
+          console.log("http Service Error:-",error);
           // if (error.response.status === 500) {
           //   // resolve(error.response);
           //   reject(error.response);

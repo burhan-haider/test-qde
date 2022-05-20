@@ -10,7 +10,6 @@ import { removerFromRefreshModule } from "redux/features/features.actions";
 
 export default function ModuleDataContainer(props) {
   const { moduleCode, moduleURL, presentationCategory, moduleId, feature } = props;
-  console.log("moduleCode", moduleCode);
   const [indexPageData, setindexPageData] = useState(null);
   const [dataLoading, setDataLoading] = useState(true);
   const [error, setError] = useState();
@@ -74,7 +73,7 @@ export default function ModuleDataContainer(props) {
   let PageComponent = ModuleComponentConfig[presentationCategory]
     ? ModuleComponentConfig[presentationCategory]
     : ModuleComponentConfig["Error_404"];
-  console.log("module :", ModuleComponentConfig[presentationCategory]);
+  // console.log("module :", ModuleComponentConfig[presentationCategory]);
   return (
     <div>
       {dataLoading ? (

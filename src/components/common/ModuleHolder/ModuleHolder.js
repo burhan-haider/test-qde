@@ -23,7 +23,6 @@ const ModuleHolder = ({feature, module, getModuleChartData}) => {
         // console.log("Item Parent Id:-", item.parentModuleId)
         feature.breadCrumbs.map(crumb=>{
             if(item.parentModuleId === crumb.id){
-                console.log("Module Parent Matches Crumb")
                 dispatch(addToBreadcrumbs(feature.featureCode, {
                     id:item.uniqueNo, 
                     label: item.moduleName, 
@@ -40,7 +39,6 @@ const ModuleHolder = ({feature, module, getModuleChartData}) => {
         })
 
         dispatch(setSelectedModule(feature.featureCode, item.uniqueNo))
-        console.log("Clicked Module:-", item)
         if(item.hasChildren == true){
             getModuleChartData(item);
         }
@@ -49,7 +47,7 @@ const ModuleHolder = ({feature, module, getModuleChartData}) => {
     
 
     return(
-        <div>
+        <div className='sm:max-h-[300px] lg:min-h-[450px]'>
             {module.hasChildren==false ? (
                 <>
                     {module.presentationCategory!==null ? (
@@ -79,8 +77,8 @@ const ModuleHolder = ({feature, module, getModuleChartData}) => {
                     {modules.map(item=>{
                         if(item.moduleChartDetails!=null){
                             return(
-                                <Grid item xs={6} >
-                                    <div className="text-center m-4" >
+                                <Grid item xs={6} key={item.uniqueNo} >
+                                    <div className="text-center mx-2" >
                                         <p>{item.moduleName}</p>
                                         <ModuleChartFrame current={item} getModuleChartData={getModuleChartData} feature={feature} />
                                     </div>

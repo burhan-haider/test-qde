@@ -60,7 +60,6 @@ const FeatureHolder = ({feature}) => {
             setModules(feature.modules);
       }
       if(feature.showModule === selectedFeature){
-        console.log('This UseEffect was Fired!!')
         feature.breadCrumbs.map(crumb=>{
             if(crumb.id!==feature.featureCode){
                 dispatch(removeFromBreadcrumbs(feature.featureCode, crumb))
@@ -98,7 +97,6 @@ const FeatureHolder = ({feature}) => {
         const trailIndex = trail.findIndex(x => x.code === module_Id);
         if (trail.slice(1, trailIndex).length > 0) {
           const finalUrl = `~~~${trail.slice(1, trailIndex)[0].code}`;
-          console.log("2nd One was fired")
           mainUrl = `${url}${finalUrl.replace(
             ",",
             ""
@@ -106,7 +104,6 @@ const FeatureHolder = ({feature}) => {
           mainUrl.replace(",", "");
         } else {
           const finalUrl = `~~~${module_Id}`;
-          console.log("3rd one was fired")
           mainUrl = `${url}${finalUrl.replace(",", "")}`;
           mainUrl.replaceAll(",", "");
         }
@@ -144,8 +141,6 @@ const FeatureHolder = ({feature}) => {
         dispatch(putMapClickedDataInFeatures(moduleDataArray));
       }
       makeApiCallUrl(uniqueNo, module_Id, parentModule_Id).then(res => {
-      console.log("TRAIL----->",trail)
-      console.log('URL----->',res);
         dispatch(
           fetchModuleDetails(
             res,

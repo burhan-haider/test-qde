@@ -18,6 +18,7 @@ import {
     REMOVE_REFRESH_MODULE
 } from 'redux/features/features.types';
 import _ from "lodash";
+import { RESET_STATE_AFTER_LOGOUT } from 'redux/auth/user/user.types';
 
 const initialState = {
     userFeatures: [],
@@ -255,6 +256,18 @@ const features = (state = initialState, action) => {
             return {
                 ...state,
                 refreshModule: null
+            };
+        }
+        case RESET_STATE_AFTER_LOGOUT: {
+            return {
+                userFeatures: [],
+                featureCode: null,
+                features: [],
+                openFeatures: [],
+                pinnedModules: [],
+                success: true,
+                refreshModule: true,
+                isLoading: true,
             };
         }
         default:

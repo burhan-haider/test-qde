@@ -90,7 +90,7 @@ class commonService {
           .get(url)
           .then((response) => {
             if (response.status === 200) {
-              console.log("fetchIndexPageData :"+response.data);
+              // console.log("fetchIndexPageData :"+response.data);
               resolve(response.data);
             } else {
               reject(response.data.err);

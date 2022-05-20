@@ -99,7 +99,7 @@ function ActionsBottomContainer(props) {
         })
         .catch(error => {
           if (!unmounted) {
-            console.log(error);
+            console.log("caseworkflow Service Error:-",error);
           }
         });
     } else {
@@ -112,7 +112,7 @@ function ActionsBottomContainer(props) {
         })
         .catch(error => {
           if (!unmounted) {
-            console.log(error);
+            console.log("caseworkflow Service Error:-",error);
           }
         });
     }

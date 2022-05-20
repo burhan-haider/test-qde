@@ -230,7 +230,7 @@ class MasterModuleHyperlinks {
   ) => {
     //console.log(desiredHyperlinkFunction + "---" + hyperlinkDetailsModule);
     //VIVEK - Below line is for separate functions click for each hyperlink
-    return this[desiredHyperlinkFunction](
+    return [desiredHyperlinkFunction](
       hyperlinkTitle,
       hyperlinkDetailsModule,
       hyperlinkRow,

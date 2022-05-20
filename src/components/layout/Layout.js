@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from './header/Header';
 import { Box } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 const Layout = ({ children }) => {
+
+    
+    
     
     return (
         <Box sx={{
-            minHeight: '99vh',
+            minHeight: '97vh',
             background: '#052a4f',
             paddingBottom: 1
         }} >

@@ -1,3 +1,4 @@
+import { RESET_STATE_AFTER_LOGOUT } from "../user/user.types";
 import {
   LOGIN_ERROR,
   LOGIN_SUCCESS,
@@ -19,6 +20,11 @@ const login = (state = initialState, action) => {
         success: false,
         error: action.payload
       };
+    }
+    case RESET_STATE_AFTER_LOGOUT:{
+      return {
+        success: false
+      }
     }
     default: {
       return state;

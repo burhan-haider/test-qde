@@ -37,11 +37,11 @@ function ModuleChartFrame(props) {
 
   const chartClickOperation = (module) => {
 
-    console.log("chartClickOperations Triggered")
-    console.log("Module Element Name:",module)
-    console.log("Module Data:",current)
-    console.log("Chart Feature:", feature)
-    console.log('Feature BreadCrumbs:-',feature.breadCrumbs)
+    // console.log("chartClickOperations Triggered")
+    // console.log("Module Element Name:",module)
+    // console.log("Module Data:",current)
+    // console.log("Chart Feature:", feature)
+    // console.log('Feature BreadCrumbs:-',feature.breadCrumbs)
 
     if(current.module_Id == module){
 

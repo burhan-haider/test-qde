@@ -28,7 +28,6 @@ export function setGuestUserRole() {
 }
 
 export function logoutUser() {
-  console.log("yess");
   return (dispatch) => {
     AuthService.logout();
     dispatch(resetStoreAfterLogOut());

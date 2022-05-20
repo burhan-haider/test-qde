@@ -83,7 +83,7 @@ function GenericTableHead(props) {
             id={headCell.id}
             key={headCell.id}
             align={headCell.numeric ? "left" : "left"}
-            padding={headCell.disablePadding ? "none" : "default"}
+            padding={headCell.disablePadding ? "none" : "normal"}
             sortDirection={orderBy === headCell.id ? order : false}
           >
             <TableSortLabel

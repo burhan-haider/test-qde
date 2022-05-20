@@ -29,7 +29,7 @@ const styles = theme => ({
 });
 
 function UserRoleMapping(props) {
-  console.log(props);
+  // console.log(props);
   let userAndRole =
     props && props.indexPageData ? props.indexPageData.USERANDROLE : false;
   let userCodeList = Object.keys(userAndRole);

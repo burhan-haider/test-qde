@@ -1,3 +1,4 @@
+import { RESET_STATE_AFTER_LOGOUT } from 'redux/auth/user/user.types';
 import { SET_OPENED_REPORTS_DATA } from './reportsdetails.types'
 
 
@@ -19,7 +20,11 @@ const reportsDetails = function(state = initialState, action) {
         }
       };
     }
-
+    case RESET_STATE_AFTER_LOGOUT:{
+      return {
+        openedReportDetails: {}
+      };
+    }
     default: {
       return state;
     }

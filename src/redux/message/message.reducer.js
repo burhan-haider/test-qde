@@ -3,6 +3,8 @@ import {
     SHOW_MESSAGE,
 } from './message.types';
 
+import {RESET_STATE_AFTER_LOGOUT} from 'redux/auth/user/user.types';
+
 const initialState = {
     state: null,
     options: {
@@ -31,6 +33,20 @@ const initialState = {
         return {
           ...state,
           state: null
+        };
+      }
+      case RESET_STATE_AFTER_LOGOUT: {
+        return {
+          state: null,
+          options: {
+            anchorOrigin: {
+              vertical: "bottom",
+              horizontal: "center"
+            },
+            autoHideDuration: 6000,
+            message: "Cognifi",
+            variant: null
+          }
         };
       }
       default: {

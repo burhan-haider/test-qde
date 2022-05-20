@@ -308,7 +308,6 @@ export default function FeaturesModules(props) {
     featureService.fetchAllModules().then(response => {
       setAllModules(response);
     });
-    console.log('FEATURES MODULE IS COMING BRO!')
   }, []);
 
   useEffect(() => {
