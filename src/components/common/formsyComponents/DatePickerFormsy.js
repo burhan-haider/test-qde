@@ -1,5 +1,12 @@
 import React from "react";
-import { DatePicker, DateTimePicker } from "@mui/x-date-pickers";
+import { 
+  DatePicker, 
+  DateTimePicker, 
+  LocalizationProvider,
+} from "@mui/x-date-pickers";
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+// import AdapterDateFns from '@mui/lab/AdapterDateFns'
+import { TextField } from "@mui/material";
 import { withFormsy } from "formsy-react";
 import _ from "lodash";
 import moment from "moment";
@@ -75,35 +82,42 @@ function DatePickerFormsy(props) {
   return (
     <React.Fragment>
       {props.dateTime ? (
-        <DateTimePicker
-          {...importedProps}
-          inputVariant="outlined"
-          autoOk
-          ampm={props.ampm}
-          className={props.className}
-          onChange={changeValue}
-          clearable
-          value={value}
-          format="dd/MM/yyyy HH:mm"
-          allowKeyboardControl={props.allowKeyboardControl}
-          error={Boolean(errorMessage)}
-          helperText={errorMessage}
-        />
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <DateTimePicker
+            {...importedProps}
+            inputVariant="outlined"
+            autoOk
+            ampm={props.ampm}
+            className={props.className}
+            onChange={changeValue}
+            clearable
+            value={value}
+            format="dd/MM/yyyy HH:mm"
+            allowKeyboardControl={props.allowKeyboardControl}
+            error={Boolean(errorMessage)}
+            helperText={errorMessage}
+            renderInput={(props)=><TextField {...props} />}
+          />
+        </LocalizationProvider>
       ) : (
-        <DatePicker
-          {...importedProps}
-          inputVariant="outlined"
-          autoOk
-          ampm={props.ampm}
-          className={props.className}
-          onChange={changeValue}
-          clearable
-          value={value}
-          format="dd/MM/yyyy"
-          allowKeyboardControl={props.allowKeyboardControl}
-          error={Boolean(errorMessage)}
-          helperText={errorMessage}
-        />
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <DatePicker
+            {...importedProps}
+            inputVariant="outlined"
+            autoOk
+            ampm={props.ampm}
+            className={props.className}
+            onChange={changeValue}
+            clearable
+            value={value}
+            format="dd/MM/yyyy"
+            allowKeyboardControl={props.allowKeyboardControl}
+            error={Boolean(errorMessage)}
+            helperText={errorMessage}
+            renderInput={(props)=><TextField {...props} />}
+          />
+        </LocalizationProvider>
+
       )}
     </React.Fragment>
   );

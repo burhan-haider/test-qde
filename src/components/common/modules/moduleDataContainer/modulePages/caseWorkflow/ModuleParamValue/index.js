@@ -93,7 +93,7 @@ function ModuleParamValue(props) {
     const getColNamesForView = async () => {
       const viewName = props.modalContent.viewName;
       const result = await httpService.post(
-        `api/common/getGenericSearchViewColumns/${viewName}`
+        `common/getGenericSearchViewColumns/${viewName}`
       );
       setColNamesForView(result.data);
     };

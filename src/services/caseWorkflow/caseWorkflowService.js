@@ -61,7 +61,7 @@ class caseWorkflowService {
     return new Promise((resolve, reject) => {
       httpService
         .post(
-          `api/action/getActionDetails`,
+          `action/getActionDetails`,
           {
             headers: {
               Authorization: `Bearer ${window.localStorage.getItem(
@@ -99,7 +99,7 @@ class caseWorkflowService {
     return new Promise((resolve, reject) => {
       httpService
         .post(
-          `api/action/getActionParamDetails`,
+          `action/getActionParamDetails`,
           {
             headers: {
               Authorization: `Bearer ${window.localStorage.getItem(
@@ -240,7 +240,7 @@ class caseWorkflowService {
     return new Promise((resolve, reject) => {
       httpService
         .post(
-          `api/caseworkflow/getCWFCommentsDetails`,
+          `/caseworkflow/getCWFCommentsDetails`,
           {
             headers: {
               Authorization: `Bearer ${window.localStorage.getItem(
@@ -266,7 +266,7 @@ class caseWorkflowService {
     return new Promise((resolve, reject) => {
       httpService
         .post(
-          `api/caseworkflow/getCWFCaseAndCommentsDetails`,
+          `/caseworkflow/getCWFCaseAndCommentsDetails`,
           {
             headers: {
               Authorization: `Bearer ${window.localStorage.getItem(

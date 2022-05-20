@@ -42,7 +42,7 @@ function ActionRegistry(props) {
 
       const getDetailsForAction = async () => {
         const result = await httpService.post(
-          `api/caseworkflow/getCWFCaseAndCommentsDetails`,
+          `caseworkflow/getCWFCaseAndCommentsDetails`,
           config,
           { params: paramData }
         );

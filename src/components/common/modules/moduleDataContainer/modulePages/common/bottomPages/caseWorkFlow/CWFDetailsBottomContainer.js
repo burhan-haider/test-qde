@@ -56,7 +56,7 @@ function CWFDetailsBottomContainer(props) {
       const result = await new Promise((resolve, reject) => {
         httpService
           .post(
-            "api/caseworkflow/getCWFCaseAndCommentsDetails",
+            "/caseworkflow/getCWFCaseAndCommentsDetails",
             {
               headers: {
                 Authorization: `Bearer ${window.localStorage.getItem(

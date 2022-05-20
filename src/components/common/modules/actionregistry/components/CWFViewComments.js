@@ -54,7 +54,7 @@ function CWFApproveCase(props) {
   const dataSet = {
     "Case Comments History": new Promise((resolve, reject) => {
       httpService
-        .post(`api/caseworkflow/getCWFCaseAndCommentsDetails`, config, {
+        .post(`/caseworkflow/getCWFCaseAndCommentsDetails`, config, {
           params: paramData
         })
         .then(response => {
