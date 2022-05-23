@@ -25,6 +25,7 @@
 
 html{
   font-family: 'GoogleSans-Regular',-apple-system, BlinkMacSystemFont, 'Segoe UI',Roboto, Helvetica Neue, Arial, sans-serif;
+  overflow: hidden;
 }
 body {
   margin: 0;
@@ -49,4 +50,5 @@ code {
 .no-scrollbar {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
+  overflow-y: scroll;
 }
