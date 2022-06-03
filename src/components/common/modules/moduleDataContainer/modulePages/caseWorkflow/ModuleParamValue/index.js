@@ -89,16 +89,19 @@ function ModuleParamValue(props) {
   //   setSelectedValuesArr(data);
   // };
 
+  const getColNamesForView = async () => {
+    const viewName = props.modalContent.viewName;
+    const result = await httpService.post(
+      `common/getGenericSearchViewColumns/${viewName}`
+    );
+    setColNamesForView(result.data);
+    console.log("Column Data Was Set!", )
+  };
+
   useEffect(() => {
-    const getColNamesForView = async () => {
-      const viewName = props.modalContent.viewName;
-      const result = await httpService.post(
-        `common/getGenericSearchViewColumns/${viewName}`
-      );
-      setColNamesForView(result.data);
-    };
+    console.log("UseEffect Was Called")
     getColNamesForView();
-  }, [props.modalContent.viewName]);
+  });
 
   const ResultFrame = () => (
     <div

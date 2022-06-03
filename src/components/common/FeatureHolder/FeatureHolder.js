@@ -11,10 +11,12 @@ import {
     Link,
     CircularProgress,
 } from '@mui/material';
-import { MdPushPin, MdBookmark, MdArrowDropDown } from 'react-icons/md'
+import { MdPushPin, MdBookmark, MdArrowDropDown, MdRefresh } from 'react-icons/md'
+import { IoMdRefreshCircle } from 'react-icons/io'
 import ComponentHolder from 'components/common/componentHolder/ComponentHolder';
 import ModuleHolder from 'components/common/ModuleHolder';
 import {useDispatch, useSelector} from 'react-redux';
+import { useClasses } from '@application'
 import { 
     setSelectedModule, 
     addToBreadcrumbs, 
@@ -31,11 +33,29 @@ import getIconByKey from 'assets';
 import ModuleChartFrame from 'components/common/modules/mainModuleSearchFrame/ModuleChartFrame'
 import { handleBreakpoints } from '@mui/system';
 
+const styles = theme => ({
+    chipRoot: {
+        "& .MuiChip-icon": {
+          order: 1, // the label has a default order of 0, so this icon goes after the label
+          marginRight: "5px", // add some space between icon and delete icon
+          marginLeft: '-2px',
+          cursor: "pointer"
+        },
+        "& .MuiChip-deleteIcon": {
+          order: 2 // since this is greater than an order of 1, it goes after the icon
+        }
+      }
+})
+
 const FeatureHolder = ({feature}) => {
 
   const [bookMark, toggleBookMark] = useState(null);
   const [trail, setTrail] = useState(feature.breadCrumbs);
   const [modules, setModules] = useState(null);
+  const [isModuleLoading, setIsModuleLoading] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const classes = useClasses(styles);
 
   const dispatch =  useDispatch();
   const selectedFeature = useSelector(state => state.features.features.featureCode);
@@ -152,6 +172,62 @@ const FeatureHolder = ({feature}) => {
       });
     }
   }
+
+  const handleRefresh = (item) => {
+
+    setIsModuleLoading(true);
+
+    console.log("Refresh Item:", item)
+    const module = feature.modules.filter(e => e.uniqueNo === item.id)[0];
+
+    if(module!==undefined&&module!=null){
+        const { uniqueNo, module_Id, parentModule_Id, dataPointClick } = module;
+        let moduleDataArray = [];
+        moduleDataArray.push({
+        uniqueNo: module.uniqueNo,
+        module_Id: module.module_Id,
+        moduleName: module.moduleName,
+        parentModule_Id: module.parentModule_Id,
+        parentModuleId: module.parentModuleId,
+        url: module.moduleURL,
+        presentationCategory: module.presentationCategory,
+        dataPointClick: module.dataPointClick,
+        hasChildren: module.hasMoreChild
+        });
+        // if (dataPointClick !== undefined && dataPointClick === true) {
+        //     dispatch(putMapClickedDataInFeatures(moduleDataArray));
+        //   }
+        if(module.moduleURL != null){
+            setIsRefreshing(true);
+            // dispatch(
+            //     fetchModuleDetails(
+            //         module.moduleURL,
+            //         module_Id,
+            //         uniqueNo,
+            //         selectedFeature
+            //     )
+            // );
+            setIsModuleLoading(false);
+        }
+        else{
+            makeApiCallUrl(uniqueNo, module_Id, parentModule_Id).then(res => {
+                console.log("Final URL",res)
+                dispatch(
+                    fetchModuleDetails(
+                    res,
+                    module_Id,
+                    uniqueNo,
+                    selectedFeature
+                    )
+                );
+                setIsModuleLoading(false);
+            });
+        }
+          
+
+    }
+    
+  }
   
   
   const handleClick = (item) => {
@@ -266,7 +342,23 @@ const FeatureHolder = ({feature}) => {
                         {feature.openTabs.length>0 && feature.openTabs.map((item, index)=>(
                             <span key={index} >
                                 {feature.showModule===item.id ? (
-                                    <Chip key={item.id} style={{backgroundColor: '#83a3bb',}} className="text-xs m-1 text-white" label={item.label} size="small" onDelete={()=>handleDelete(item)} />
+                                    <Chip 
+                                        key={item.id} 
+                                        style={{backgroundColor: '#83a3bb',}} 
+                                        className="text-xs m-1 text-white" 
+                                        label={item.label}
+                                        icon={
+                                            <IoMdRefreshCircle 
+                                                className=" text-[#61798b] hover:text-[#565f6f]" 
+                                                onClick={()=>{handleRefresh(item)}} 
+                                            />
+                                        }
+                                        size="small" 
+                                        onDelete={()=>handleDelete(item)}
+                                        classes={{
+                                            root: classes.chipRoot,
+                                        }} 
+                                    />
                                 ):(
                                     <Chip key={item.id} style={{border: '1px solid #83a3bb'}} className=" bg-transparent hover:bg-light-grey hover:text-white text-xs m-1" size="small" label={item.label} onClick={()=>handleClick(item)}  onDelete={()=>handleDelete(item)} />
                                 )}
@@ -318,7 +410,7 @@ const FeatureHolder = ({feature}) => {
             }}
             >
                 {pinnedModules.length>0 ? pinnedModules.map((item)=>(
-                    <MenuItem disableRipple>
+                    <MenuItem disableRipple key={item.featureCode}>
                         <Link component="button" onClick={()=>handleOpenPin(item)} className="text-2xl" underline='false' >{item.moduleName}</Link>
                         &nbsp;&nbsp;
                         <IconButton sx={{width: '14px', height: '14px'}} className="p-1" onClick={()=>handleRemovePin(item)} >
@@ -333,14 +425,31 @@ const FeatureHolder = ({feature}) => {
             <CircularProgress />
         ):(
             <>
-                <ComponentHolder index={feature.featureCode} type={'main'} value={feature.showModule}>
-                    <MainPage key={feature.featureCode} feature={feature} getModuleChartData={getModuleChartData} />
-                </ComponentHolder>
-                {feature.modules.length > 0 && feature.modules.map((item)=>(
-                    <ComponentHolder index={item.uniqueNo} key={item.uniqueNo} type={'main'} value={feature.showModule}  >
-                        <ModuleHolder feature={feature} module={item} getModuleChartData={getModuleChartData} />
-                    </ComponentHolder>
-                ))}
+                {isModuleLoading?(
+                    <Box
+                        className={'bg-white m-5 mt-4 mb-2 pb-2 pt-2 rounded-md h-[80vh] overflow-y-scroll no-scrollbar'}
+                    >
+                        <CircularProgress />     
+                    </Box>
+                ):(
+                    <>
+                        <ComponentHolder index={feature.featureCode} type={'main'} value={feature.showModule}>
+                            <MainPage 
+                                key={feature.featureCode} 
+                                feature={feature} 
+                                getModuleChartData={getModuleChartData} 
+                                isRefreshing={isRefreshing}
+                                setIsRefreshing={setIsRefreshing}
+                            />
+                        </ComponentHolder>
+                        {feature.modules.length > 0 && feature.modules.map((item)=>(
+                            <ComponentHolder index={item.uniqueNo} key={item.uniqueNo} type={'main'} value={feature.showModule}  >
+                                <ModuleHolder isRefreshing={isRefreshing} setIsRefreshing={setIsRefreshing} feature={feature} module={item} getModuleChartData={getModuleChartData} />
+                            </ComponentHolder>
+                        ))}
+                    </>
+                )}
+                
             </>
         )}
             
@@ -348,7 +457,7 @@ const FeatureHolder = ({feature}) => {
   )
 }
 
-const MainPage = ({feature, getModuleChartData}) =>{
+const MainPage = ({feature, getModuleChartData, isRefreshing, setIsRefreshing}) =>{
 
     const dispatch = useDispatch();
 
@@ -387,7 +496,13 @@ const MainPage = ({feature, getModuleChartData}) =>{
 
                     <div className="text-center mx-2 my-0" >
                         <p>{item.moduleName}</p>
-                        <ModuleChartFrame current={item} getModuleChartData={getModuleChartData} feature={feature} />
+                        <ModuleChartFrame 
+                            current={item} 
+                            getModuleChartData={getModuleChartData} 
+                            feature={feature} 
+                            isRefreshing={isRefreshing}
+                            setIsRefreshing={setIsRefreshing}
+                        />
                     </div>
 
                 ):(

@@ -74,7 +74,13 @@ const theme = createTheme({
 let tempPage = 0;
 
 function GenericDatatable(props) {
+
   const classes = useClasses(styles);
+
+  const completeHeader = props.dataSet.HEADER ? props.dataSet.HEADER : [];
+  const completeData = props.dataSet.DATA ? props.dataSet.DATA : [];
+  const actionButtons = props.dataSet.ACTIONBUTTONS ? props.dataSet.ACTIONBUTTONS : [];
+
   const [isDatatableShown, setIsDatatableShown] = useState(true);
   const [order, setOrder] = useState("asc");
   const [orderBy, setOrderBy] = useState("");
@@ -82,14 +88,11 @@ function GenericDatatable(props) {
   const [page, setPage] = useState(tempPage);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [headers, setHeaders] = useState([]);
-  const [rows, setRows] = useState([]);
+  const [rows, setRows] = useState(completeData);
   // VIVEK - using resettedData only for filtering the fields based on resetted columns data
-  const [resettedData, setResettedData] = useState([]);
-  const completeHeader = props.dataSet.HEADER ? props.dataSet.HEADER : [];
-  const completeData = props.dataSet.DATA ? props.dataSet.DATA : [];
-  const actionButtons = props.dataSet.ACTIONBUTTONS
-    ? props.dataSet.ACTIONBUTTONS
-    : [];
+  const [resettedData, setResettedData] = useState(completeData);
+
+    
   //console.log("reloadDataFunc :>> ", props.reloadData);
   // console.log("inputParams :>> ", props.inputParams);
   //console.log("Vivek - CompleteHeader", completeHeader);
@@ -115,14 +118,18 @@ function GenericDatatable(props) {
 
   //console.log("VIVEK------");
   // VIVEK - setting rows data
-  useEffect(() => {
-    //console.log("useEffect 1");
-    setRows(completeData);
-    setResettedData(completeData);
-  }, [completeData]);
+  // useEffect(() => {
+  //   console.log("useEffect 1");
+  //   console.log("Rows:-", rows);
+  // });
+
+  // useEffect(() => {
+  //   console.log("useEffect 3");
+  //   console.log("Headers:-", headers);
+  // });
 
   useEffect(() => {
-    //console.log("useEffect 2");
+    console.log("useEffect 2");
     const intermediateAllHeadCells = [];
     const intermediateResetColumnHeaders = [];
     for (var i = 0; i < completeHeader.length; i++) {
@@ -150,16 +157,14 @@ function GenericDatatable(props) {
       );
     }
     setAllHeadCells(intermediateAllHeadCells);
+    setHeaders(intermediateAllHeadCells);
     setResetColumnHeaders(intermediateResetColumnHeaders);
   }, [completeHeader, hyperlinksMap]);
 
-  useEffect(() => {
-    //console.log("useEffect 3");
-    setHeaders(allHeadCells);
-  }, [allHeadCells]);
+  
 
   useEffect(() => {
-    //console.log("useEffect 4");
+    console.log("useEffect 4");
     if (resetColumns.length === 0) {
       setHeaders(allHeadCells);
       setRows(completeData);

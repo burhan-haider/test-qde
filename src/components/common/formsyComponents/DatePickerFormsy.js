@@ -93,6 +93,9 @@ function DatePickerFormsy(props) {
             clearable
             value={value}
             format="dd/MM/yyyy HH:mm"
+            // format="dd/MM/yyyy"
+            inputFormat="dd/MM/yyyy HH:mm"
+            toolbarFormat="dd/MM/yyyy HH:mm"
             allowKeyboardControl={props.allowKeyboardControl}
             error={Boolean(errorMessage)}
             helperText={errorMessage}
@@ -111,6 +114,8 @@ function DatePickerFormsy(props) {
             clearable
             value={value}
             format="dd/MM/yyyy"
+            inputFormat="dd/MM/yyyy"
+            toolbarFormat="dd/MM/yyyy"
             allowKeyboardControl={props.allowKeyboardControl}
             error={Boolean(errorMessage)}
             helperText={errorMessage}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card, Paper } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import Box from '@mui/material/Box'
@@ -34,6 +34,16 @@ function ModuleChartFrame(props) {
   const { current, getModuleChartData, feature } = props;
 
   const dispatch = useDispatch();
+  const currentModule = feature?feature.showModule:"";
+
+  useEffect(()=>{
+
+    console.log('currentModule', currentModule)
+    console.log('current', current.parentModuleId)
+    if(currentModule===current.parentModuleId){
+      props.setIsRefreshing(false);
+    }
+  },[props.isRefreshing])
 
   const chartClickOperation = (module) => {
 

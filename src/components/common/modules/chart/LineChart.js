@@ -5,22 +5,39 @@ import { Chart as ChartJS, registerables } from 'chart.js';
  ChartJS.register(...registerables);
 
 function LineChart(props) {
+
+  let {
+    module_Id,
+    moduleURL,
+    presentationCategory,
+    moduleChartDetail,
+    hasChildren,
+    parentModuleId,
+    parentModule_Id,
+    uniqueNo
+  } = props;
+
+  const isClickable = !hasChildren&&!presentationCategory?false:true;
+
   function graphClickEvent(dataIndexArray) {
-    const parentModule = props.module_Id;
-    if (props.hasChildren) {
-      let module_Id;
-      let modulename;
-      let moduleUrl;
+    // console.log("FUNCTION OF GRAPHCLICKCALLED", dataIndexArray);
+    let hasMoreChild;
+    let modulename;
+    if (hasChildren) {
       let dataPointClick;
-      let presentationCategory;
       if (dataIndexArray.length > 0) {
+        parentModule_Id = module_Id;
+        parentModuleId = uniqueNo;
         module_Id =
           props.moduleChartDetail.module_IdDetailList[
             dataIndexArray[0]["_index"]
           ]["MODULECODE"];
+        uniqueNo =
+          moduleChartDetail.module_IdDetailList[dataIndexArray[0]["_index"]][
+            "UNIQUENO"
+          ];
         modulename = props.moduleChartDetail.xaxis[dataIndexArray[0]["_index"]];
-
-        moduleUrl =
+        moduleURL =
           props.moduleChartDetail.module_IdDetailList[
             dataIndexArray[0]["_index"]
           ]["MODULEURL"];
@@ -28,6 +45,11 @@ function LineChart(props) {
           props.moduleChartDetail.module_IdDetailList[
             dataIndexArray[0]["_index"]
           ]["PRESENTATIONCATEGORY"];
+
+        hasMoreChild =
+          moduleChartDetail.module_IdDetailList[dataIndexArray[0]["_index"]][
+            "HASCHILDREN"
+          ];
         dataPointClick = true;
       } else {
         module_Id = props.module_Id;
@@ -35,19 +57,28 @@ function LineChart(props) {
       }
       props.chartClickOperation(
         module_Id,
-        moduleUrl,
+        moduleURL,
         presentationCategory,
         dataPointClick,
         modulename,
-        parentModule
+        parentModuleId,
+        parentModule_Id,
+        hasMoreChild,
+        uniqueNo,
+        hasChildren
       );
     } else {
       props.chartClickOperation(
-        props.module_Id,
-        props.moduleURL,
-        props.presentationCategory,
+        module_Id,
+        moduleURL,
+        presentationCategory,
         true,
-        parentModule
+        modulename,
+        parentModuleId,
+        parentModule_Id,
+        hasMoreChild,
+        uniqueNo,
+        hasChildren
       );
     }
   }
@@ -120,6 +151,7 @@ function LineChart(props) {
       <Line
         data={cData}
         // getElementAtEvent={elms => graphClickEvent(elms)}
+        onClick={(elms) => isClickable?graphClickEvent(elms):null}
         options={{
           responsive: true,
           title: {

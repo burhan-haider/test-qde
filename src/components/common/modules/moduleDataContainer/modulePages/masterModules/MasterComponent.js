@@ -247,9 +247,8 @@ export default function MasterComponent(props) {
                   ? paramObj.map((eachParam, index) =>
                       eachParam.MODULEPARAMDATATYPE === "select" ? (
                         <Grid item xs={3} key={index}>
-                          <FormControl className={classes.formControl}>
+                          <FormControl className={classes.formControl} variant={'outlined'} >
                             <SelectFormsy
-                              variant="outlined"
                               name={`${eachParam.MODULEPARAMINDEX}_${eachParam.MODULEPARAMIDNAME}`}
                               //label={`${eachParam.MODULEPARAMIDNAME}`}
                               label={commonService.getLabel(
@@ -334,10 +333,7 @@ export default function MasterComponent(props) {
                 <Grid item xs={12}></Grid>
                 <Grid
                   container
-                  alignItems="flex-start"
-                  justify="flex-end"
-                  direction="row"
-                  style={{ marginRight: 15, marginBottom: 10 }}
+                  className="mx-4 my-3 flex flex-row justify-end w-100"
                 >
                   <GenericButton
                     type="submit"

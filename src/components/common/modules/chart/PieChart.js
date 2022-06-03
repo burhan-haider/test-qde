@@ -94,7 +94,7 @@ export default function PieChart(props) {
     <div style={{ position: "relative"}}>
       <Pie
         data={cData}
-        getElementAtEvent={elms => graphClickEvent(elms)}
+        // getElementAtEvent={elms => graphClickEvent(elms)}
         onClick={elms => graphClickEvent(elms)}
         options={{
           responsive: true,

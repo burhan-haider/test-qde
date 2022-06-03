@@ -53,7 +53,8 @@ const styles = theme => ({
     color: "#052a4f",
     "&#checked": {
       color: "#fff"
-    }
+    },
+    marginRight: "10px",
   },
   checked: {
     color: "#fff !important",
@@ -225,7 +226,7 @@ function GenericTableBody(props) {
                 selected: classes.selected
               }}
             >
-              <TableCell padding="checkbox">
+              <TableCell padding="checkbox" className="flex flex-row justify-start">
                 {isSelection === true ? (
                   isMultipleSelect === true ? (
                     <Checkbox

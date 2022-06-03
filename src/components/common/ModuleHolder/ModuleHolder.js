@@ -6,7 +6,7 @@ import ModuleChartFrame from 'components/common/modules/mainModuleSearchFrame/Mo
 import { Grid } from '@mui/material';
 // import ModuleFrame from './ModuleFrame';
 
-const ModuleHolder = ({feature, module, getModuleChartData}) => {
+const ModuleHolder = ({feature, module, getModuleChartData, isRefreshing, setIsRefreshing}) => {
     
     const dispatch = useDispatch();
     const selectedFeature = useSelector(state=>state.features.features.featureCode);
@@ -57,11 +57,19 @@ const ModuleHolder = ({feature, module, getModuleChartData}) => {
                             presentationCategory={module.presentationCategory}
                             moduleId={module.uniqueNo}
                             feature={feature}
+                            isRefreshing={isRefreshing}
+                            setIsRefreshing={setIsRefreshing}
                         />
                     ):(
                         <>
                             {module.moduleChartDetails!=null?(
-                                <ModuleChartFrame current={module} getModuleChartData={getModuleChartData} feature={feature} />
+                                <ModuleChartFrame 
+                                    current={module} 
+                                    getModuleChartData={getModuleChartData} 
+                                    feature={feature}
+                                    isRefreshing={isRefreshing}
+                                    setIsRefreshing={setIsRefreshing}
+                                />
                             ):(
                                 <div>
                                     <h1 className="text-red-700 pt-20 font-bold text-5xl" >{module.moduleName}</h1>
@@ -80,7 +88,13 @@ const ModuleHolder = ({feature, module, getModuleChartData}) => {
                                 <Grid item xs={6} key={item.uniqueNo} >
                                     <div className="text-center mx-2" >
                                         <p>{item.moduleName}</p>
-                                        <ModuleChartFrame current={item} getModuleChartData={getModuleChartData} feature={feature} />
+                                        <ModuleChartFrame 
+                                            current={item} 
+                                            getModuleChartData={getModuleChartData} 
+                                            feature={feature} 
+                                            isRefreshing={isRefreshing}
+                                            setIsRefreshing={setIsRefreshing}
+                                        />
                                     </div>
                                 </Grid>
                             )

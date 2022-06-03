@@ -127,17 +127,21 @@ export default function CaseWorkflowComponent(props) {
     // console.log(expandedPanel);
     // console.log(cwfCasesData);
     dispatch(CWFActions.getCWFCases(data));
+    setCWFCasesData(cwfCases&&cwfCases!=null?cwfCases:{});
+    setBottomAction(cwfCases&&cwfCases!=null?cwfCases.ACTIONBUTTONS:[]);
     setDataSelected([]);
     setShowResults(true);
     setExpandedPanel(false);
   };
 
   useEffect(() => {
-    setCWFCasesData(cwfCases);
-    setBottomAction(cwfCases.ACTIONBUTTONS);
+    
+    console.log("Props:-", props)
+    console.log("CaseWorkflow Data:", cwfCasesData)
+    console.log("CaseWorkflow Actions:", bottomAction)
 
     //setIsFormValid(true);
-  }, [cwfCases]);
+  });
 
   const ResultFrame = () => (
     <div id="bottomFrame" className={classes.root} style={{ paddingTop: 5 }}>
@@ -373,6 +377,7 @@ export default function CaseWorkflowComponent(props) {
                         >
                           {eachParam.ACTIONS.map(eachAction =>
                             Object.entries(eachAction).map((key, value) => {
+
                               return (
                                 <GenericButton
                                   type="submit"
