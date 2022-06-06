@@ -54,7 +54,6 @@ const styles = theme => ({
     "&#checked": {
       color: "#fff"
     },
-    marginRight: "10px",
   },
   checked: {
     color: "#fff !important",
@@ -226,7 +225,7 @@ function GenericTableBody(props) {
                 selected: classes.selected
               }}
             >
-              <TableCell padding="checkbox" className="flex flex-row justify-start">
+              <TableCell padding="checkbox" className="flex items-center w-full py-4 ">
                 {isSelection === true ? (
                   isMultipleSelect === true ? (
                     <Checkbox
@@ -260,7 +259,7 @@ function GenericTableBody(props) {
                 ) : null}
                 {infoEnabled ? (
                   <InfoIcon
-                    fontSize="small"
+                    fontSize={"18px"}
                     color="action"
                     onClick={event => changeComponentView(row)}
                     className="ml-2 cursor-pointer"
