@@ -130,67 +130,83 @@ function GenericDatatable(props) {
 
   useEffect(() => {
     console.log("useEffect 2");
+    console.log("Props Dataset:-", props.dataSet);
+    console.log("Props Dataset Length:-", props.dataSet.length);
     const intermediateAllHeadCells = [];
     const intermediateResetColumnHeaders = [];
-    for (var i = 0; i < completeHeader.length; i++) {
-      intermediateAllHeadCells.push({
-        id: completeHeader[i],
-        disablePadding: false,
-        label: commonService.getLabel(completeHeader[i], completeHeader[i]),
-        hyperlink: hyperlinksMap.has(completeHeader[i]),
-        hyperlinkFunction: hyperlinksMap.has(completeHeader[i])
-          ? hyperlinksMap.get(completeHeader[i])["function"]
-          : "",
-        hyperlinkTitle: hyperlinksMap.has(completeHeader[i])
-          ? hyperlinksMap.get(completeHeader[i])["title"]
-          : "",
-        hyperlinkDetailsModule: hyperlinksMap.has(completeHeader[i])
-          ? hyperlinksMap.get(completeHeader[i])["detailsModule"]
-          : ""
-      });
-      intermediateResetColumnHeaders.push(
-        i +
-          "~!!~" +
-          completeHeader[i] +
-          "~!!~" +
-          commonService.getLabel(completeHeader[i], completeHeader[i])
-      );
+
+    if(props.dataSet !== null && props.dataSet !== undefined && props.dataSet.length !== 0) {
+      for (var i = 0; i < completeHeader.length; i++) {
+        intermediateAllHeadCells.push({
+          id: completeHeader[i],
+          disablePadding: false,
+          label: commonService.getLabel(completeHeader[i], completeHeader[i]),
+          hyperlink: hyperlinksMap.has(completeHeader[i]),
+          hyperlinkFunction: hyperlinksMap.has(completeHeader[i])
+            ? hyperlinksMap.get(completeHeader[i])["function"]
+            : "",
+          hyperlinkTitle: hyperlinksMap.has(completeHeader[i])
+            ? hyperlinksMap.get(completeHeader[i])["title"]
+            : "",
+          hyperlinkDetailsModule: hyperlinksMap.has(completeHeader[i])
+            ? hyperlinksMap.get(completeHeader[i])["detailsModule"]
+            : ""
+        });
+        intermediateResetColumnHeaders.push(
+          i +
+            "~!!~" +
+            completeHeader[i] +
+            "~!!~" +
+            commonService.getLabel(completeHeader[i], completeHeader[i])
+        );
+      }
+      setAllHeadCells(intermediateAllHeadCells);
+      setHeaders(intermediateAllHeadCells);
+      setResetColumnHeaders(intermediateResetColumnHeaders);
     }
-    setAllHeadCells(intermediateAllHeadCells);
-    setHeaders(intermediateAllHeadCells);
-    setResetColumnHeaders(intermediateResetColumnHeaders);
-  }, [completeHeader, hyperlinksMap]);
+    
+  }, [
+    // completeHeader, 
+    hyperlinksMap
+  ]);
 
   
 
   useEffect(() => {
     console.log("useEffect 4");
-    if (resetColumns.length === 0) {
-      setHeaders(allHeadCells);
-      setRows(completeData);
-      setResettedData(completeData);
-    } else {
-      var updatedHeaderList = allHeadCells;
-      var updatedDataList = completeData;
-      resetColumns.filter(eachItem => {
-        let mainIndex = "";
-        updatedHeaderList.filter((eachHeader, eachIndex) => {
-          return eachHeader.id === eachItem ? (mainIndex = eachIndex) : "";
-        });
-
-        if (mainIndex !== "") {
-          updatedHeaderList = removeItem(updatedHeaderList, mainIndex);
-          setHeaders(updatedHeaderList);
-
-          updatedDataList = updatedDataList.map(eachRow => {
-            return removeItem(eachRow, mainIndex);
+    if(props.dataSet !== null && props.dataSet !== undefined && Object.keys(props.dataSet).length !== 0) {
+      if (resetColumns.length === 0) {
+        setHeaders(allHeadCells);
+        setRows(completeData);
+        setResettedData(completeData);
+      } else {
+        var updatedHeaderList = allHeadCells;
+        var updatedDataList = completeData;
+        resetColumns.filter(eachItem => {
+          let mainIndex = "";
+          updatedHeaderList.filter((eachHeader, eachIndex) => {
+            return eachHeader.id === eachItem ? (mainIndex = eachIndex) : "";
           });
-          setRows(updatedDataList);
-          setResettedData(updatedDataList);
-        }
-      });
+  
+          if (mainIndex !== "") {
+            updatedHeaderList = removeItem(updatedHeaderList, mainIndex);
+            setHeaders(updatedHeaderList);
+  
+            updatedDataList = updatedDataList.map(eachRow => {
+              return removeItem(eachRow, mainIndex);
+            });
+            setRows(updatedDataList);
+            setResettedData(updatedDataList);
+          }
+        });
+      }
     }
-  }, [allHeadCells, completeData, resetColumns]);
+    
+  }, [
+    allHeadCells, 
+    completeData, 
+    resetColumns
+  ]);
 
   const handleClickOpenModal = () => {
     setOpenModal(true);
