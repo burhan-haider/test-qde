@@ -8,7 +8,9 @@ import Input from "@mui/material/Input";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import RoleOperationService from "services/role/RoleOperationService";
+import { SelectFormsy } from "components/common/formsyComponents";
 import { GenericButton, useClasses } from "@application";
+import Formsy from "formsy-react";
 
 const styles = theme => ({
   formControl: {
@@ -24,7 +26,8 @@ const styles = theme => ({
   },
   chip: {
     margin: 2
-  }
+  },
+  Muigrid: {}
 });
 
 function RoleFeatureMapping(props) {
@@ -70,11 +73,22 @@ function RoleFeatureMapping(props) {
 
   return (
     <div style={{ marginTop: "1%" }}>
+      <Formsy>
       <Grid container justify="center" alignItems="center" spacing={3}>
-        <Grid item md={2}>
-          <FormControl className={classes.formControl} fullWidth={true}>
-            <InputLabel htmlFor="age-native-simple">Select Role</InputLabel>
-            <Select
+        <Grid 
+          item 
+          md={2}
+          className={classes.Muigrid}
+        >
+          <FormControl 
+            className={classes.formControl} 
+            fullWidth={true}
+          >
+            <SelectFormsy
+              name="Role"
+              label="Select Role"
+              variant="outlined"
+              // style={{ paddingLeft: "10px" }}
               native
               value={roleId ? roleId : ""}
               onChange={roleOnChange}
@@ -91,13 +105,19 @@ function RoleFeatureMapping(props) {
                   </option>
                 );
               })}
-            </Select>
+            </SelectFormsy>
           </FormControl>
         </Grid>
-        <Grid item md={7}>
-          <FormControl className={classes.formControl} fullWidth={true}>
-            <InputLabel id="userRoleLabel">Feature</InputLabel>
-            <Select
+        <Grid item md={7} className={classes.Muigrid}>
+          <FormControl 
+            className={classes.formControl} 
+            fullWidth={true}
+            >
+            <SelectFormsy
+              label="Feature"
+              name="Features"
+              variant="outlined"
+              // style={{ paddingLeft: "10px" }}
               labelId="role-mutiple-chip-label"
               id="userRole"
               multiple
@@ -107,7 +127,11 @@ function RoleFeatureMapping(props) {
               renderValue={selected => (
                 <div className={classes.chips}>
                   {selected.map(value => (
-                    <Chip key={value} label={value} className={classes.chip} />
+                    <Chip 
+                      key={value} 
+                      label={value} 
+                      className={classes.chip} 
+                    />
                   ))}
                 </div>
               )}
@@ -120,7 +144,7 @@ function RoleFeatureMapping(props) {
                   {feature["featureName"]}
                 </MenuItem>
               ))}
-            </Select>
+            </SelectFormsy>
           </FormControl>
         </Grid>
         <Grid item md={2}>
@@ -134,6 +158,7 @@ function RoleFeatureMapping(props) {
         </Grid>
       </Grid>
       {/* {successMessage ? <AlertDescription message={AlertDescription} /> : null} */}
+      </Formsy>
     </div>
   );
 }
