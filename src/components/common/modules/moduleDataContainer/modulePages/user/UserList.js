@@ -2,44 +2,153 @@ import React, { useState } from "react";
 import Fab from "@mui/material/Fab";
 // import AddIcon from "@material-ui/icons/Add";
 import { MdAdd as AddIcon } from 'react-icons/md'
-import { GenericDatatable } from "@application";
+import { GenericDatatable, GenericDialog, useClasses } from "@application";
 import UserCreationForm from "./UserCreationForm";
-import Dialog from "@mui/material/Dialog";
-import Grid from "@mui/material/Grid";
-import { AppBar, Toolbar, Typography } from "@mui/material";
+import { 
+  AppBar, 
+  Toolbar, 
+  Typography, 
+  Dialog, 
+  Grid,
+  SpeedDial,
+  SpeedDialIcon,
+  SpeedDialAction,
+} from "@mui/material";
 import userOperationService from "services/user/UserOperationService";
 
-export default function UserComponent(props) {
-  const [isDialogopen, setDialogOpen] = React.useState(false);
-
-  const openCreaeUserDialog = () => {
-    setDialogOpen(true);
-  };
-  const closeCreaeUserDialog = () => {
-    setDialogOpen(false);
-  };
-
-  function addNewUser(newUserDetails) {
-    userOperationService
-      .createNewUser("api/user/", newUserDetails)
-      .then(data => {
-        closeCreaeUserDialog();
-        props.refreshCurrentModule();
-      })
-      .catch(err => {
-        if (err.response) {
-          alert(err.response.data.message);
-        } else {
-          alert("Error");
-        }
-      });
+const styles = theme => ({
+  mainDivSpeedDial: {
+    position: "relative",
+    marginRight: "2%",
+    marginBottom: "1%"
+  },
+  speedDialAction: {
+    background: "#d4d4d4"
   }
+});
+
+export default function UserComponent(props) {
+  const classes = useClasses(styles);
+  const [isDialogopen, setDialogOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [action, setAction] = useState("");
+  const [openModal, setOpenModal] = useState(false);
+  const [property, setProperty] = useState({});
+
+  const modalData = {
+    AddUser: {
+      title: "Add User",
+      size: "lg"
+    }
+  };
+
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+  
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const displayProperty = data => {
+    setProperty(modalData[data]);
+  };
+
+  // function addNewUser(newUserDetails) {
+  //   userOperationService
+  //     .createNewUser("api/user/", newUserDetails)
+  //     .then(data => {
+  //       // closeCreaeUserDialog();
+  //       props.refreshCurrentModule();
+  //     })
+  //     .catch(err => {
+  //       if (err.response) {
+  //         alert(err.response.data.message);
+  //       } else {
+  //         alert("Error");
+  //       }
+  //     });
+  // }
   const selectionIndex = "all";
   const [rowData, setRowData] = useState([]);
 
+  const HEADER = props.indexPageData["HEADER"];
+  const DATA = props.indexPageData["DATA"];
+  const finalHEADER = HEADER.filter(function(h) {
+    return h !== "USERPASS";
+  });
+
+  var letCDATA;
+  var finalDATA = [];
+  for (var j = 0; j < DATA.length; j++) {
+    letCDATA = DATA[j].filter(data => data !== DATA[j][1]);
+    finalDATA.push(letCDATA);
+    // console.log(
+    //  "DATA =",
+    //   DATA[i].filter(data => data !== DATA[i][1])
+    // );
+  }
   return (
-    <div>
-      <Grid container>
+    <>
+      <div>
+        <GenericDatatable
+          dataSet={{
+            DATA: finalDATA,
+            HEADER: finalHEADER
+          }}
+          infoEnabled={false}
+          moduleName="User"
+          isSelection={true}
+          isMultipleSelect={false}
+          selectionIndex={selectionIndex}
+          selected={rowData}
+          selectHandler={setRowData}
+        ></GenericDatatable>
+      </div>
+      <div>
+        <SpeedDial
+          className={classes.mainDivSpeedDial}
+          ariaLabel="Add"
+          direction="left"
+          onClose={handleClose}
+          icon={<SpeedDialIcon />}
+          onOpen={handleOpen}
+          open={open}
+        >
+          <SpeedDialAction
+            className={classes.speedDialAction}
+            key="AddUser"
+            tooltipPlacement="top"
+            tooltipTitle="Add"
+            icon={<AddIcon />}
+            onClick={e => {
+              setAction("Add");
+              handleOpenModal();
+              displayProperty("AddUser");
+            }}
+          ></SpeedDialAction>
+        </SpeedDial>
+        <GenericDialog
+          state={openModal}
+          closeModal={handleCloseModal}
+          property={property}
+        >
+          <UserCreationForm
+            closeModal={handleCloseModal}
+            action={action}
+            ></UserCreationForm>
+        </GenericDialog>
+      </div>
+    </>
+  );
+}
+
+/* <Grid container>
         <GenericDatatable
           dataSet={props.indexPageData}
           infoEnabled={false}
@@ -80,7 +189,4 @@ export default function UserComponent(props) {
           closeCreaeUserDialog={closeCreaeUserDialog}
           addNewUser={addNewUser}
         />
-      </Dialog>
-    </div>
-  );
-}
+      </Dialog> */
