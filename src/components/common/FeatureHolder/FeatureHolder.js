@@ -491,29 +491,33 @@ const MainPage = ({feature, getModuleChartData, isRefreshing, setIsRefreshing}) 
            {/* mapping all the modules inside a feature as button */}
         {feature.modules.length>0 && feature.modules.map((item, index)=>(
             <Grid item key={index} xs={6} className="sm:max-h-[300px] lg:min-h-[450px]" >
-
-                {item.parentModuleId==null&&item.moduleChartDetails!=null?(
-
-                    <div className="text-center mx-2 my-0" >
-                        <p>{item.moduleName}</p>
-                        <ModuleChartFrame 
-                            current={item} 
-                            getModuleChartData={getModuleChartData} 
-                            feature={feature} 
-                            isRefreshing={isRefreshing}
-                            setIsRefreshing={setIsRefreshing}
-                        />
-                    </div>
-
-                ):(
+                {item.parentModule_Id == null?(
                     <>
-                        {item.parentModuleId==null&&(
-                            <button key={item.id} onClick={()=>handleClick(item)} className="m-5 text-white font-bold border-none bg-red-500 hover:bg-red-700 rounded-md p-3 cursor-pointer">
-                                {item.moduleName}
-                            </button>
-                        )}   
+                    {item.parentModuleId==null&&item.moduleChartDetails!=null?(
+
+                        <div className="text-center mx-2 my-0" >
+                            <p>{item.moduleName}</p>
+                            <ModuleChartFrame 
+                                current={item} 
+                                getModuleChartData={getModuleChartData} 
+                                feature={feature} 
+                                isRefreshing={isRefreshing}
+                                setIsRefreshing={setIsRefreshing}
+                            />
+                        </div>
+    
+                    ):(
+                        <>
+                            {item.parentModuleId==null&&(
+                                <button key={item.id} onClick={()=>handleClick(item)} className="m-5 text-white font-bold border-none bg-red-500 hover:bg-red-700 rounded-md p-3 cursor-pointer">
+                                    {item.moduleName}
+                                </button>
+                            )}   
+                        </>
+                    )}
                     </>
-                )}
+                ):""}
+                
             </Grid>
 
         ))}
