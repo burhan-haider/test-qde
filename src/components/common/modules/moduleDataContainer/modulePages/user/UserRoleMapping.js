@@ -9,6 +9,8 @@ import MenuItem from "@mui/material/MenuItem";
 import RoleOperationService from "services/role/RoleOperationService";
 // import AlertDescription from "../../../../common/AlertDescription";
 import { GenericButton } from "@application";
+import { SelectFormsy } from "components/common/formsyComponents";
+import Formsy from "formsy-react";
 import { useClasses } from "@application";
 
 const styles = theme => ({
@@ -39,24 +41,49 @@ function UserRoleMapping(props) {
   const classes = useClasses(styles);
   const [userCode, setUserCode] = useState();
   const [roleIds, setroleIds] = useState([]);
+  const [roleCodeList, setRoleCodeList] = useState([]);
+  const [activateField, setActivateField] = useState(false);
   // const [successMessage, setSuccessMessage] = useState();
 
   const userCodeOnChange = event => {
+    setActivateField(true);
     let currentSelectedUserCode = event.target.value;
     setUserCode(currentSelectedUserCode);
-    let currentSelectedUserRoleList = Object.keys(
+    let currentSelectedUserRoleList = Object.values(
       userAndRole[currentSelectedUserCode]
     );
-    debugger;
-    setroleIds(currentSelectedUserRoleList);
+    setroleIds(currentSelectedUserRoleList); 
   };
 
   const handleChangeMultiple = event => {
+
+    let selectedList = event.target.value;
+    let allRoles = roleObjectList;
+    let currentSelectedRoleCodeList = [];
+
+    if(selectedList.length > 0){
+      selectedList.map(roleId => {
+        allRoles.map(role => {
+          if(role.roleName == roleId){
+            if(currentSelectedRoleCodeList.filter(e=>e===role.roleName).length === 0){
+              currentSelectedRoleCodeList.push(role.roleId);
+            }
+          }
+          return null;
+        })
+        return null;
+      })
+    }
+
+    // console.log("current Code List:-", currentSelectedRoleCodeList);
+    // console.log("allRoles:-",allRoles)
+    // console.log("Event:-",selectedList)
+    setRoleCodeList(currentSelectedRoleCodeList);
     setroleIds(event.target.value);
   };
 
   const assignRoleToUser = () => {
-    RoleOperationService.assignRoleToUser(userCode, roleIds)
+    RoleOperationService.assignRoleToUser(userCode, roleCodeList)
       .then(data => {
         //setSuccessMessage("ROles has assigned to user =" + userCode);
         alert("Role has assigned to user");
@@ -66,23 +93,27 @@ function UserRoleMapping(props) {
   };
 
   return (
+    <Formsy>
     <div style={{ marginTop: "1%" }}>
       <Grid container justify="center" alignItems="center" spacing={3}>
         <Grid item md={3}>
           <FormControl className={classes.formControl} fullWidth={true}>
-            <InputLabel htmlFor="age-native-simple">
+            {/* <InputLabel htmlFor="age-native-simple">
               Select User Code
-            </InputLabel>
-            <Select
+            </InputLabel> */}
+            <SelectFormsy
+              variant="outlined"
+              name="userCode"
               native
-              value={userCode}
+              label="Select User Code"
+              value={userCode ? userCode : ""}
               onChange={userCodeOnChange}
               inputProps={{
                 name: "userCode",
                 id: "userCode"
               }}
             >
-              <option aria-label="None" value="" />
+              <option aria-label="None" disabled value="" />
               {userCodeList.map((user, index) => {
                 return (
                   <option key={user} value={user}>
@@ -90,15 +121,19 @@ function UserRoleMapping(props) {
                   </option>
                 );
               })}
-            </Select>
+            </SelectFormsy>
           </FormControl>
         </Grid>
-        <Grid item md={4}>
+        <Grid item md={5}>
           <FormControl className={classes.formControl} fullWidth={true}>
-            <InputLabel id="userRoleLabel">User Roles</InputLabel>
-            <Select
+            {/* <InputLabel id="userRoleLabel">User Roles</InputLabel> */}
+            <SelectFormsy
               labelId="role-mutiple-chip-label"
+              label="Select Role"
               id="userRole"
+              name="userRole"
+              variant="outlined"
+              disabled={!activateField}
               multiple
               value={roleIds}
               onChange={handleChangeMultiple}
@@ -106,17 +141,21 @@ function UserRoleMapping(props) {
               renderValue={selected => (
                 <div className={classes.chips}>
                   {selected.map(value => (
-                    <Chip key={value} label={value} className={classes.chip} />
+                    <Chip 
+                      key={value} 
+                      label={value} 
+                      className={classes.chip} 
+                      />
                   ))}
                 </div>
               )}
             >
               {roleObjectList.map(role => (
-                <MenuItem key={role.roleId} value={role.roleId}>
+                <MenuItem key={role.roleName} value={role.roleName}>
                   {role.roleName}
                 </MenuItem>
               ))}
-            </Select>
+            </SelectFormsy>
           </FormControl>
         </Grid>
         <Grid item md={3}>
@@ -131,6 +170,7 @@ function UserRoleMapping(props) {
       </Grid>
       {/* {successMessage ? <AlertDescription message={AlertDescription} /> : null} */}
     </div>
+    </Formsy>
   );
 }
 

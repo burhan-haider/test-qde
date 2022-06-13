@@ -9,9 +9,46 @@ import {
   TextField,
   DialogActions
 } from "@mui/material";
-import { GenericButton } from "@application";
+import { GenericButton, useClasses } from "@application";
+import { TextFieldFormsy } from "components/common/formsyComponents";
+import userOperationService from "services/user/UserOperationService";
+import Formsy from "formsy-react";
+
+const styles = theme => ({
+  MuiButton: {
+    textTransform: "initial",
+    marginRight: "3%",
+    borderRadius: "15px",
+    borderColor: "#052a4f",
+    padding: "2px 2.5% 2px 2.5%",
+    "&:hover": {
+      backgroundColor: "#052a4f",
+      color: "white"
+    }
+  }
+});
 
 export default function UserCreationForm(props) {
+
+  const addNewUser = (newUserDetails) => {
+    // console.log("newUserDetails ", newUserDetails);
+    userOperationService
+      .createNewUser("api/user/", newUserDetails)
+      .then(data => {
+        // closeCreaeUserDialog();
+        props.refreshCurrentModule();
+        props.closeModal();
+      })
+      .catch(err => {
+        if (err.response) {
+          alert(err.response.data.message);
+        } else {
+          alert("Error");
+        }
+      });
+  }
+  const classes = useClasses(styles);
+
   const [userForm, handleChange] = FormHelper({
     username: "Ravi",
     userPass: "Cognifi@123",
@@ -41,13 +78,13 @@ export default function UserCreationForm(props) {
   });
 
   return (
-    <div>
-      <DialogContent>
+    <>
+      <Formsy>
         <div className="px-16 sm:px-24">
-          <Grid container spacing={3}>
+          <Grid container spacing={3} sx={{marginBottom: '15px', marginTop: '0px'}} >
             <Grid item xs={6}>
               <FormControl className="mt-8 mb-16" required fullWidth>
-                <TextField
+                <TextFieldFormsy
                   label="User Name"
                   autoFocus
                   name="username"
@@ -60,7 +97,7 @@ export default function UserCreationForm(props) {
             </Grid>
             <Grid item xs={6}>
               <FormControl className="mt-8 mb-16" required fullWidth>
-                <TextField
+                <TextFieldFormsy
                   label="First Name"
                   // autoFocus
                   name="firstName"
@@ -72,10 +109,10 @@ export default function UserCreationForm(props) {
               </FormControl>
             </Grid>
           </Grid>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} sx={{marginBottom: '15px'}}>
             <Grid item xs={6}>
-              <FormControl className="mt-8 mb-16" required fullWidth>
-                <TextField
+              <FormControl required fullWidth>
+                <TextFieldFormsy
                   label="Last Name"
                   name="lastName"
                   value={userForm.lastName}
@@ -86,8 +123,8 @@ export default function UserCreationForm(props) {
               </FormControl>
             </Grid>
             <Grid item xs={6}>
-              <FormControl className="mt-8 mb-16" required fullWidth>
-                <TextField
+              <FormControl required fullWidth>
+                <TextFieldFormsy
                   label="Email ID"
                   name="emailId"
                   type="email"
@@ -99,10 +136,10 @@ export default function UserCreationForm(props) {
               </FormControl>
             </Grid>
           </Grid>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} sx={{marginBottom: '15px'}}>
             <Grid item xs={6}>
-              <FormControl className="mt-8 mb-16" required fullWidth>
-                <TextField
+              <FormControl required fullWidth>
+                <TextFieldFormsy
                   label="Mobile No."
                   name="mobileNo"
                   type="number"
@@ -114,8 +151,8 @@ export default function UserCreationForm(props) {
               </FormControl>
             </Grid>
             <Grid item xs={6}>
-              <FormControl className="mt-8 mb-16" required fullWidth>
-                <TextField
+              <FormControl required fullWidth>
+                <TextFieldFormsy
                   label="Designation"
                   name="designation"
                   value={userForm.designation}
@@ -126,10 +163,10 @@ export default function UserCreationForm(props) {
               </FormControl>
             </Grid>
           </Grid>
-          <Grid container spacing={3}>
+          <Grid container spacing={3} sx={{marginBottom: '15px'}} >
             <Grid item xs={6}>
-              <FormControl className="mt-8 mb-16" required fullWidth>
-                <TextField
+              <FormControl  required fullWidth>
+                <TextFieldFormsy
                   label="Employee Code"
                   name="employeeCode"
                   value={userForm.employeeCode}
@@ -140,8 +177,8 @@ export default function UserCreationForm(props) {
               </FormControl>
             </Grid>
             <Grid item xs={6}>
-              <FormControl className="mt-8 mb-16" required fullWidth>
-                <TextField
+              <FormControl  required fullWidth>
+                <TextFieldFormsy
                   label="Branch Code"
                   // autoFocus
                   name="branchCode"
@@ -180,26 +217,34 @@ export default function UserCreationForm(props) {
             </Grid>
           </Grid> */}
         </div>
-      </DialogContent>
-      <DialogActions className="justify-end pl-8 sm:pl-16">
+      </Formsy>
+      <div 
+        className="flex justify-end"
+        style={{
+          marginTop: "30px",
+          marginBottom: "1.5%"
+        }}
+        >
         <GenericButton
+          className={classes.MuiButton}
           variant="contained"
           color="primary"
-          className="saveButtonStyle"
-          onClick={() => props.addNewUser(userForm)}
+          name="saveButtonStyle"
+          onClick={() => addNewUser(userForm)}
         >
           Add
         </GenericButton>
 
         <GenericButton
+          className={classes.MuiButton}
           variant="contained"
-          color="default"
-          className="cancelButtonStyle"
-          onClick={props.closeCreaeUserDialog}
+          color="secondary"
+          name="cancelButtonStyle"
+          onClick={props.closeModal}
         >
           Close
         </GenericButton>
-      </DialogActions>
-    </div>
+      </div>
+    </>
   );
 }

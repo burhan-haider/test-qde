@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 // import { makeStyles } from "@mui/styles";
 import Grid from "@mui/material/Grid";
 import Chip from "@mui/material/Chip";
-import Select from "@mui/material/Select";
-import InputLabel from "@mui/material/InputLabel";
+// import Select from "@mui/material/Select";
+// import InputLabel from "@mui/material/InputLabel";
 import Input from "@mui/material/Input";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -25,7 +25,7 @@ const styles = theme => ({
     flexWrap: "wrap"
   },
   chip: {
-    margin: 2
+    margin: '1px',
   },
   Muigrid: {}
 });
@@ -36,33 +36,62 @@ function RoleFeatureMapping(props) {
   let roleFeatureMappingList = props.indexPageData.ROLEFEATUREMAPPING;
 
   const classes = useClasses(styles);
-  const [feaureList, setFeaureList] = useState([]);
+  const [selectedFeatureList, setSelectedFeatureList] = useState([]);
+  const [featureCodeList, setFeatureCodeList] = useState([]); 
   const [roleId, setroleId] = useState();
+  const [activateField, setActivateField] = useState(false);
   // const [successMessage, setSuccessMessage] = useState();
 
   const roleOnChange = event => {
+    setActivateField(true);
     let currentSelectedroleId = event.target.value;
     setroleId(currentSelectedroleId);
     // userAndRole[currentSelectedUserCode];
     let roleAssignedFeatureList = roleFeatureMappingList.filter(function(
       roleFeaturemapping
     ) {
-      return roleFeaturemapping["ROLE"]["roleId"] === currentSelectedroleId;
+      return roleFeaturemapping.ROLE.roleId === currentSelectedroleId;
     });
     let currentSelectedFeatureCodeList = [];
-    roleAssignedFeatureList[0]["FEATURELIST"].map(feature => {
-      currentSelectedFeatureCodeList.push(feature["featureCode"]);
-    });
+    let currentSelectedFeatureList = [];
 
-    setFeaureList(currentSelectedFeatureCodeList);
+    roleAssignedFeatureList[0].FEATURELIST.map(feature => {
+      currentSelectedFeatureCodeList.push(feature.featureName);
+      currentSelectedFeatureList.push(feature.featureMapping_Id);
+      return null;
+    });
+    
+    setSelectedFeatureList(currentSelectedFeatureCodeList);
+    setFeatureCodeList(currentSelectedFeatureList);
   };
 
   const handleChangeMultiple = event => {
-    setFeaureList(event.target.value);
+
+    let selectedList = event.target.value;
+    let allFeatures = featureList;
+    let currentSelectedFeatureCodeList = [];
+
+    if(selectedList.length > 0){
+      // console.log("Event is an Array!")
+      selectedList.map(value=>{
+        allFeatures.map(feature => {
+          if(feature.featureName === value){
+            if(currentSelectedFeatureCodeList.filter(e=>e===feature.featureName).length === 0){
+              currentSelectedFeatureCodeList.push(feature.featureMapping_Id);
+            }
+          }
+          return null;
+        })
+        return null;
+      })
+    }
+    // console.log('event:-', event.target.value)
+    setSelectedFeatureList(selectedList);
+    setFeatureCodeList(currentSelectedFeatureCodeList);
   };
 
   const assignFeatureToRole = () => {
-    RoleOperationService.roleFeatureMaping(roleId, feaureList)
+    RoleOperationService.roleFeatureMaping(roleId, featureCodeList)
       .then(data => {
         //setSuccessMessage("ROles has assigned to user =" + userCode);
         alert("Feature has assigned to role");
@@ -97,7 +126,7 @@ function RoleFeatureMapping(props) {
                 id: "roleId"
               }}
             >
-              <option aria-label="None" value="" />
+              <option aria-label="None" disabled value="" />
               {roleList.map((role, index) => {
                 return (
                   <option key={role["roleId"]} value={role["roleId"]}>
@@ -114,22 +143,22 @@ function RoleFeatureMapping(props) {
             fullWidth={true}
             >
             <SelectFormsy
+              labelId="role-mutiple-chip-label"
               label="Feature"
+              id="userRole"
               name="Features"
               variant="outlined"
-              // style={{ paddingLeft: "10px" }}
-              labelId="role-mutiple-chip-label"
-              id="userRole"
+              disabled={!activateField}
               multiple
-              value={feaureList}
+              value={selectedFeatureList}
               onChange={handleChangeMultiple}
               input={<Input id="select-multiple-chip" />}
               renderValue={selected => (
                 <div className={classes.chips}>
-                  {selected.map(value => (
+                  {selected.map((value, index) =>(
                     <Chip 
-                      key={value} 
-                      label={value} 
+                      key={index}
+                      label={value}
                       className={classes.chip} 
                     />
                   ))}
@@ -138,10 +167,10 @@ function RoleFeatureMapping(props) {
             >
               {featureList.map(feature => (
                 <MenuItem
-                  key={feature["featureCode"]}
-                  value={feature["featureCode"]}
+                  key={feature.featureName}
+                  value={feature.featureName}
                 >
-                  {feature["featureName"]}
+                  {feature.featureName}
                 </MenuItem>
               ))}
             </SelectFormsy>
