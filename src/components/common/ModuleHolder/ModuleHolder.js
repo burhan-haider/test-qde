@@ -25,12 +25,14 @@ const ModuleHolder = ({feature, module, getModuleChartData, isRefreshing, setIsR
             if(item.parentModuleId === crumb.id){
                 dispatch(addToBreadcrumbs(feature.featureCode, {
                     id:item.uniqueNo, 
+                    code: item.module_Id,
                     label: item.moduleName, 
                     level: crumb.level + 1,
                 }))
                 if(feature.openTabs.filter(e=>e.id===item.uniqueNo).length<1){
                     dispatch(addToOpenTabs(feature.featureCode, {
                         id: item.uniqueNo, 
+                        code: item.module_Id,
                         label: item.moduleName,
                         level: crumb.level + 1,
                     }))

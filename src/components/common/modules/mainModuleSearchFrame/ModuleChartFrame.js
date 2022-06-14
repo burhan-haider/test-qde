@@ -38,8 +38,8 @@ function ModuleChartFrame(props) {
 
   useEffect(()=>{
 
-    console.log('currentModule', currentModule)
-    console.log('current', current.parentModuleId)
+    // console.log('currentModule', currentModule)
+    // console.log('current', current.parentModuleId)
     if(currentModule===current.parentModuleId){
       props.setIsRefreshing(false);
     }
@@ -53,9 +53,9 @@ function ModuleChartFrame(props) {
     // console.log("Chart Feature:", feature)
     // console.log('Feature BreadCrumbs:-',feature.breadCrumbs)
 
-    if(current.module_Id == module){
+    if(current.module_Id === module){
 
-      if(current.hasChildren == true){
+      if(current.hasChildren === true){
         dispatch(setSelectedModule(feature.featureCode, current.uniqueNo))
         getModuleChartData(current);
       }
@@ -74,7 +74,12 @@ function ModuleChartFrame(props) {
       //     return crumb;
       // })
       if(feature.openTabs.filter(e=>e.id===current.uniqueNo).length<1){
-        dispatch(addToOpenTabs(feature.featureCode, {id: current.uniqueNo, label: current.moduleName, level: lastCrumbLevel+1}));
+        dispatch(addToOpenTabs(feature.featureCode, {
+          id: current.uniqueNo, 
+          code: current.module_Id, 
+          label: current.moduleName, 
+          level: lastCrumbLevel+1
+        }));
       }
       // if(feature.breadCrumbs.filter(e=>e.id===current.uniqeNo).length<1){
       //   dispatch(addToBreadcrumbs(feature.featureCode, {id: current.uniqueNo, label: current.moduleName, level: lastCrumbLevel+1}));
@@ -85,6 +90,7 @@ function ModuleChartFrame(props) {
             if(crumb.id === current.parentModuleId){
               dispatch(addToBreadcrumbs(feature.featureCode, {
                 id: current.uniqueNo,
+                code: current.module_Id,
                 label: current.moduleName,
                 level: crumb.level+1
               }))
@@ -96,6 +102,7 @@ function ModuleChartFrame(props) {
           if(feature.breadCrumbs.filter(e=>e.id===current.uniqueNo).length<1){
             dispatch(addToBreadcrumbs(feature.featureCode, {
               id: current.uniqueNo,
+              code: current.module_Id,
               label: current.moduleName,
               level: 1
             }))

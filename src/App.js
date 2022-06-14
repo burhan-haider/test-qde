@@ -25,7 +25,7 @@ function App() {
   },[newFeatures])
 
   return (
-    <div className="text-center overflow-hidden" style={{backgroundColor: '#052a4f'}}>
+    <div className="text-center overflow-hidden" style={{backgroundColor: '#052a4f'}} >
       {isLoading ? (<CircularProgress sx={{color: 'white', marginTop: '150px'}} />) : (
         <>
           {newFeatures.map((item)=>( 

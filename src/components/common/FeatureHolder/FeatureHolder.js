@@ -5,13 +5,13 @@ import {
     Chip,
     Menu,
     MenuItem,
-    Button,
+    // Button,
     IconButton,
     Grid, 
     Link,
     CircularProgress,
 } from '@mui/material';
-import { MdPushPin, MdBookmark, MdArrowDropDown, MdRefresh } from 'react-icons/md'
+// import { MdPushPin, MdBookmark, MdArrowDropDown, MdRefresh } from 'react-icons/md'
 import { IoMdRefreshCircle } from 'react-icons/io'
 import ComponentHolder from 'components/common/componentHolder/ComponentHolder';
 import ModuleHolder from 'components/common/ModuleHolder';
@@ -31,7 +31,7 @@ import {
 } from 'redux/features/features.actions';
 import getIconByKey from 'assets';
 import ModuleChartFrame from 'components/common/modules/mainModuleSearchFrame/ModuleChartFrame'
-import { handleBreakpoints } from '@mui/system';
+// import { handleBreakpoints } from '@mui/system';
 
 const styles = theme => ({
     chipRoot: {
@@ -50,7 +50,7 @@ const styles = theme => ({
 const FeatureHolder = ({feature}) => {
 
   const [bookMark, toggleBookMark] = useState(null);
-  const [trail, setTrail] = useState(feature.breadCrumbs);
+//   const [trail, setTrail] = useState(feature.breadCrumbs);
   const [modules, setModules] = useState(null);
   const [isModuleLoading, setIsModuleLoading] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -94,27 +94,42 @@ const FeatureHolder = ({feature}) => {
     ? `/common/feature/${selectedFeature}`
     : null;
 
+  let trail = feature.breadCrumbs;
+
   const makeApiCallUrl = (uniqueNo, module_Id, parentModule_Id) => {
+    let mainUrl = "";
+
     return new Promise((resolve, reject) => {
       if (trail && trail.filter(mod => mod.id === uniqueNo).length === 0) {
-        var mainUrl = "";
 
-        let prevModules = trail
-          .filter(x => x.id !== features.featureCode && x.id !== uniqueNo)
-          .map(code => code.id);
+        console.log("If was executed!");
+        
+        let newStructure = [];
 
-        if (parentModule_Id !== undefined && parentModule_Id !== null) {
-          prevModules.push(parentModule_Id);
-          prevModules = [...new Set(prevModules)];
-        }
-        prevModules.push(module_Id);
-        const finalUrl = url + prevModules.map(x => `~~~${x}`);
+        trail.map(mod => {
+            if(mod.code !== feature.featureCode){
+                newStructure.push(mod.code);
+                return mod;
+            }
+            return mod;
+        })
+        newStructure.push(module_Id);
+
+        
+
+        console.log("Trail:-", trail)
+        console.log("newStructure:-", newStructure)
+
+        const finalUrl = url + newStructure.map(x => `~~~${x}`);
         mainUrl = finalUrl.replace(",", "");
         mainUrl = mainUrl.replaceAll(",", "");
         // makes url for first jump / not chart click
         //============================================================
       } else {
         const trailIndex = trail.findIndex(x => x.code === module_Id);
+
+        console.log("Else was Executed!");
+
         if (trail.slice(1, trailIndex).length > 0) {
           const finalUrl = `~~~${trail.slice(1, trailIndex)[0].code}`;
           mainUrl = `${url}${finalUrl.replace(
@@ -128,7 +143,7 @@ const FeatureHolder = ({feature}) => {
           mainUrl.replaceAll(",", "");
         }
       }
-
+      console.log("mainUrl:-", mainUrl);
       resolve(mainUrl);
     });
   };
@@ -177,7 +192,7 @@ const FeatureHolder = ({feature}) => {
 
     setIsModuleLoading(true);
 
-    console.log("Refresh Item:", item)
+    // console.log("Refresh Item:", item)
     const module = feature.modules.filter(e => e.uniqueNo === item.id)[0];
 
     if(module!==undefined&&module!=null){
@@ -211,7 +226,7 @@ const FeatureHolder = ({feature}) => {
         }
         else{
             makeApiCallUrl(uniqueNo, module_Id, parentModule_Id).then(res => {
-                console.log("Final URL",res)
+                // console.log("Final URL",res)
                 dispatch(
                     fetchModuleDetails(
                     res,
@@ -250,7 +265,8 @@ const FeatureHolder = ({feature}) => {
                 
 
                 if(feature.breadCrumbs.filter(e=>e.id===tempParentModule.uniqueNo).length<1){
-                    dispatch(addToBreadcrumbs(feature.featureCode, {id: tempParentModule.uniqueNo, label: tempParentModule.moduleName, level: itemLevel-1}));   
+                    console.log('tempParentModule:',tempParentModule);
+                    dispatch(addToBreadcrumbs(feature.featureCode, {id: tempParentModule.uniqueNo, code: tempParentModule.module_Id, label: tempParentModule.moduleName, level: itemLevel-1}));   
                 }
                 tempCurrentModule = tempParentModule;
                 tempParentModule = feature.modules.filter(e=>e.uniqueNo===tempParentModule.parentModuleId)[0];
@@ -258,11 +274,12 @@ const FeatureHolder = ({feature}) => {
                 
             }
 
-            dispatch(addToBreadcrumbs(feature.featureCode, {id: item.id, label: item.label, level: item.level}));
+
+            dispatch(addToBreadcrumbs(feature.featureCode, item));
         }
         else{
 
-            dispatch(addToBreadcrumbs(feature.featureCode, {id: item.id, label: item.label, level: item.level}));
+            dispatch(addToBreadcrumbs(feature.featureCode, item));
         }
       }
 
@@ -325,6 +342,12 @@ const FeatureHolder = ({feature}) => {
     }
   }
 
+  const handleScroll = (e) => {
+    // console.log("Target:-",e.target.scrollY)
+    if(window.scrollY>0){
+        // console.log('Scrolly', window.scrollY)
+    }
+  }
 //   const handleClickPin = () => {
 //       const label = feature.modules.filter(e=>e.uniqueNo===feature.selectedModule)[0].moduleName
 //       if(selectedFeature === feature.featureCode){
@@ -433,7 +456,7 @@ const FeatureHolder = ({feature}) => {
                     </Box>
                 ):(
                     <>
-                        <ComponentHolder index={feature.featureCode} type={'main'} value={feature.showModule}>
+                        <ComponentHolder index={feature.featureCode} type={'main'} value={feature.showModule} onScroll={(e)=>handleScroll(e)}>
                             <MainPage 
                                 key={feature.featureCode} 
                                 feature={feature} 
@@ -443,7 +466,7 @@ const FeatureHolder = ({feature}) => {
                             />
                         </ComponentHolder>
                         {feature.modules.length > 0 && feature.modules.map((item)=>(
-                            <ComponentHolder index={item.uniqueNo} key={item.uniqueNo} type={'main'} value={feature.showModule}  >
+                            <ComponentHolder index={item.uniqueNo} key={item.uniqueNo} type={'main'} value={feature.showModule} onScroll={()=>handleScroll()} >
                                 <ModuleHolder isRefreshing={isRefreshing} setIsRefreshing={setIsRefreshing} feature={feature} module={item} getModuleChartData={getModuleChartData} />
                             </ComponentHolder>
                         ))}
@@ -467,9 +490,11 @@ const MainPage = ({feature, getModuleChartData, isRefreshing, setIsRefreshing}) 
 
     const handleClick = (item) => {
         dispatch(setSelectedModule(feature.featureCode, item.uniqueNo));
+        
+        console.log("item:", item);
 
         if(feature.breadCrumbs.filter(e=>e.id===item.id).length<1){
-            dispatch(addToBreadcrumbs(feature.featureCode, {id: item.uniqueNo, label: item.moduleName, level: 1}));
+            dispatch(addToBreadcrumbs(feature.featureCode, {id: item.uniqueNo, code: item.module_Id, label: item.moduleName, level: 1}));
         }
         feature.breadCrumbs.map(crumb=>{
             if(crumb.level===1 && crumb.id!==item.uniqueNo){
@@ -479,7 +504,7 @@ const MainPage = ({feature, getModuleChartData, isRefreshing, setIsRefreshing}) 
             return crumb;
         })
         if(feature.openTabs.filter(e=>e.id===item.uniqueNo).length<1){
-            dispatch(addToOpenTabs(feature.featureCode, {id: item.uniqueNo, label: item.moduleName, level: 1}));
+            dispatch(addToOpenTabs(feature.featureCode, {id: item.uniqueNo, code: item.module_Id, label: item.moduleName, level: 1}));
         }
 
         getModuleChartData(item);

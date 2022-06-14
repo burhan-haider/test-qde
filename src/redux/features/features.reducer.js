@@ -92,6 +92,7 @@ const features = (state = initialState, action) => {
                         modules: [...moduleData],
                         breadCrumbs:[{
                             id: featureCode, 
+                            code: featureCode,
                             label: featureName,
                             level: 0,
                         }],
