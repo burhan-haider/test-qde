@@ -28,7 +28,9 @@ import {
     addToPinnedModules,
     removeFromPinnedModules,
     openPinnedModule,
+    toggleHeader,
 } from 'redux/features/features.actions';
+import featureService from 'services/features/featureService'
 import getIconByKey from 'assets';
 import ModuleChartFrame from 'components/common/modules/mainModuleSearchFrame/ModuleChartFrame'
 // import { handleBreakpoints } from '@mui/system';
@@ -36,18 +38,39 @@ import ModuleChartFrame from 'components/common/modules/mainModuleSearchFrame/Mo
 const styles = theme => ({
     chipRoot: {
         "& .MuiChip-icon": {
-          order: 1, // the label has a default order of 0, so this icon goes after the label
-          marginRight: "5px", // add some space between icon and delete icon
-          marginLeft: '-2px',
-          cursor: "pointer"
+            display: 'none',
         },
         "& .MuiChip-deleteIcon": {
-          order: 2 // since this is greater than an order of 1, it goes after the icon
+            display: 'none',
+        },
+        "&:hover":{
+            "& .MuiChip-icon": {
+                display: 'block',
+                order: 1, // the label has a default order of 0, so this icon goes after the label
+                marginRight: "5px", // add some space between icon and delete icon
+                marginLeft: '-2px',
+                cursor: "pointer"
+              },
+              "& .MuiChip-deleteIcon": {
+                display: 'block',
+                order: 2 // since this is greater than an order of 1, it goes after the icon
+              }
+        },
+        
+      },
+      inactiveChip: {
+        "& .MuiChip-deleteIcon": {
+            display: 'none',
+        },
+        "&:hover":{
+            "& .MuiChip-deleteIcon": {
+                display: 'block',
+            }
         }
       }
 })
 
-const FeatureHolder = ({feature}) => {
+const FeatureHolder = ({feature, hideHeader, setHideHeader}) => {
 
   const [bookMark, toggleBookMark] = useState(null);
 //   const [trail, setTrail] = useState(feature.breadCrumbs);
@@ -86,9 +109,7 @@ const FeatureHolder = ({feature}) => {
             }
         })
       }
-  },[selectedFeature,feature])
-
-  
+  },[selectedFeature,feature])  
 
   var url = selectedFeature
     ? `/common/feature/${selectedFeature}`
@@ -113,9 +134,13 @@ const FeatureHolder = ({feature}) => {
             }
             return mod;
         })
-        newStructure.push(module_Id);
 
-        
+        if(parentModule_Id !== null){
+            if(newStructure.filter(e=>e===parentModule_Id).length === 0){
+                newStructure.push(parentModule_Id);
+            }
+        }
+        newStructure.push(module_Id);
 
         console.log("Trail:-", trail)
         console.log("newStructure:-", newStructure)
@@ -149,7 +174,10 @@ const FeatureHolder = ({feature}) => {
   };
 
   function getModuleChartData(module) {
-    const { uniqueNo, module_Id, parentModule_Id, dataPointClick } = module;
+
+    console.log("getModuleChartData:-", module);
+
+    const { uniqueNo, module_Id, parentModule_Id, parentModuleId, dataPointClick } = module;
     let moduleDataArray = [];
     moduleDataArray.push({
       uniqueNo: module.uniqueNo,
@@ -172,19 +200,56 @@ const FeatureHolder = ({feature}) => {
     //   dispatch(selectSpecificModule(false, uniqueNo));
     } else {
     //   dispatch(removeModuleFromDeleted(uniqueNo));
-      if (dataPointClick !== undefined && dataPointClick === true) {
-        dispatch(putMapClickedDataInFeatures(moduleDataArray));
-      }
-      makeApiCallUrl(uniqueNo, module_Id, parentModule_Id).then(res => {
-        dispatch(
-          fetchModuleDetails(
-            res,
-            module_Id,
-            uniqueNo,
-            selectedFeature
-          )
-        );
-      });
+    //   if (dataPointClick !== undefined && dataPointClick === true) {
+    //     dispatch(putMapClickedDataInFeatures(moduleDataArray));
+    //   }
+        if(module.dataPointClick === true){
+            if(module.hasMoreChild === true){
+                makeApiCallUrl(parentModuleId, parentModule_Id, null).then(res=>{
+                    featureService
+                    .fetchModuleData(res).then(response=>{
+                        console.log("response:-", response);
+                        dispatch(putMapClickedDataInFeatures(response, module.parentModuleId, module.parentModule_Id, module.uniqueNo));
+                        makeApiCallUrl(uniqueNo, module_Id, parentModule_Id).then(res => {
+                            dispatch(
+                                fetchModuleDetails(
+                                    res,
+                                    module_Id,
+                                    uniqueNo,
+                                    selectedFeature
+                                )
+                            );
+                        });
+                    })
+                    
+                })
+                
+                
+            }
+            else{
+                makeApiCallUrl(parentModuleId, parentModule_Id, null).then(res=>{
+                    featureService
+                    .fetchModuleData(res).then(response=>{
+                        console.log("response:-", response);
+                        dispatch(putMapClickedDataInFeatures(response, module.parentModuleId, module.parentModule_Id, module.uniqueNo));
+                    })
+                })
+            }
+        }
+        else{
+            if(module.hasChildren === true){
+                makeApiCallUrl(uniqueNo, module_Id, parentModule_Id).then(res => {
+                    dispatch(
+                        fetchModuleDetails(
+                            res,
+                            module_Id,
+                            uniqueNo,
+                            selectedFeature
+                        )
+                    );
+                });
+            }
+        }
     }
   }
 
@@ -343,22 +408,20 @@ const FeatureHolder = ({feature}) => {
   }
 
   const handleScroll = (e) => {
-    // console.log("Target:-",e.target.scrollY)
-    if(window.scrollY>0){
-        // console.log('Scrolly', window.scrollY)
-    }
+    // console.log("Scroll Amount:-",e.target.scrollTop)
+    if(e.target.scrollTop<20){
+        setHideHeader(false);
+    }else{
+        if(hideHeader === false){
+            setHideHeader(true);
+        }
+    } 
   }
-//   const handleClickPin = () => {
-//       const label = feature.modules.filter(e=>e.uniqueNo===feature.selectedModule)[0].moduleName
-//       if(selectedFeature === feature.featureCode){
-//           dispatch(addToPinnedModules({label: label,feature: feature}));
-//       }
-//   }
-
+  
     return(
-    <div>
+    <div >
         
-        <div className="flex justify-start w-100" >
+        <div className={ "flex justify-start w-100"} >
             <div className="w-full" >
                 {feature.openTabs.length>0&&(
                     <Box className="px-1 pt-1 bottom-1 text-left ml-5" style={{backgroundColor: '#fff'}} >
@@ -383,7 +446,18 @@ const FeatureHolder = ({feature}) => {
                                         }} 
                                     />
                                 ):(
-                                    <Chip key={item.id} style={{border: '1px solid #83a3bb'}} className=" bg-transparent hover:bg-light-grey hover:text-white text-xs m-1" size="small" label={item.label} onClick={()=>handleClick(item)}  onDelete={()=>handleDelete(item)} />
+                                    <Chip 
+                                        key={item.id} 
+                                        style={{border: '1px solid #83a3bb'}} 
+                                        className=" bg-transparent hover:bg-light-grey hover:text-white text-xs m-1" 
+                                        size="small" 
+                                        label={item.label} 
+                                        onClick={()=>handleClick(item)}  
+                                        onDelete={()=>handleDelete(item)} 
+                                        classes={{
+                                            root: classes.inactiveChip
+                                        }}
+                                    />
                                 )}
                             </span>
                         ))}
@@ -456,7 +530,7 @@ const FeatureHolder = ({feature}) => {
                     </Box>
                 ):(
                     <>
-                        <ComponentHolder index={feature.featureCode} type={'main'} value={feature.showModule} onScroll={(e)=>handleScroll(e)}>
+                        <ComponentHolder hideHeader={hideHeader} index={feature.featureCode} type={'main'} value={feature.showModule} onScroll={(e)=>handleScroll(e)}>
                             <MainPage 
                                 key={feature.featureCode} 
                                 feature={feature} 
@@ -466,7 +540,7 @@ const FeatureHolder = ({feature}) => {
                             />
                         </ComponentHolder>
                         {feature.modules.length > 0 && feature.modules.map((item)=>(
-                            <ComponentHolder index={item.uniqueNo} key={item.uniqueNo} type={'main'} value={feature.showModule} onScroll={()=>handleScroll()} >
+                            <ComponentHolder hideHeader={hideHeader} index={item.uniqueNo} key={item.uniqueNo} type={'main'} value={feature.showModule} onScroll={(e)=>handleScroll(e)} >
                                 <ModuleHolder isRefreshing={isRefreshing} setIsRefreshing={setIsRefreshing} feature={feature} module={item} getModuleChartData={getModuleChartData} />
                             </ComponentHolder>
                         ))}
@@ -486,7 +560,7 @@ const MainPage = ({feature, getModuleChartData, isRefreshing, setIsRefreshing}) 
 
     useEffect(()=>{
         console.log("Module Feature:", feature)
-    })
+    },[])
 
     const handleClick = (item) => {
         dispatch(setSelectedModule(feature.featureCode, item.uniqueNo));

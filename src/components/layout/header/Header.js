@@ -34,7 +34,7 @@ const MyTabScrollButton = styled(TabScrollButton)({
     },
   });
 
-const Header = () => {
+const Header = ({hideHeader}) => {
 
     const selectedFeature = useSelector(state => state.features.features.featureCode);
     // const modules = useSelector(state => state.routes.modules);
@@ -57,6 +57,7 @@ const Header = () => {
         // setNewFeatures(currentFeatures)
     },[]);
 
+
     const handleChange = (event, newValue) => {
         dispatch(setSelectedFeature(newValue));
         if(features.filter(e=>e.featureCode===newValue).length<1){
@@ -65,7 +66,9 @@ const Header = () => {
     };
 
     return (
-        <Box className='flex justify-start align-middle px-3'>
+        <Box className={'flex justify-start align-middle px-3'}
+            style={{transition: 'all 0.1s ease-in-out', transform: hideHeader == true ? 'translateY(-50px)' : 'none'}}
+        >
             <div className='flex justify-start' >
                 <img 
                     src={logo} 

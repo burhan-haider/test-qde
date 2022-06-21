@@ -1,6 +1,11 @@
-import React from "react";
-import { Pie } from "react-chartjs-2";
+import React, {useRef} from "react";
+import { Pie, getElementAtEvent } from "react-chartjs-2";
 import { Chart as ChartJS, registerables } from 'chart.js';
+import {
+  setSelectedModule,
+  addToBreadcrumbs,
+  addToOpenTabs,
+} from 'redux/features/features.actions'
 
 ChartJS.register(...registerables);
 
@@ -16,43 +21,74 @@ export default function PieChart(props) {
     parentModule_Id,
     uniqueNo
   } = props;
-  function graphClickEvent(dataIndexArray) {
-    // console.log("FUNCTION OF GRAPHCLICKCALLED", dataIndexArray);
-    let hasMoreChild;
-    let modulename;
-    if (hasChildren) {
-      let dataPointClick;
-      if (dataIndexArray.length > 0) {
-        parentModule_Id = module_Id;
-        parentModuleId = uniqueNo;
-        module_Id =
-          props.moduleChartDetail.module_IdDetailList[
-            dataIndexArray[0]["_index"]
-          ]["MODULECODE"];
-        uniqueNo =
-          moduleChartDetail.module_IdDetailList[dataIndexArray[0]["_index"]][
-            "UNIQUENO"
-          ];
-        modulename = props.moduleChartDetail.xaxis[dataIndexArray[0]["_index"]];
-        moduleURL =
-          props.moduleChartDetail.module_IdDetailList[
-            dataIndexArray[0]["_index"]
-          ]["MODULEURL"];
-        presentationCategory =
-          props.moduleChartDetail.module_IdDetailList[
-            dataIndexArray[0]["_index"]
-          ]["PRESENTATIONCATEGORY"];
 
-        hasMoreChild =
-          moduleChartDetail.module_IdDetailList[dataIndexArray[0]["_index"]][
-            "HASCHILDREN"
-          ];
+  const myChart = useRef(null);
+
+  const graphClickEvent = (dataIndex) => {
+
+    const dataIndexArray = getElementAtEvent(myChart.current, dataIndex);
+
+    console.log("FUNCTION OF GRAPHCLICKCALLED", getElementAtEvent(myChart.current, dataIndex));
+    console.log("Props:-", props);
+
+    let dataPointClick;
+    let modulename;
+    let hasMoreChild;
+
+    if(hasChildren===true) {
+
+      if(dataIndexArray.length > 0) {
+        parentModule_Id = module_Id;
+
+        parentModuleId = uniqueNo;
+
+        module_Id = props.moduleChartDetail.moduleCodeDetailList[dataIndexArray[0]["index"]]["MODULE_ID"];
+
+        uniqueNo = moduleChartDetail.moduleCodeDetailList[dataIndexArray[0]["index"]]["UNIQUENO"];
+
+        modulename = props.moduleChartDetail.xaxis[dataIndexArray[0]["index"]];
+
+        moduleURL = props.moduleChartDetail.moduleCodeDetailList[dataIndexArray[0]["index"]]["MODULEURL"];
+          
+        presentationCategory = props.moduleChartDetail.moduleCodeDetailList[ dataIndexArray[0]["index"]]["PRESENTATIONCATEGORY"];
+
+        hasMoreChild = moduleChartDetail.moduleCodeDetailList[dataIndexArray[0]["index"]]["HASCHILDREN"];
+      
         dataPointClick = true;
-      } else {
-        module_Id = props.module_Id;
-        dataPointClick = false;
+
+        let moduleMain = {
+          module_Id,
+          moduleURL,
+          presentationCategory,
+          dataPointClick,
+          modulename,
+          parentModuleId,
+          parentModule_Id,
+          hasMoreChild,
+          uniqueNo,
+          hasChildren
+        };
+        props.chartClickOperation(moduleMain);
       }
-      props.chartClickOperation(
+      else{
+        let moduleMain = {
+          module_Id,
+          moduleURL,
+          presentationCategory,
+          dataPointClick,
+          modulename,
+          parentModuleId,
+          parentModule_Id,
+          hasMoreChild,
+          uniqueNo,
+          hasChildren
+        };
+        props.chartClickOperation(moduleMain);
+      }
+    }
+    else{
+
+      let moduleMain = {
         module_Id,
         moduleURL,
         presentationCategory,
@@ -63,22 +99,71 @@ export default function PieChart(props) {
         hasMoreChild,
         uniqueNo,
         hasChildren
-      );
-    } else {
-      props.chartClickOperation(
-        module_Id,
-        moduleURL,
-        presentationCategory,
-        true,
-        modulename,
-        parentModuleId,
-        parentModule_Id,
-        hasMoreChild,
-        uniqueNo,
-        hasChildren
-      );
+      };
+      props.chartClickOperation(moduleMain);
+
     }
+
   }
+
+  // function graphClickEvent(dataIndex) {
+
+
+  //   let hasMoreChild;
+  //   let modulename;
+  //   if (hasChildren) {
+  //     if (dataIndexArray.length > 0) {
+  //       parentModule_Id = module_Id;
+  //       parentModuleId = uniqueNo;
+  //       module_Id = props.moduleChartDetail.moduleCodeDetailList[dataIndexArray[0]["index"]]["MODULE_ID"];
+
+  //       uniqueNo = moduleChartDetail.moduleCodeDetailList[dataIndexArray[0]["index"]]["UNIQUENO"];
+
+  //       modulename = props.moduleChartDetail.xaxis[dataIndexArray[0]["index"]];
+
+  //       moduleURL = props.moduleChartDetail.moduleCodeDetailList[dataIndexArray[0]["index"]]["MODULEURL"];
+          
+  //       presentationCategory = props.moduleChartDetail.moduleCodeDetailList[ dataIndexArray[0]["index"]]["PRESENTATIONCATEGORY"];
+
+  //       hasMoreChild = moduleChartDetail.moduleCodeDetailList[dataIndexArray[0]["index"]]["HASCHILDREN"];
+  //       dataPointClick = true;
+  //     } else {
+  //       module_Id = props.module_Id;
+  //       dataPointClick = false;
+  //       hasMoreChild = false;
+
+  //     }
+  //     let moduleMain = {
+  //       module_Id,
+  //       moduleURL,
+  //       presentationCategory,
+  //       dataPointClick,
+  //       modulename,
+  //       parentModuleId,
+  //       parentModule_Id,
+  //       hasMoreChild,
+  //       uniqueNo,
+  //       hasChildren
+  //     };
+  //     console.log("moduleMainIf:-", moduleMain);
+  //     props.chartClickOperation(moduleMain);
+  //   } else {
+  //     let moduleMain = {
+  //       module_Id,
+  //       moduleURL,
+  //       presentationCategory,
+  //       dataPointClick: true,
+  //       modulename,
+  //       parentModuleId,
+  //       parentModule_Id,
+  //       hasMoreChild,
+  //       uniqueNo,
+  //       hasChildren
+  //     };
+  //     console.log("moduleMainElse:-", moduleMain);
+  //     props.chartClickOperation(moduleMain);
+  //   }
+  // }
   const cData = {
     labels: props.moduleChartDetail.xaxis,
     datasets: [
@@ -94,8 +179,9 @@ export default function PieChart(props) {
     <div style={{ position: "relative"}}>
       <Pie
         data={cData}
-        // getElementAtEvent={elms => graphClickEvent(elms)}
+        // getElementAtEvent={(elms) => graphClickEvent(elms)}
         onClick={elms => graphClickEvent(elms)}
+        ref={ myChart }
         options={{
           responsive: true,
           title: {

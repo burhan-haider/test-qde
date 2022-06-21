@@ -219,9 +219,19 @@ const features = (state = initialState, action) => {
         case PUT_MAP_CLICK_DATA_IN_FEATURES: {
             const showData = state.features.map(f => {
               if (f.featureCode === state.featureCode) {
-                f.showModule = action.payload[0].uniqueNo;
+                f.showModule = action.payload.uniqueNo;
                 f.showRoot = false;
-                f.modules = [...f.modules, ...action.payload];
+                let newModules = [];
+                action.payload.module.map(item => {
+                    if(f.modules.filter(e=>e.uniqueNo === item.uniqueNo).length == 0){
+                        newModules.push({
+                            ...item,
+                            parentModuleId: action.payload.parentModuleId,
+                            parentModule_Id: action.payload.parentModule_Id,
+                        });
+                    }
+                });
+                f.modules = [...f.modules, ...newModules];
               }
               return f;
             });

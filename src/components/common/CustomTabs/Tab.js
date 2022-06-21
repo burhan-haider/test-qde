@@ -14,7 +14,7 @@ const CustomTabComponent = styled(props=><Tab disableRipple {...props} />)(({the
         backgroundColor: '#617990 !important',
         color: '#ffffff',
     },
-    transition: 'all 0.3s ease-in',
+    transition: 'all 0.1s ease-in-out',
 }));
 
 export default CustomTabComponent;

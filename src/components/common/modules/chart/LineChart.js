@@ -1,5 +1,5 @@
-import React from "react";
-import { Line } from "react-chartjs-2";
+import React, { useRef } from "react";
+import { Line, getElementAtEvent } from "react-chartjs-2";
 import { Chart as ChartJS, registerables } from 'chart.js';
 
  ChartJS.register(...registerables);
@@ -19,43 +19,73 @@ function LineChart(props) {
 
   const isClickable = !hasChildren&&!presentationCategory?false:true;
 
-  function graphClickEvent(dataIndexArray) {
-    // console.log("FUNCTION OF GRAPHCLICKCALLED", dataIndexArray);
-    let hasMoreChild;
-    let modulename;
-    if (hasChildren) {
-      let dataPointClick;
-      if (dataIndexArray.length > 0) {
-        parentModule_Id = module_Id;
-        parentModuleId = uniqueNo;
-        module_Id =
-          props.moduleChartDetail.module_IdDetailList[
-            dataIndexArray[0]["_index"]
-          ]["MODULECODE"];
-        uniqueNo =
-          moduleChartDetail.module_IdDetailList[dataIndexArray[0]["_index"]][
-            "UNIQUENO"
-          ];
-        modulename = props.moduleChartDetail.xaxis[dataIndexArray[0]["_index"]];
-        moduleURL =
-          props.moduleChartDetail.module_IdDetailList[
-            dataIndexArray[0]["_index"]
-          ]["MODULEURL"];
-        presentationCategory =
-          props.moduleChartDetail.module_IdDetailList[
-            dataIndexArray[0]["_index"]
-          ]["PRESENTATIONCATEGORY"];
+  const myChart = useRef(null);
 
-        hasMoreChild =
-          moduleChartDetail.module_IdDetailList[dataIndexArray[0]["_index"]][
-            "HASCHILDREN"
-          ];
+  const graphClickEvent = (dataIndex) => {
+
+    const dataIndexArray = getElementAtEvent(myChart.current, dataIndex);
+
+    console.log("FUNCTION OF GRAPHCLICKCALLED", getElementAtEvent(myChart.current, dataIndex));
+    console.log("Props:-", props);
+
+    let dataPointClick;
+    let modulename;
+    let hasMoreChild;
+
+    if(hasChildren===true) {
+
+      if(dataIndexArray.length > 0) {
+        parentModule_Id = module_Id;
+
+        parentModuleId = uniqueNo;
+
+        module_Id = props.moduleChartDetail.moduleCodeDetailList[dataIndexArray[0]["index"]]["MODULE_ID"];
+
+        uniqueNo = moduleChartDetail.moduleCodeDetailList[dataIndexArray[0]["index"]]["UNIQUENO"];
+
+        modulename = props.moduleChartDetail.xaxis[dataIndexArray[0]["index"]];
+
+        moduleURL = props.moduleChartDetail.moduleCodeDetailList[dataIndexArray[0]["index"]]["MODULEURL"];
+          
+        presentationCategory = props.moduleChartDetail.moduleCodeDetailList[ dataIndexArray[0]["index"]]["PRESENTATIONCATEGORY"];
+
+        hasMoreChild = moduleChartDetail.moduleCodeDetailList[dataIndexArray[0]["index"]]["HASCHILDREN"];
+      
         dataPointClick = true;
-      } else {
-        module_Id = props.module_Id;
-        dataPointClick = false;
+
+        let moduleMain = {
+          module_Id,
+          moduleURL,
+          presentationCategory,
+          dataPointClick,
+          modulename,
+          parentModuleId,
+          parentModule_Id,
+          hasMoreChild,
+          uniqueNo,
+          hasChildren
+        };
+        props.chartClickOperation(moduleMain);
       }
-      props.chartClickOperation(
+      else{
+        let moduleMain = {
+          module_Id,
+          moduleURL,
+          presentationCategory,
+          dataPointClick,
+          modulename,
+          parentModuleId,
+          parentModule_Id,
+          hasMoreChild,
+          uniqueNo,
+          hasChildren
+        };
+        props.chartClickOperation(moduleMain);
+      }
+    }
+    else{
+
+      let moduleMain = {
         module_Id,
         moduleURL,
         presentationCategory,
@@ -66,21 +96,11 @@ function LineChart(props) {
         hasMoreChild,
         uniqueNo,
         hasChildren
-      );
-    } else {
-      props.chartClickOperation(
-        module_Id,
-        moduleURL,
-        presentationCategory,
-        true,
-        modulename,
-        parentModuleId,
-        parentModule_Id,
-        hasMoreChild,
-        uniqueNo,
-        hasChildren
-      );
+      };
+      props.chartClickOperation(moduleMain);
+
     }
+
   }
   // console.log(props);
   const cData = {
@@ -152,6 +172,7 @@ function LineChart(props) {
         data={cData}
         // getElementAtEvent={elms => graphClickEvent(elms)}
         onClick={(elms) => isClickable?graphClickEvent(elms):null}
+        ref={myChart}
         options={{
           responsive: true,
           title: {

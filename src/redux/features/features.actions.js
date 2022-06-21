@@ -132,10 +132,10 @@ export const removeFromOpenTabs = (featureCode, module) => {
   }
 }
 
-export const putMapClickedDataInFeatures = data => {
+export const putMapClickedDataInFeatures = (module, parentModuleId, parentModule_Id, uniqueNo) => {
   return {
     type: PUT_MAP_CLICK_DATA_IN_FEATURES,
-    payload: data
+    payload: { module, parentModuleId, parentModule_Id, uniqueNo}
   };
 };
 

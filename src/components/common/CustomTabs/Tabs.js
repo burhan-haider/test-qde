@@ -14,7 +14,7 @@ const CustomTabs = styled(Tabs)({
     '& .MuiTabs-indicator': {
         background: 'transparent',
     },
-    transition: 'all 0.3s ease-in-out',
+    transition: 'all 0.s ease-in-out',
 })
 
 export default CustomTabs;

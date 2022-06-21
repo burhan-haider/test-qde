@@ -37,54 +37,39 @@ function ModuleChartFrame(props) {
   const currentModule = feature?feature.showModule:"";
 
   useEffect(()=>{
-
-    // console.log('currentModule', currentModule)
-    // console.log('current', current.parentModuleId)
     if(currentModule===current.parentModuleId){
       props.setIsRefreshing(false);
     }
   },[props.isRefreshing])
 
-  const chartClickOperation = (module) => {
+  const chartClickOperation = (chartModule) => {
 
-    // console.log("chartClickOperations Triggered")
-    // console.log("Module Element Name:",module)
-    // console.log("Module Data:",current)
-    // console.log("Chart Feature:", feature)
-    // console.log('Feature BreadCrumbs:-',feature.breadCrumbs)
+    console.log("chart click operations module:- ", chartModule);
+    console.log("chart click operations current:- ", current);
 
-    if(current.module_Id === module){
+    if(chartModule.dataPointClick !== true){
 
-      if(current.hasChildren === true){
-        dispatch(setSelectedModule(feature.featureCode, current.uniqueNo))
-        getModuleChartData(current);
-      }
-      else{
-        dispatch(setSelectedModule(feature.featureCode, current.uniqueNo))
-      }
+      if(current.module_Id === chartModule.module_Id){
 
-      const lastCrumbLevel = feature.breadCrumbs[feature.breadCrumbs.length-1].level;
-
-      
-      // feature.breadCrumbs.map(crumb=>{
-      //     if(crumb.level===lastCrumbLevel+1 && crumb.id!==current.uniqueNo){
-      //         dispatch(removeFromBreadcrumbs(feature.featureCode, crumb));
-      //         return crumb
-      //     }
-      //     return crumb;
-      // })
-      if(feature.openTabs.filter(e=>e.id===current.uniqueNo).length<1){
-        dispatch(addToOpenTabs(feature.featureCode, {
-          id: current.uniqueNo, 
-          code: current.module_Id, 
-          label: current.moduleName, 
-          level: lastCrumbLevel+1
-        }));
-      }
-      // if(feature.breadCrumbs.filter(e=>e.id===current.uniqeNo).length<1){
-      //   dispatch(addToBreadcrumbs(feature.featureCode, {id: current.uniqueNo, label: current.moduleName, level: lastCrumbLevel+1}));
-      // }
-
+        if(current.hasChildren === true){
+          dispatch(setSelectedModule(feature.featureCode, current.uniqueNo))
+          getModuleChartData(current);
+        }
+        else{
+          dispatch(setSelectedModule(feature.featureCode, current.uniqueNo))
+        }
+  
+        const lastCrumbLevel = feature.breadCrumbs[feature.breadCrumbs.length-1].level;
+  
+        if(feature.openTabs.filter(e=>e.id===current.uniqueNo).length<1){
+          dispatch(addToOpenTabs(feature.featureCode, {
+            id: current.uniqueNo, 
+            code: current.module_Id, 
+            label: current.moduleName, 
+            level: lastCrumbLevel+1
+          }));
+        }
+  
         feature.breadCrumbs.map(crumb=>{
           if(feature.breadCrumbs.filter(e=>e.id===current.uniqueNo).length<1){
             if(crumb.id === current.parentModuleId){
@@ -108,128 +93,135 @@ function ModuleChartFrame(props) {
             }))
           }
         }
+  
+      }
+      else{
+        console.log("Module From Chart Click:-", chartModule);
 
-      // feature.breadCrumbs.map(crumb=>{
-      //   if(current.parentModuleId === crumb.id){
-      //     console.log("Module Parent Matches Crumb")
-      //     dispatch(addToBreadcrumbs(feature.featureCode, {
-      //       id: current.uniqueNo, 
-      //       label: current.moduleName, 
-      //       level: crumb.level + 1,
-      //     }))
-      //     if(feature.openTabs.filter(e=>e.id===current.uniqueNo).length<1){
-      //       dispatch(addToOpenTabs(feature.featureCode, {
-      //           id: current.uniqueNo, 
-      //           label: current.moduleName,
-      //           level: crumb.level + 1,
-      //       }))
-      //     }
-      //   }
-      // })
-      // dispatch(setSelectedModule(feature.featureCode, current.uniqueNo))
+        dispatch(setSelectedModule(feature.featureCode, chartModule.uniqueNo))
+        getModuleChartData(chartModule);
+      }
+    } 
+    else {
+      console.log("Module From DataPoint Click:-", chartModule);
+      
+      dispatch(setSelectedModule(feature.featureCode, chartModule.uniqueNo))
+      getModuleChartData(chartModule);
+
+      if(current.parentModuleId === null){
+        dispatch(addToBreadcrumbs(feature.featureCode, {
+          id: current.uniqueNo,
+          code: current.module_Id,
+          label: current.moduleName,
+          level: 1
+        }))
+        dispatch(addToBreadcrumbs(feature.featureCode, {
+          id: chartModule.uniqueNo,
+          code: chartModule.module_Id,
+          label: chartModule.modulename,
+          level: 2
+        }))
+        if(feature.openTabs.filter(e=>e.id===chartModule.uniqueNo).length === 0 ){
+          dispatch(addToOpenTabs(feature.featureCode,{
+            id: chartModule.uniqueNo,
+            code: chartModule.module_Id,
+            label: chartModule.modulename,
+            level: 2
+          }))
+        }
+      }
+      else{
+        feature.breadCrumbs.map(crumb=>{
+          if(crumb.id === current.parentModuleId){
+            dispatch(addToBreadcrumbs(feature.featureCode, {
+              id: current.uniqueNo,
+              code: current.module_Id,
+              label: current.moduleName,
+              level: crumb.level+1
+            }))
+            dispatch(addToBreadcrumbs(feature.featureCode, {
+              id: chartModule.uniqueNo,
+              code: chartModule.module_Id,
+              label: chartModule.modulename,
+              level: crumb.level+2
+            }))
+            if(feature.openTabs.filter(e=>e.id===chartModule.uniqueNo).length === 0 ){
+              dispatch(addToOpenTabs(feature.featureCode,{
+                id: chartModule.uniqueNo,
+                code: chartModule.module_Id,
+                label: chartModule.modulename,
+                level: crumb.level+2
+              }))
+            }
+          }
+        })
+      }
+
+      
+
     }
     
-    // if (dataPointClick) {
-    //   if (hasMoreChild) {
-    //     // getModuleChartData(module_Id, parentModule);
-
-    //     getModuleChartData({
-    //       module_Id: module.module_Id,
-    //       url: module.url,
-    //       presentationCategory: module.presentationCategory,
-    //       dataPointClick:module.dataPointClick,
-    //       moduleName:module.moduleName,
-    //       parentModuleId:module.parentModuleId,
-    //       parentModule_Id:module.parentModule_Id,
-    //       uniqueNo:module.uniqueNo,
-    //       hasChildren:module.hasChildren,
-    //       hasMoreChild: module.hasMoreChild,
-    //     });
-    //   } else {
-    //     props.getmoduleDetails({
-    //       module_Id:module.module_Id,
-    //       url:module.url,
-    //       presentationCategory:module.presentationCategory,
-    //       dataPointClick:module.dataPointClick,
-    //       moduleName:module.moduleName,
-    //       parentModuleId:module.parentModuleId,
-    //       parentModule_Id:module.parentModule_Id,
-    //       uniqueNo:module.uniqueNo,
-    //       hasChildren:module.hasChildren,
-    //       hasMoreChild: module.hasMoreChild,
-    //     });
-    //   }
-    // } else {
-    //   getModuleChartData({
-    //     module_Id:module.module_Id,
-    //     uniqueNo:module.uniqueNo,
-    //     parentModuleId:module.parentModuleId,
-    //     parentModule_Id:module.parentModule_Id,
-    //     dataPointClick:module.dataPointClick,
-    //     hasChildren:module.hasChildren
-    //   });
-    // }
   }
 
   function selectSpecificChart(
-    module
+    selectedModule
   ) {
-    let chartType = module.moduleChartDetails && module.moduleChartDetails.chartType;
+    let chartType = selectedModule.moduleChartDetails && selectedModule.moduleChartDetails.chartType;
     switch (chartType) {
       case "LINE":
         return (
           <LineChart
-            moduleChartDetail={module.moduleChartDetails}
-            module_Id={module.module_Id}
-            moduleURL={module.moduleURL}
+            moduleChartDetail={selectedModule.moduleChartDetails}
+            module_Id={selectedModule.module_Id}
+            moduleURL={selectedModule.moduleURL}
             chartClickOperation={chartClickOperation}
-            hasChildren={module.hasChildren}
-            presentationCategory={module.presentationCategory}
-            parentModuleId={module.parentModuleId}
-            parentModule_Id={module.parentModule_Id}
-            uniqueNo={module.uniqueNo}
+            hasChildren={selectedModule.hasChildren}
+            presentationCategory={selectedModule.presentationCategory}
+            parentModuleId={selectedModule.parentModuleId}
+            parentModule_Id={selectedModule.parentModule_Id}
+            uniqueNo={selectedModule.uniqueNo}
           ></LineChart>
         );
       case "BAR":
         return (
           <BarChart
-            moduleChartDetail={module.moduleChartDetails}
-            module_Id={module.module_Id}
-            moduleURL={module.moduleURL}
+            moduleChartDetail={selectedModule.moduleChartDetails}
+            module_Id={selectedModule.module_Id}
+            moduleURL={selectedModule.moduleURL}
             chartClickOperation={chartClickOperation}
-            hasChildren={module.hasChildren}
-            presentationCategory={module.presentationCategory}
-            parentModuleId={module.parentModuleId}
-            parentModule_Id={module.parentModule_Id}
-            uniqueNo={module.uniqueNo}
+            hasChildren={selectedModule.hasChildren}
+            presentationCategory={selectedModule.presentationCategory}
+            parentModuleId={selectedModule.parentModuleId}
+            parentModule_Id={selectedModule.parentModule_Id}
+            uniqueNo={selectedModule.uniqueNo}
           ></BarChart>
         );
       case "PIE":
         return (
           <PieChart
-            moduleChartDetail={module.moduleChartDetails}
-            module_Id={module.module_Id}
-            moduleURL={module.moduleURL}
+            moduleChartDetail={selectedModule.moduleChartDetails}
+            module_Id={selectedModule.module_Id}
+            moduleURL={selectedModule.moduleURL}
             chartClickOperation={chartClickOperation}
-            hasChildren={module.hasChildren}
-            presentationCategory={module.presentationCategory}
-            parentModuleId={module.parentModuleId}
-            parentModule_Id={module.parentModule_Id}
-            uniqueNo={module.uniqueNo}
+            hasChildren={selectedModule.hasChildren}
+            presentationCategory={selectedModule.presentationCategory}
+            parentModuleId={selectedModule.parentModuleId}
+            parentModule_Id={selectedModule.parentModule_Id}
+            uniqueNo={selectedModule.uniqueNo}
           ></PieChart>
         );
       default:
         return (
           <LineChart
-            moduleChartDetail={module.moduleChartDetails}
-            module_Id={module.module_Id}
-            moduleURL={module.moduleURL}
+            moduleChartDetail={selectedModule.moduleChartDetails}
+            module_Id={selectedModule.module_Id}
+            moduleURL={selectedModule.moduleURL}
             chartClickOperation={chartClickOperation}
-            hasChildren={module.hasChildren}
-            presentationCategory={module.presentationCategory}
-            parentModuleId={module.parentModuleId}
-            parentModule_Id={module.parentModule_Id}
-            uniqueNo={module.uniqueNo}
+            hasChildren={selectedModule.hasChildren}
+            presentationCategory={selectedModule.presentationCategory}
+            parentModuleId={selectedModule.parentModuleId}
+            parentModule_Id={selectedModule.parentModule_Id}
+            uniqueNo={selectedModule.uniqueNo}
           ></LineChart>
         );
     }

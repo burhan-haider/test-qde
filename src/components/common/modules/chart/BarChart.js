@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useRef} from "react";
 import { Chart as ChartJS, registerables } from 'chart.js'
-import { Bar } from "react-chartjs-2";
+import { Bar, getElementAtEvent } from "react-chartjs-2";
 
 ChartJS.register(...registerables);
 
@@ -16,59 +16,74 @@ export default function BarChart(props) {
     parentModule_Id,
     uniqueNo
   } = props;
-  const graphClickEvent = (dataIndexArray) => {
-    // const parentModule = props.module_Id;
-    let hasMoreChild;
+
+  const myChart = useRef(null);
+
+  const graphClickEvent = (dataIndex) => {
+
+    const dataIndexArray = getElementAtEvent(myChart.current, dataIndex);
+
+    console.log("FUNCTION OF GRAPHCLICKCALLED", getElementAtEvent(myChart.current, dataIndex));
+    console.log("Props:-", props);
+
+    let dataPointClick;
     let modulename;
-    if (hasChildren) {
-      let dataPointClick;
-      if (dataIndexArray.length > 0) {
-        //for getting details;
-        // console.log(moduleChartDetail);
+    let hasMoreChild;
+
+    if(hasChildren===true) {
+
+      if(dataIndexArray.length > 0) {
         parentModule_Id = module_Id;
+
         parentModuleId = uniqueNo;
-        module_Id =
-          moduleChartDetail.module_IdDetailList[dataIndexArray[0]["_index"]][
-            "MODULECODE"
-          ];
 
-        uniqueNo =
-          moduleChartDetail.module_IdDetailList[dataIndexArray[0]["_index"]][
-            "UNIQUENO"
-          ];
+        module_Id = props.moduleChartDetail.moduleCodeDetailList[dataIndexArray[0]["index"]]["MODULE_ID"];
 
-        modulename = moduleChartDetail.xaxis[dataIndexArray[0]["_index"]];
-        moduleURL =
-          moduleChartDetail.module_IdDetailList[dataIndexArray[0]["_index"]][
-            "MODULEURL"
-          ];
-        presentationCategory =
-          moduleChartDetail.module_IdDetailList[dataIndexArray[0]["_index"]][
-            "PRESENTATIONCATEGORY"
-          ];
+        uniqueNo = moduleChartDetail.moduleCodeDetailList[dataIndexArray[0]["index"]]["UNIQUENO"];
 
-        hasMoreChild =
-          moduleChartDetail.module_IdDetailList[dataIndexArray[0]["_index"]][
-            "HASCHILDREN"
-          ];
-        // if (
-        //   moduleChartDetail.module_IdDetailList[dataIndexArray[0]["_index"]][
-        //     "HASCHILDREN"
-        //   ]
-        // ) {
-        //   dataPointClick = false;
-        //   // module_Id = module_Id;
-        // } else {
-        //   dataPointClick = true;
-        // }
+        modulename = props.moduleChartDetail.xaxis[dataIndexArray[0]["index"]];
+
+        moduleURL = props.moduleChartDetail.moduleCodeDetailList[dataIndexArray[0]["index"]]["MODULEURL"];
+          
+        presentationCategory = props.moduleChartDetail.moduleCodeDetailList[ dataIndexArray[0]["index"]]["PRESENTATIONCATEGORY"];
+
+        hasMoreChild = moduleChartDetail.moduleCodeDetailList[dataIndexArray[0]["index"]]["HASCHILDREN"];
+      
         dataPointClick = true;
-      } else {
-        //for getting chart
-        module_Id = props.module_Id;
-        dataPointClick = false;
-      }
 
-      props.chartClickOperation(
+        let moduleMain = {
+          module_Id,
+          moduleURL,
+          presentationCategory,
+          dataPointClick,
+          modulename,
+          parentModuleId,
+          parentModule_Id,
+          hasMoreChild,
+          uniqueNo,
+          hasChildren
+        };
+        props.chartClickOperation(moduleMain);
+      }
+      else{
+        let moduleMain = {
+          module_Id,
+          moduleURL,
+          presentationCategory,
+          dataPointClick,
+          modulename,
+          parentModuleId,
+          parentModule_Id,
+          hasMoreChild,
+          uniqueNo,
+          hasChildren
+        };
+        props.chartClickOperation(moduleMain);
+      }
+    }
+    else{
+
+      let moduleMain = {
         module_Id,
         moduleURL,
         presentationCategory,
@@ -79,21 +94,11 @@ export default function BarChart(props) {
         hasMoreChild,
         uniqueNo,
         hasChildren
-      );
-    } else {
-      props.chartClickOperation(
-        module_Id,
-        moduleURL,
-        presentationCategory,
-        true,
-        modulename,
-        parentModuleId,
-        parentModule_Id,
-        hasMoreChild,
-        uniqueNo,
-        hasChildren
-      );
+      };
+      props.chartClickOperation(moduleMain);
+
     }
+
   }
   const cData = {
     labels: moduleChartDetail.xaxis,
@@ -115,6 +120,7 @@ export default function BarChart(props) {
         data={cData}
         // getElementAtEvent={elms => graphClickEvent(elms)}
         onClick={elms => graphClickEvent(elms)}
+        ref={myChart}
         options={{
           responsive: true,
           title: {

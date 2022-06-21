@@ -204,8 +204,8 @@ function GenericDatatable(props) {
     
   }, [
     allHeadCells, 
-    completeData, 
-    resetColumns
+    // completeData, 
+    // resetColumns
   ]);
 
   const handleClickOpenModal = () => {
