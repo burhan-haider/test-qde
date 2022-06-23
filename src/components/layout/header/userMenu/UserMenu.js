@@ -30,7 +30,6 @@ const styles = theme => ({
   },
   button: {
     color: "#fff",
-    fontFamily: "inherit",
     textTransform: "capitalize"
   },
   small: {
@@ -126,7 +125,8 @@ function UserMenuList() {
             width: "77px",
             wordBreak: "normal",
             lineHeight: "1.2em",
-            marginTop: "3px"
+            marginTop: "3px",
+            fontFamily: '"GoogleSans-Regular",-apple-system, BlinkMacSystemFont, "Segoe UI",Roboto, Helvetica Neue, Arial, sans-serif'
           }}
         >
           {userData.data.displayName}

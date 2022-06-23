@@ -24,11 +24,12 @@ const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 const styles = theme => ({
   parentDiv: {
     backgroundColor: "#f4f5fa",
+    paddingBottom: "15px",
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12
   },
   moduleNameDiv: {
-    maxHeight: "40px",
+    maxHeight: "60px",
     alignItems: "center",
     color: "#353535",
     marginTop: "10px"
@@ -83,9 +84,8 @@ const styles = theme => ({
     //margin: "auto",
     //width: "20px",
     //height: "20px",
-    maxWidth: "30px",
-    maxHeight: "30px",
-    marginRight: "15px",
+    maxWidth: "60px",
+    maxHeight: "60px",
     cursor: "pointer"
   }
 });
@@ -144,7 +144,7 @@ function GenericTableTopbar(props) {
       <div className={clsx("flex pl-3 float-left", classes.moduleNameDiv)}>
         <Typography
           variant="h6"
-          style={{ fontFamily: "inherit", fontSize: "16px" }}
+          className="font-gSans text-xl font-bold"
         >
           {moduleName} Results
         </Typography>

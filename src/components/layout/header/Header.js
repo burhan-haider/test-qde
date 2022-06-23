@@ -94,7 +94,7 @@ const Header = ({hideHeader}) => {
                         icon={item.icon?<Icon iconName={item.icon} size={18} color={'inherit'} />:<img src={getIconByKey(item.featureIcon)} style={{height: '1.25rem', width: 'auto'}} className="h-5 w-auto mr-2" alt={item.featureIcon}/>} 
                         iconPosition="start" 
                         value={item.featureCode?item.featureCode:item.featureMapping_Id}
-                        className="text-white border-none"
+                        className="text-white border-none text-base font-gSans"
                         label={
                             item.featureName
                         }

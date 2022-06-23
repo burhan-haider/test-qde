@@ -13,6 +13,7 @@ import { FeaturesComponent } from "./modulePages";
 import { LabelsComponent } from "./modulePages";
 import { ReportAndScenariosComponent } from "./modulePages";
 import { RealtimeScanningComponent } from "./modulePages";
+import { RiskDashboardComponent } from './modulePages'
 
 /*
     Structure of this object like 
@@ -33,7 +34,8 @@ const moduleComponentConfig = {
   allScenarios: ReportAndScenariosComponent,
   allReports: ReportAndScenariosComponent,
   rtScanning: RealtimeScanningComponent,
-  accountProfiling: MasterComponent
+  accountProfiling: MasterComponent,
+  riskDashboard: RiskDashboardComponent,
 };
 
 export default moduleComponentConfig;

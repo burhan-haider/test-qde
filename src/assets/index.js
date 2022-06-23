@@ -15,10 +15,10 @@ import labelsFeature from './icons/feature/labelsFeature.png'
 import features from './icons/feature/features.png';
 import closeBlue from './icons/close_blue.png';
 import closeWhite from './icons/close_white.png';
-import pdf from './icons/pdf_logo.png';
-import excel from './icons/excel_logo.png';
-import csv from './icons/csv_logo.png';
-import print from './icons/print_logo.png';
+import pdf from './icons/new_pdf.png';
+import excel from './icons/new_excel.png';
+import csv from './icons/new_csv.png';
+import print from './icons/new_print.png';
 
 import viewMatches from './icons/View_Matches.png'
 import addToAccept from './icons/Add_To_Acceptlist.png'

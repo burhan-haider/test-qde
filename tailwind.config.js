@@ -9,6 +9,9 @@ module.exports = {
       colors: {
         'light-grey': '#83a3bb',
       },
+      fontFamily: {
+        gSans: ['GoogleSans-Regular', 'sans-serif'],
+      },
     },
   },
   plugins: [],

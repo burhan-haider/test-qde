@@ -11,3 +11,4 @@ export { default as LabelsComponent } from "./labels/LabelsComponent";
 export { default as ReportAndScenariosComponent } from "./reportAndScenarios/ReportAndScenariosComponent";
 // export { default as SingleRowEntity } from "./checkermanagement/SingleRowEntity";
 export { default as RealtimeScanningComponent } from "./realtimeScanning/RealtimeScanningComponent";
+export { default as RiskDashboardComponent } from "./riskDashboard/RiskDashboardComponent"

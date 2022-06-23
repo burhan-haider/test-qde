@@ -431,7 +431,7 @@ const FeatureHolder = ({feature, hideHeader, setHideHeader}) => {
                                     <Chip 
                                         key={item.id} 
                                         style={{backgroundColor: '#83a3bb',}} 
-                                        className="text-xs m-1 text-white" 
+                                        className="text-sm m-1 text-white font-gSans" 
                                         label={item.label}
                                         icon={
                                             <IoMdRefreshCircle 
@@ -449,7 +449,7 @@ const FeatureHolder = ({feature, hideHeader, setHideHeader}) => {
                                     <Chip 
                                         key={item.id} 
                                         style={{border: '1px solid #83a3bb'}} 
-                                        className=" bg-transparent hover:bg-light-grey hover:text-white text-xs m-1" 
+                                        className=" bg-transparent font-gSans hover:bg-light-grey hover:text-white text-sm m-1" 
                                         size="small" 
                                         label={item.label} 
                                         onClick={()=>handleClick(item)}  
@@ -468,12 +468,12 @@ const FeatureHolder = ({feature, hideHeader, setHideHeader}) => {
                 <Box className="flex justify-between border-4 border-solid border-white text-white items-center px-1 ml-5 text-left" style={{backgroundColor: '#052a4f'}} >
                     <div className='flex justify-start items-center' >
                         {feature.breadCrumbs.length>1 &&(
-                            <IconButton style={{backgroundColor: '#cccc00'}} onClick={()=>handlePin()} className="rounded-full p-1 m-1" >
+                            <IconButton style={{backgroundColor: '#cccc00'}} onClick={()=>handlePin()} className="rounded-full p-1 m-1 mr-3" >
                                 <img src={getIconByKey('pinBlack')} alt="pin Icon" className="w-4 h-auto m-0" />
                             </IconButton>
                         )}
                         
-                        <Breadcrumbs className="text-white text-sm" >
+                        <Breadcrumbs className="text-white text-base font-gSans" >
                             {feature.breadCrumbs.sort((a, b) => a.level > b.level ? 1:-1).map((item)=>(
                                 <p 
                                     onClick={()=>handleClickBreadcrumb(item)} 

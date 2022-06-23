@@ -339,7 +339,7 @@ function ActionParamsForm(props) {
               variant="outlined"
               onClick={() => handleAddFields()}
             >
-              Add Field <AddIcon className="ml-2" color={'#052a4f'} size={25} />
+              Add Field
             </Button>
             
             <Formsy
@@ -824,7 +824,16 @@ function ActionParamsForm(props) {
                         >
                           <AddIcon color={'#3f51b5'} size={45} />
                         </IconButton> */}
-                        <IconButton
+                        <Button
+                          type="button"
+                          aria-label="remove"
+                          className={classes.margin}
+                          style={{ margin: 10 }}
+                          color="primary"
+                          variant="outlined"
+                          onClick={() => handleRemoveFields(index)}
+                        >Delete</Button>
+                        {/* <IconButton
                           type="button"
                           aria-label="remove"
                           className={classes.margin}
@@ -832,7 +841,7 @@ function ActionParamsForm(props) {
                           onClick={() => handleRemoveFields(index)}
                         >
                           <DeleteIcon color={'#f50057'} size={45} />
-                        </IconButton>
+                        </IconButton> */}
                       </Grid>
                     </Grid>
                   </Grid>

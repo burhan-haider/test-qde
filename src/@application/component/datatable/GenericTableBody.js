@@ -31,19 +31,24 @@ const styles = theme => ({
   },
   tableCell: {
     fontSize: "13px !important",
+    fontFamily: 'GoogleSans-Regular',
     color: "#353535",
   },
   tableCellSelected: {
     fontSize: "13px !important",
+    fontFamily: 'GoogleSans-Regular',
+
     color: "#fff !important",
   },
   hover: {},
   selected: {
     color: "#fff !important",
+    fontFamily: 'GoogleSans-Regular',
     backgroundColor: "#494949 !important"
   },
   hyperlink: {
     color: "#052a4f",
+    fontFamily: 'GoogleSans-Regular',
     "$selected &": {
       color: "#fff"
     }

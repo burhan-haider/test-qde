@@ -8,7 +8,7 @@ function ReportAndScenariosComponent(props) {
   const [dataSelected, setDataSelected] = useState([]);
 
   return (
-    <div className="px-12">
+    <div className="px-5">
       <GenericDatatable
         dataSet={props.indexPageData}
         //moduleName="IBA Alerts"
