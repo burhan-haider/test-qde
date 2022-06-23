@@ -45,7 +45,7 @@ const RiskDashboardComponent = () => {
         formData.append("ReportFrequency", data.ReportFrequency);
 
         await httpService
-            .post("/reports/getConsolidatedReportTabView",  formData, config)
+            .get("/reports/getConsolidatedReportTabView",  formData, config)
             .then(response => {
             console.log("API Response",response)
             })

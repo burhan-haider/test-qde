@@ -169,8 +169,8 @@ export default function PieChart(props) {
     datasets: [
       {
         data: props.moduleChartDetail.yaxis,
-        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-        hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"]
+        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#FF851B"],
+        hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#FF851B"]
       }
     ]
   };
