@@ -5,9 +5,16 @@ import {
     FormControl,
     TextField,
     DialogActions,
-    MenuItem
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
+    MenuItem,
+    Box,
+    Tabs,
+    Tab,
+    Typography
 } from "@mui/material";
-import { GenericButton } from "@application";
+import { GenericButton, GenericDatatable } from "@application";
 import Formsy from "formsy-react";
 import { TextFieldFormsy, SelectFormsy, DatePickerFormsy } from "components/common/formsyComponents";
 import { useClasses } from '@application';
@@ -15,6 +22,11 @@ import moment from 'moment';
 import httpService from 'services/httpservice/httpService'
 
 const RiskDashboardComponent = () => {
+
+    const [value, setValue] = useState(0);
+    const [tableData, setTableData] = useState({});
+    const [showTable, setShowTable] = useState(false);
+    const [dataSelected, setDataSelected] = useState([]);
 
     const listData = [
         "Monthly",
@@ -47,12 +59,44 @@ const RiskDashboardComponent = () => {
         await httpService
             .get("/reports/getConsolidatedReportTabView",  formData, config)
             .then(response => {
-            console.log("API Response",response)
+                console.log("API Response",response)
+                setTableData(response.data);
+                setShowTable(true);
             })
             .catch(err=>{
                 console.log(err);
             });
     }
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    }
+    const a11yProps = (index) => {
+        return {
+            id: `simple-tab-${index}`,
+            'aria-controls': `simple-tabpanel-${index}`,
+        };
+    }
+
+    const TabPanel = (props) => {
+        const { children, value, index, ...other } = props;
+      
+        return (
+          <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+          >
+            {value === index && (
+              <Box sx={{ p: 3}}>
+                {children}
+              </Box>
+            )}
+          </div>
+        );
+      }
 
     return(
         <div>
@@ -86,7 +130,7 @@ const RiskDashboardComponent = () => {
                         <SelectFormsy 
                             variant="outlined"
                             name="ReportFrequency"
-                            label="List"
+                            label="Report Frequency"
                             className={"w-5/6 text-left"}
                             required={true}
                             value={list}
@@ -112,6 +156,58 @@ const RiskDashboardComponent = () => {
                     </Grid>
                 </Grid>
             </Formsy>
+            {showTable && (
+            <>
+                <Box 
+                    sx={{ 
+                        borderBottom: 1, 
+                        borderColor: 'divider',
+                    }}
+                >
+                    <Tabs 
+                        value={value} 
+                        onChange={handleChange} 
+                        aria-label="basic tabs example" 
+                        variant="scrollable"
+                    >
+                        {Object.keys(tableData).map((item, index)=>(
+                            <Tab 
+                                key={index} 
+                                label={`${item}`} 
+                                wrapped
+                                sx={{
+                                    textAlign: 'left',
+                                }}
+                                {...a11yProps(index)} 
+                            />
+                        ))}
+                    </Tabs>
+                    
+                </Box>
+                {Object.values(tableData).map((item, index)=>{
+                    let searchData = {
+                        VIEWTYPE: "ALL",
+                        MODULENAME: "Risk Dashboard",
+                        GROUP: "RISKDASHBOARD",
+                        DATA: item.listResultData.length > 0 ? item.listResultData : [],
+                        HEADER: item.listResultHeader.length > 0 ? item.listResultHeader[0] : []
+                    };
+
+                    return (
+                        <TabPanel key={index} value={value} index={index}>
+                            <GenericDatatable
+                                dataSet={searchData}
+                                moduleCode={JSON.stringify(Object.keys(tableData)[index])}
+                                moduleName={Object.keys(tableData)[index]}
+                                selected={dataSelected}
+                                selectHandler={setDataSelected}
+                            ></GenericDatatable>
+                        </TabPanel>
+                        )
+                    })}
+            </>
+            )}
+            
         </div>
     )
 
