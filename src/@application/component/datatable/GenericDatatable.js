@@ -80,6 +80,7 @@ function GenericDatatable(props) {
   const completeHeader = props.dataSet.HEADER ? props.dataSet.HEADER : [];
   const completeData = props.dataSet.DATA ? props.dataSet.DATA : [];
   const actionButtons = props.dataSet.ACTIONBUTTONS ? props.dataSet.ACTIONBUTTONS : [];
+  const internalData = props.dataSet.INTERNALDATA ? props.dataSet.INTERNALDATA : [];
 
   const [isDatatableShown, setIsDatatableShown] = useState(true);
   const [order, setOrder] = useState("asc");
@@ -118,15 +119,15 @@ function GenericDatatable(props) {
 
   //console.log("VIVEK------");
   // VIVEK - setting rows data
-  // useEffect(() => {
-  //   console.log("useEffect 1");
-  //   console.log("Rows:-", rows);
-  // });
+  useEffect(() => {
+    console.log("useEffect 1");
+    console.log("Rows:-", rows);
+  }, [rowComponentView]);
 
-  // useEffect(() => {
-  //   console.log("useEffect 3");
-  //   console.log("Headers:-", headers);
-  // });
+  useEffect(() => {
+    console.log("useEffect 3");
+    console.log("Headers:-", headers);
+  },[rowComponentView]);
 
   useEffect(() => {
     console.log("useEffect 2");
@@ -445,6 +446,7 @@ function GenericDatatable(props) {
             moduleName={props.moduleName}
             headers={headers}
             row={rowComponentView}
+            internalData={internalData}
             changeComponentView={changeComponentView}
             bottomAction={actionButtons}
             reloadData={props.reloadData}

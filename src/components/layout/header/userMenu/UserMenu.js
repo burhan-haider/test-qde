@@ -121,6 +121,7 @@ function UserMenuList() {
         style={{ padding: "0" }}
       >
         <span
+          className="hidden xl:block"
           style={{
             width: "77px",
             wordBreak: "normal",

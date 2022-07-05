@@ -33,7 +33,7 @@ export default function UserCreationForm(props) {
   const addNewUser = (newUserDetails) => {
     // console.log("newUserDetails ", newUserDetails);
     userOperationService
-      .createNewUser("api/user/", newUserDetails)
+      .createNewUser("user/", newUserDetails)
       .then(data => {
         // closeCreaeUserDialog();
         props.refreshCurrentModule();

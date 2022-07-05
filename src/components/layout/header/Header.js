@@ -106,7 +106,7 @@ const Header = ({hideHeader}) => {
             </Tabs>
             <div className="flex justify-end align-middle ml-auto" >
                 <img src={headerBar} alt="header-bar" className="h-9 w-auto m-auto" />
-                <IconButton onClick={()=>{}} color="primary" className="ml-2 m-auto" >
+                <IconButton onClick={()=>{}} color="primary" className="ml-2 m-auto hidden xl:block" >
                     <img src={getIconByKey('searchOne')} alt={'search_icon'} className="h-4 w-auto " />
                 </IconButton>
                 {/*<div className="flex justify-start align-middle w-100" >

@@ -13,12 +13,19 @@ import { FeaturesComponent } from "./modulePages";
 import { LabelsComponent } from "./modulePages";
 import { ReportAndScenariosComponent } from "./modulePages";
 import { RealtimeScanningComponent } from "./modulePages";
-import { RiskDashboardComponent } from './modulePages'
+import { RiskDashboardComponent } from './modulePages';
+import { Customer360Component } from './modulePages';
+import { UserActionsComponent } from './modulePages';
+import { store } from 'redux/store'
 
 /*
     Structure of this object like 
     presentationCategory:Component (In which data will render of module)
 */
+
+const reduxState = store.getState();
+console.log("reduxState :", reduxState);
+
 const moduleComponentConfig = {
   master: MasterComponent,
   roleComponent: RoleComponent,
@@ -26,6 +33,7 @@ const moduleComponentConfig = {
   userOperations: UserList,
   // singleRowEntity: SingleRowEntity,
   userRoleMapping: UserRoleMapping,
+  userAction: UserActionsComponent,
   Error_404: Error_404,
   actionManagement: ActionMasterComponent,
   caseworkflow: CaseWorkflowComponent,
@@ -36,6 +44,7 @@ const moduleComponentConfig = {
   rtScanning: RealtimeScanningComponent,
   accountProfiling: MasterComponent,
   riskDashboard: RiskDashboardComponent,
+  customer360: Customer360Component,
 };
 
 export default moduleComponentConfig;

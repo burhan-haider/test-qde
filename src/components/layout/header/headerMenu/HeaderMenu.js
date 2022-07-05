@@ -107,7 +107,7 @@ function HeaderMenu() {
   }, [open]);
 
   return (
-    <div className="">
+    <div className="hidden xl:block">
       <ul className="content-center ml-0 pl-0">
         <li className={classes.topbarLi} key="list">
           <div className={classes.iconsDiv}>

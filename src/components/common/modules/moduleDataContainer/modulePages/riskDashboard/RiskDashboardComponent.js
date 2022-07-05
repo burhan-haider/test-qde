@@ -16,10 +16,15 @@ import {
 } from "@mui/material";
 import { GenericButton, GenericDatatable } from "@application";
 import Formsy from "formsy-react";
-import { TextFieldFormsy, SelectFormsy, DatePickerFormsy } from "components/common/formsyComponents";
+import { 
+    TextFieldFormsy, 
+    SelectFormsy, 
+    DatePickerFormsy 
+} from "components/common/formsyComponents";
 import { useClasses } from '@application';
 import moment from 'moment';
 import httpService from 'services/httpservice/httpService'
+import RiskDashboardBottomContainer from './RiskDashboardBottomContainer'
 
 const RiskDashboardComponent = () => {
 
@@ -27,6 +32,7 @@ const RiskDashboardComponent = () => {
     const [tableData, setTableData] = useState({});
     const [showTable, setShowTable] = useState(false);
     const [dataSelected, setDataSelected] = useState([]);
+    const [searchData, setSearchData] = useState({});
 
     const listData = [
         "Monthly",
@@ -48,7 +54,7 @@ const RiskDashboardComponent = () => {
 
     const handleSubmit = async(data) => {
 
-        console.log("Form Data:-", data)
+        // console.log("Form Data:-", data)
 
         const formData = new FormData();
 
@@ -59,8 +65,20 @@ const RiskDashboardComponent = () => {
         await httpService
             .get("/reports/getConsolidatedReportTabView",  formData, config)
             .then(response => {
-                console.log("API Response",response)
+                // console.log("API Response",response)
                 setTableData(response.data);
+                let parentTableData = [];
+                Object.keys(response.data).map(key => {
+                    parentTableData.push([key]);
+                }) 
+                setSearchData({
+                    VIEWTYPE: "ALL",
+                    MODULENAME: "Risk Dashboard",
+                    GROUP: "RISKDASHBOARD",
+                    DATA: parentTableData,
+                    HEADER: ["Risk Dashboard Tables"],
+                    INTERNALDATA: response.data
+                })
                 setShowTable(true);
             })
             .catch(err=>{
@@ -164,7 +182,16 @@ const RiskDashboardComponent = () => {
                         borderColor: 'divider',
                     }}
                 >
-                    <Tabs 
+                    <GenericDatatable
+                        dataSet={searchData}
+                        moduleCode={searchData.MODULENAME?searchData.MODULENAME:""}
+                        moduleName={searchData.MODULENAME?searchData.MODULENAME:""}
+                        infoEnabled={true}
+                        BottomContainer={RiskDashboardBottomContainer}
+                        selected={dataSelected}
+                        selectHandler={setDataSelected}
+                    ></GenericDatatable>
+                    {/* <Tabs 
                         value={value} 
                         onChange={handleChange} 
                         aria-label="basic tabs example" 
@@ -181,10 +208,10 @@ const RiskDashboardComponent = () => {
                                 {...a11yProps(index)} 
                             />
                         ))}
-                    </Tabs>
+                    </Tabs> */}
                     
                 </Box>
-                {Object.values(tableData).map((item, index)=>{
+                {/* {Object.values(tableData).map((item, index)=>{
                     let searchData = {
                         VIEWTYPE: "ALL",
                         MODULENAME: "Risk Dashboard",
@@ -199,12 +226,14 @@ const RiskDashboardComponent = () => {
                                 dataSet={searchData}
                                 moduleCode={JSON.stringify(Object.keys(tableData)[index])}
                                 moduleName={Object.keys(tableData)[index]}
+                                infoEnabled={true}
+                                BottomContainer={RiskDashboardBottomContainer}
                                 selected={dataSelected}
                                 selectHandler={setDataSelected}
                             ></GenericDatatable>
                         </TabPanel>
                         )
-                    })}
+                    })} */}
             </>
             )}
             

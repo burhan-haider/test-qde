@@ -11,6 +11,7 @@ import masterFeature from './icons/feature/allMaster.png'
 import userAndRole from './icons/feature/userAndRole.png'
 import scenarios from './icons/feature/scenarios.png'
 import scanning from './icons/feature/scanning.png'
+import checker from './icons/feature/scanning.png'
 import labelsFeature from './icons/feature/labelsFeature.png'
 import features from './icons/feature/features.png';
 import closeBlue from './icons/close_blue.png';
@@ -45,6 +46,7 @@ const icons = {
     actionManagement,
     scenarios,
     scanning,
+    checker,
     userAndRole,
     labelsFeature,
     features,

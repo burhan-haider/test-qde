@@ -12,3 +12,5 @@ export { default as ReportAndScenariosComponent } from "./reportAndScenarios/Rep
 // export { default as SingleRowEntity } from "./checkermanagement/SingleRowEntity";
 export { default as RealtimeScanningComponent } from "./realtimeScanning/RealtimeScanningComponent";
 export { default as RiskDashboardComponent } from "./riskDashboard/RiskDashboardComponent"
+export { default as Customer360Component } from "./customer360/Customer360Component";
+export { default as UserActionsComponent } from './userActions/UserActionsComponent';

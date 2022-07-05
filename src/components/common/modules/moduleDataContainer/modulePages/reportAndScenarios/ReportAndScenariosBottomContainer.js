@@ -100,7 +100,7 @@ function ReportAndScenariosBottomContainer(props) {
                   id={headCell.id}
                   key={headCell.id}
                   align="center"
-                  padding="default"
+                  padding="none"
                 >
                   <Typography className={classes.headerLabels}>
                     {headCell.label}
