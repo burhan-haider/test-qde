@@ -34,7 +34,16 @@ function UserRoleMapping(props) {
   // console.log(props);
   let userAndRole =
     props && props.indexPageData ? props.indexPageData.USERANDROLE : false;
-  let userCodeList = Object.keys(userAndRole);
+  let pendingUsers = props.indexPageData ? props.indexPageData.PENDINGUSER : [];
+  let userCodeList = [];
+
+  Object.keys(userAndRole).map((key,index)=>{
+    userCodeList.push(key);
+  })
+  
+  pendingUsers.map((user, index)=>{
+    userCodeList.push(user.username)
+  })
 
   let roleObjectList = props.indexPageData.ROLELIST;
 
