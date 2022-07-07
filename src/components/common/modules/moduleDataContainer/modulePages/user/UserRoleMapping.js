@@ -41,8 +41,8 @@ function UserRoleMapping(props) {
     userCodeList.push(key);
   })
   
-  pendingUsers.map((user, index)=>{
-    userCodeList.push(user.username)
+  Object.keys(pendingUsers).map((user, index)=>{
+    userCodeList.push(user)
   })
 
   let roleObjectList = props.indexPageData.ROLELIST;
@@ -58,8 +58,10 @@ function UserRoleMapping(props) {
     setActivateField(true);
     let currentSelectedUserCode = event.target.value;
     setUserCode(currentSelectedUserCode);
-    let currentSelectedUserRoleList = Object.values(
+    let currentSelectedUserRoleList = userAndRole[currentSelectedUserCode]?Object.values(
       userAndRole[currentSelectedUserCode]
+    ):Object.values(
+      pendingUsers[currentSelectedUserCode]
     );
     setroleIds(currentSelectedUserRoleList); 
   };
