@@ -145,7 +145,7 @@ const UserActionsComponent = (props) => {
                             {dropDownData.map((item, index) => {
                                 return (
                                 <MenuItem key={index} value={item.username?item.username:''}>
-                                    {item.username?item.username:''}
+                                    {item?item:''}
                                 </MenuItem>
                                 );
                             })}

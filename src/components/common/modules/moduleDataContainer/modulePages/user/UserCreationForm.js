@@ -36,6 +36,7 @@ export default function UserCreationForm(props) {
       .createNewUser("user/", newUserDetails)
       .then(data => {
         // closeCreaeUserDialog();
+        console.log("User Data:-", data)
         props.refreshCurrentModule();
         props.closeModal();
       })
