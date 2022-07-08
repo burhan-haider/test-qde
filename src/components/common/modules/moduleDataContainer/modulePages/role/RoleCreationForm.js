@@ -12,6 +12,7 @@ import { TextFieldFormsy } from "components/common/formsyComponents";
 import roleOperationService from "services/role/RoleOperationService";
 import Formsy from "formsy-react";
 import { useClasses } from '@application'
+import httpService from "services/httpservice/httpService";
 
 const styles = theme => ({
   MuiButton: {
@@ -29,10 +30,20 @@ const styles = theme => ({
     borderRadius: "50px"
   }
 });
-function RoleCreationForm(props) {
+const RoleCreationForm = (props) => {
+
+    const token = window.localStorage.getItem("cognifi_token");
+    let config = {
+    headers: {
+        Authorization: "Bearer " + token,
+        'Content-Type': `multipart/form-data`,
+    }
+  };
+
   const handleSubmit = newRoleDetails => {
-    roleOperationService
-      .createNewRole("/api/role/", newRoleDetails)
+
+    httpService
+      .post(`/role/?roleName=${newRoleDetails.roleName}`, config)
       .then(data => {
         // setOpen(false);
         props.refreshCurrentModule();
@@ -42,6 +53,7 @@ function RoleCreationForm(props) {
       });
     props.closeModal();
   };
+
   const classes = useClasses(styles);
   // const [roleForm, handleChange] = FormHelper({
   //   roleName: ""
@@ -82,17 +94,12 @@ function RoleCreationForm(props) {
           <GenericButton
           type="submit"
           variant="contained"
-          color="primary"
-          className={classes.MuiButton}
           // onClick={e => props.addNewRole(roleForm)}
-          onClick={e => ""}
         >
           Add
         </GenericButton>
         <GenericButton
           variant="contained"
-          color="default"
-          className={classes.MuiButton}
           onClick={props.closeModal}
         >
           Close
