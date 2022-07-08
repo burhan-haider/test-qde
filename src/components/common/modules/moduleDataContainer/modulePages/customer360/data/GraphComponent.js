@@ -1,41 +1,26 @@
-import React, { useEffect, useState, useRef } from  'react';
+import React, { useEffect, useState, useRef, useLayoutEffect } from  'react';
 import { useD3 } from '@application';
 import * as d3 from 'd3';
 
 const GraphComponent = (props) => {
 
     const [d3Config, setD3Config] = useState("")
+    const [parentHeight, setParentHeight] = useState(0)
+    const [parentWidth, setParentWidth] = useState(0)
 
     const parentRef = useRef();
     const d3Container = useRef();
 
+    useLayoutEffect(() => {
+        console.log("Parent Height:-", parentRef.current.clientHeight)
+        console.log("Parent Width:-", parentRef.current.clientWidth)
+        setParentHeight(parentRef.current.clientHeight)
+        setParentWidth(parentRef.current.clientWidth)
+    })
+
     const data = props.data?props.data:null;
 
-        var channelName = null;
-	    var countTrans = "N.A.";
-        var channelType = null;
-	    // var customerId = document.getElementById("customerId").value;
-	    var transAmount = null;
-        var diameter = 800;
-        var wid = 12000;
-        var hei = wid-100;
-
-        var margin = {
-            top : 400,
-            right : 200,
-            bottom : 150,
-            left : 600
-        }
-        var width = wid - margin.right - margin.left;
-        var height = hei - margin.top - margin.bottom;
-
-        var i = 0
-        var duration = 500
-        var root;
-
-        var custName;
-
-        var r = 960 / 2;
+       
 
         
 
@@ -48,15 +33,40 @@ const GraphComponent = (props) => {
         //     })
 
         useEffect(()=>{
-
+            var channelName = null;
+            var countTrans = "N.A.";
+            var channelType = null;
+            // var customerId = document.getElementById("customerId").value;
+            var transAmount = null;
+            var diameter = 800;
+            var wid = parentRef.current.clientWidth;
+            var hei = wid-100;
+    
+            var margin = {
+                top : 400,
+                right : 200,
+                bottom : 150,
+                left : 600
+            }
+            var width = wid - margin.right - margin.left;
+            var height = hei - margin.top - margin.bottom;
+    
+            var i = 0
+            var duration = 500
+            var root;
+    
+            var custName;
+    
+            var r = 960 / 2;
             console.log("parentRef:-", parentRef.current.width)
 
-            var tree = d3.tree().size([height, width]).separation((a, b)=>{
-                return (a.parent == b.parent ? 1 : 2) / a.depth;
-            })
+            var tree = d3.layout.tree().size([ 360, r - 80 ]).separation(
+                function(a, b) {
+                    return (a.parent == b.parent ? 1 : 10) / a.depth;
+                });
     
-            var diagonal = d3.linkRadial().angle((d) => { 
-                return d.x / 180 * Math.PI; 
+            var diagonal = d3.svg.diagonal.radial().projection(function(d) {
+                return [ d.y, d.x / 180 * Math.PI ];
             });
 
             var svg = d3.select(d3Container.current).append("svg:svg")
@@ -86,12 +96,11 @@ const GraphComponent = (props) => {
             }
 
             const update = (source) => {
-                const treeRoot = d3.hierarchy(source)
-                tree(treeRoot);
+                
 
                 // Compute the new tree layout.
-                const nodes = treeRoot.descendants();
-                const links = treeRoot.links();
+                var nodes = tree.nodes(root),
+                links = tree.links(nodes);
 
                 //Normalize for fixed-depth.
                 nodes.forEach((d)=>{
@@ -120,17 +129,6 @@ const GraphComponent = (props) => {
                             }
                             update(d);
                         }
-                        // else if(d.depth==2){
-                        //     if (d.children) {
-                        //         d._children = d.children;
-                        //         d.children = null;
-                        //     }
-                        //     else {
-                        //         d.children = d._children;
-                        //         d._children = null;
-                        //     }
-                        //     update(d);
-                        // }
                         else if(d.depth==3){
                             if (d.children) {
                                 d._children = d.children;
@@ -157,7 +155,7 @@ const GraphComponent = (props) => {
                     })
 
                 nodeEnter.append("circle")
-                    .attr("r", 2.5)
+                    .attr("r", 4)
                     .style("fill", d => d._children ? "lightsteelblue" : "#fff");
 
                 nodeEnter.append("rect")
@@ -172,12 +170,12 @@ const GraphComponent = (props) => {
                     .style("text-decoration", d=>d.depth>3?"underline":"none")
                     .style("fill", d=>d.depth>3?"blue":"black")
                     .style("fill-opacity", 1)
-                    .attr("dx", d=>d.x<180?6:-6)
+                    .attr("dx", 6)
                     .attr("class", "keyText")
                     .attr("dy", 0.35)
                     .on("mouseover", (d)=>{}) /* Need to Comeback For Flare Data Dialog Box */  
-                    .attr("text-anchor", d=>d.x<180?"end":"start")
-                    .attr("transform", d=>d.id==1?"rotate(234)":d.x<180?null:"rotate(180)")
+                    .attr("text-anchor", "start")
+                    .attr("transform", d=>d.id==1?"rotate(234)":d.x<180?null:null)
                     .text(d=>d.depth==0?custName+" - "+d.name+" ":d.name);
 
                 nodeEnter.selectAll('rect')
@@ -190,7 +188,7 @@ const GraphComponent = (props) => {
                     .attr("transform", d=>"rotate(" + (d.x-90) + ")translate(" + d.y + ")");
 
                 nodeUpdate.select("circle")
-                    .attr("r", 2.5)
+                    .attr("r", 4)
                     .style("fill", d=>{
                         switch(d.depth){
                             case 0: return "rgb(0,0,4)"
@@ -215,7 +213,7 @@ const GraphComponent = (props) => {
                 // Transition exiting nodes to the parent's new position.
                 var nodeExit = node.exit().transition().duration(duration).remove()
 
-                nodeExit.select("circle").attr("r", 2.5);
+                nodeExit.select("circle").attr("r", 4);
 
                 nodeExit.select("text").style("fill-opacity", 1);
 
