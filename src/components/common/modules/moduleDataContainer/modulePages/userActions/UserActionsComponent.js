@@ -191,11 +191,9 @@ const UserActionsComponent = (props) => {
                                     ))}
                                 </td>
                                 <td className="bg-yellow-200">
-                                    <ul className="list-none">
-                                        {tempUserRoles.map((item, index) => (
-                                                <li key={index}>{item.roleName}</li>
-                                        ))}
-                                    </ul>
+                                    {tempUserRoles.map((item, index) => (
+                                            <p className="p-0 m-0 mb-1" key={index}>{item.roleName}</p>
+                                    ))}
                                 </td>
                             </tr>
                         </tbody>
