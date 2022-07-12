@@ -35,6 +35,9 @@ import speak from './icons/topbar/speak .png'
 import trace from './icons/topbar/trace.png'
 import search1 from './icons/topbar/search_1.png'
 
+import whitePin from './icons/Pin-02.png'
+import yellowPin from './icons/Pin-01.png'
+
 
 const icons = {
     searchOne,
@@ -69,7 +72,9 @@ const icons = {
     trace,
     search1,
     drsCaseWorkflow,
-    masterFeature
+    masterFeature,
+    whitePin,
+    yellowPin
 }
 
 const getIconByKey = (key) => {

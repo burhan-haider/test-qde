@@ -33,6 +33,7 @@ export default function ModuleDataContainer(props) {
 
   function refreshCurrentModule() {
     setRefreshModule(true);
+    props.setIsRefreshing(true);
   }
   // if (prevModule !== moduleCode) {
     

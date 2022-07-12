@@ -58,16 +58,16 @@ const styles = theme => ({
         },
         
       },
-      inactiveChip: {
-        "& .MuiChip-deleteIcon": {
-            display: 'none',
-        },
-        "&:hover":{
-            "& .MuiChip-deleteIcon": {
-                display: 'block',
-            }
-        }
-      }
+    //   inactiveChip: {
+    //     "& .MuiChip-deleteIcon": {
+    //         display: 'none',
+    //     },
+    //     "&:hover":{
+    //         "& .MuiChip-deleteIcon": {
+    //             display: 'block',
+    //         }
+    //     }
+    //   }
 })
 
 const FeatureHolder = ({feature, hideHeader, setHideHeader}) => {
@@ -468,8 +468,8 @@ const FeatureHolder = ({feature, hideHeader, setHideHeader}) => {
                 <Box className="flex justify-between border-4 border-solid border-white text-white items-center px-1 ml-5 text-left" style={{backgroundColor: '#052a4f'}} >
                     <div className='flex justify-start items-center' >
                         {feature.breadCrumbs.length>1 &&(
-                            <IconButton style={{backgroundColor: '#cccc00'}} onClick={()=>handlePin()} className="rounded-full p-1 m-1 mr-3" >
-                                <img src={getIconByKey('pinBlack')} alt="pin Icon" className="w-4 h-auto m-0" />
+                            <IconButton onClick={()=>handlePin()} className="m-0 p-0 ml-1 mr-2" >
+                                <img src={getIconByKey('whitePin')} alt="pin Icon" className="w-5 p-0 h-auto m-0" />
                             </IconButton>
                         )}
                         
@@ -492,10 +492,9 @@ const FeatureHolder = ({feature, hideHeader, setHideHeader}) => {
                 aria-haspopup="true"
                 aria-expanded={open ? 'true' : undefined}
                 onClick={handleBookmark} 
-                className="rounded-full w-12 h-12 ml-2 mr-4" 
-                style={{background: '#cccc00'}} 
+                className="m-0 p-0 ml-1"
             >
-                <img src={getIconByKey('pinned')} alt="Pinned Modules Logo" className="w-5 h-auto m-0"  />
+                <img src={getIconByKey('yellowPin')} alt="Pinned Modules Logo" className="w-14 h-auto m-0"  />
             </IconButton>
             <Menu
             id="basic-menu"

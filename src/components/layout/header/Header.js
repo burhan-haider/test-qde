@@ -91,10 +91,10 @@ const Header = ({hideHeader}) => {
                 {newFeatures.map((item)=>(
                     <Tab 
                         key={item.featureCode?item.featureCode:item.featureMapping_Id} 
-                        icon={item.icon?<Icon iconName={item.icon} size={18} color={'inherit'} />:<img src={getIconByKey(item.featureIcon)} style={{height: '1.25rem', width: 'auto'}} className="h-5 w-auto mr-2" alt={item.featureIcon}/>} 
+                        icon={item.icon?<Icon iconName={item.icon} size={18} color={'inherit'} />:<img src={getIconByKey(item.featureIcon)} style={{height: '0.9rem', width: 'auto'}} className="mr-2" alt={item.featureIcon}/>} 
                         iconPosition="start" 
                         value={item.featureCode?item.featureCode:item.featureMapping_Id}
-                        className="text-white border-none text-base font-gSans"
+                        className="text-white border-none text-lg font-gSans"
                         label={
                             item.featureName
                         }
