@@ -49,7 +49,7 @@ const ModuleHolder = ({feature, module, getModuleChartData, isRefreshing, setIsR
     
 
     return(
-        <div className='sm:max-h-[300px] lg:min-h-[450px]'>
+        <div>
             {module.hasChildren==false ? (
                 <>
                     {module.presentationCategory!==null ? (
@@ -83,7 +83,7 @@ const ModuleHolder = ({feature, module, getModuleChartData, isRefreshing, setIsR
                 </>
                 
             ):(
-                <Grid container className="px-5 py-3" >
+                <Grid container className="px-5 py-3 h-[100%]" >
                     {modules.map(item=>{
                         if(item.moduleChartDetails!=null){
                             return(

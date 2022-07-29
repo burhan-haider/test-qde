@@ -1,7 +1,12 @@
 import React, { useState, useRef } from "react";
 import { makeStyles } from "@mui/styles";
 import Formsy from "formsy-react";
-import { Button, FormControl, Typography } from "@mui/material";
+import { 
+  Button, 
+  FormControl, 
+  Typography,
+  CircularProgress 
+} from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import commonService from "services/common/commonService";
 import COGNIFI_LOGO_FULL from "assets/icons/cognifi_logo_full.png";
@@ -162,6 +167,7 @@ function Login(props) {
   // login Component
   const formRef = useRef(null);
   const [isFormValid, setIsFormValid] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const classes = useClasses(styles);
   const dispatch = useDispatch();
@@ -179,6 +185,7 @@ function Login(props) {
 
   const handleSubmit = (data, resetForm, invalidateForm) => {
     //console.log("data =", data);
+    setIsSubmitting(true);
     const encryptedPassword = encryptData(data.userPassword);
     //console.log("passowrd =", encryptedPassword);
     data.userPassword = encryptedPassword;
@@ -196,9 +203,15 @@ function Login(props) {
           username: "Enter Valid Username",
           password: "Enter Valid Password",
         });
+
         alert("Username and Password does not match");
+        setIsSubmitting(false);
+
       } else if (response !== undefined) {
+        setIsSubmitting(false);
         alert("Something went wrong");
+      } else {
+        setIsSubmitting(false);
       }
     });
   };
@@ -296,10 +309,11 @@ function Login(props) {
               variant="outlined"
               sx={[customStyles.buttonRoot,customStyles.buttonLabel]}
               className="text-gray-700 border-gray-400 mt-2"
-              disabled={!isFormValid}
+              disabled={!isFormValid || isSubmitting}
             >
-              Log In
+              {isSubmitting ? <CircularProgress className="my-2 mx-3" size={12} color={'inherit'} /> : "Login"}
             </Button>
+            
           </Formsy>
         </div>
         <br />

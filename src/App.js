@@ -7,7 +7,7 @@ import {
   // useDispatch
 } from 'react-redux';
 
-function App({ hideHeader, setHideHeader }) {
+function App() {
 
   const [isLoading, setIsLoading] = useState(true);
   const newFeatures = useSelector(state => state.features.features.features);
@@ -25,17 +25,16 @@ function App({ hideHeader, setHideHeader }) {
   },[newFeatures])
 
   return (
-    <div className="text-center overflow-hidden" style={{transition: 'all 0.1s ease-in-out' ,backgroundColor: '#052a4f', transform: hideHeader == true ? 'translateY(-40px)' : 'none' }} >
-      {isLoading ? (<CircularProgress sx={{color: 'white', marginTop: '150px'}} />) : (
+    <div className="text-center overflow-hidden" style={{transition: 'all 0.1s ease-in-out' }} >
+      {isLoading===true ? (<CircularProgress size sx={{color: '#052a4f', marginTop: '350px'}} />) : (
         <>
           {newFeatures.map((item)=>( 
             <ComponentHolder 
               key={item.featureCode?item.featureCode:item.featureMapping_Id} 
               index={item.featureCode?item.featureCode:item.featureMapping_Id} 
               value={selectedFeature}
-              hideHeader={hideHeader}
               >
-              <FeatureHolder feature={item} hideHeader={hideHeader} setHideHeader={setHideHeader} />
+              <FeatureHolder feature={item} />
             </ComponentHolder>
           ))}
         </>

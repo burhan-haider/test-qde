@@ -38,6 +38,9 @@ import search1 from './icons/topbar/search_1.png'
 import whitePin from './icons/Pin-02.png'
 import yellowPin from './icons/Pin-01.png'
 
+import collapse from './icons/collapse.png'
+import expand from './icons/expand.png'
+
 
 const icons = {
     searchOne,
@@ -74,7 +77,9 @@ const icons = {
     drsCaseWorkflow,
     masterFeature,
     whitePin,
-    yellowPin
+    yellowPin,
+    collapse,
+    expand,
 }
 
 const getIconByKey = (key) => {

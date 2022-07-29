@@ -23,76 +23,74 @@ export default function PieChart(props) {
     uniqueNo
   } = props;
 
+  const decalSymbols = [
+    'rect', 
+    'line', 
+    'roundRect', 
+    'diamond', 
+    'pin',
+    'circle', 
+    'emptyCircle', 
+    'arrow'
+  ];
+
   const myChart = useRef(null);
 
   const option = {
-  title: {
-    show: false,
-  },
-  polar: {
-    radius: [10,'90%'],
-    center: ['30%', '50%']
-  },
-  angleAxis: {
-    max: Math.max(...props.moduleChartDetail.yaxis),
-    startAngle: 75,
-    show: false,
-  },
-  legend:{
-    formatter: name=>{
-      const index = props.moduleChartDetail.xaxis.indexOf(name);
-      const value = props.moduleChartDetail.yaxis[index];
-      return `${name} (${value})`;
+    tooltip: {
+      trigger: 'item',
+      textStyle:{
+        fontSize: 18,
+      }
     },
-    orient: 'vertical',
-    icon: 'circle',
-    right: '5%',
-    top: 'middle',
-    itemHeight: 25,
-    itemWidth: 25,
-    itemGap: 15,
-    textStyle: {
-      fontSize: 16,
-    }
-
-  },
-  radiusAxis: {
-    type: 'category',
-    data: props.moduleChartDetail.xaxis,
-    show: false,
-    axisLine: {
-      show: false
+    legend: {
+        top: '5%',
+        left: '2%',
+        orient: 'vertical',
+        itemHeight: 20,
+        itemWidth: 20,
+        itemGap: 15,
+        textStyle: {
+            fontSize: 14,
+        },
+        formatter: name=>{
+            const index = props.moduleChartDetail.xaxis.indexOf(name);
+            const value = props.moduleChartDetail.yaxis[index];
+            return `${name} (${value})`;
+        },
     },
-    splitLine:{
-      show: false,
-    }
-  },
-  roundCap: true,
-  
-  tooltip: {},
-  series: props.moduleChartDetail.yaxis.map((item, index)=>{
-    return {
-      type: 'bar',
-      name: props.moduleChartDetail.xaxis[index],
-      data: props.moduleChartDetail.yaxis.map((dataItem, dataIndex)=>(index===dataIndex?dataItem:0)),
-      coordinateSystem: "polar",
-      barWidth: 15,
-      roundCap: true,
-      stack: "value",
-      showBackground: true,
-      backgroundStyle: {
-        color: '#dfdfdf',
-      },
-      label: {
-        show: false,
-      },
-      animation: true,
-      animationDuration: 800,
-      animationDelay: 100,
-
-    }
-  })
-}
+    series: [
+        {
+            name: props.moduleChartDetail.chartName,
+            type: 'pie',
+            radius: ['40%', '80%'],
+            center: ['55%', '50%'],
+            avoidLabelOverlap: false,
+            itemStyle: {
+                borderRadius: 5,
+                borderColor: '#fff',
+                borderWidth: 2
+            },
+            label:{
+                show: false,
+            },
+            // emphasis: {
+            //     label: {
+            //         show: true,
+            //         fontSize: '20',
+            //         fontWeight: 'bold'
+            //     }
+            // },
+            labelLine: {
+                show: false
+            },
+            data: moduleChartDetail.yaxis.map((item, index) => ({
+                value: item,
+                name: moduleChartDetail.xaxis[index],
+            }))
+        }
+    ]
+  };
 
   const graphClickEvent = (dataIndex) => {
 
@@ -180,16 +178,16 @@ export default function PieChart(props) {
     graphClickEvent(e.dataIndex);
   }
 
-  const cData = {
-    labels: props.moduleChartDetail.xaxis,
-    datasets: [
-      {
-        data: props.moduleChartDetail.yaxis,
-        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#FF851B"],
-        hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#FF851B"]
-      }
-    ]
-  };
+//   const cData = {
+//     labels: props.moduleChartDetail.xaxis,
+//     datasets: [
+//       {
+//         data: props.moduleChartDetail.yaxis,
+//         backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#FF851B"],
+//         hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#FF851B"]
+//       }
+//     ]
+//   };
 
   const onEvents = {
     "click": e => chartClick(e),
@@ -199,6 +197,7 @@ export default function PieChart(props) {
     <div 
       style={{ position: "relative"}} 
       onClick={()=>graphClickEvent(null)}
+      className="cursor-pointer"
     >
       <ReactEcharts 
         option={option} 

@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import LineChart from "components/common/modules/chart/LineChart";
 import BarChart from "components/common/modules/chart/BarChart";
 import PieChart from "components/common/modules/chart/PieChart";
+import PieChartAlt from "components/common/modules/chart/PieChartAlt";
 import { useClasses } from "@application";
 import {
   setSelectedModule,
@@ -198,7 +199,7 @@ function ModuleChartFrame(props) {
         );
       case "PIE":
         return (
-          <PieChart
+          <PieChartAlt
             moduleChartDetail={selectedModule.moduleChartDetails}
             module_Id={selectedModule.module_Id}
             moduleURL={selectedModule.moduleURL}
@@ -208,7 +209,7 @@ function ModuleChartFrame(props) {
             parentModuleId={selectedModule.parentModuleId}
             parentModule_Id={selectedModule.parentModule_Id}
             uniqueNo={selectedModule.uniqueNo}
-          ></PieChart>
+          ></PieChartAlt>
         );
       default:
         return (
@@ -231,7 +232,7 @@ function ModuleChartFrame(props) {
     <Box className={classes.chartContentContainer}>
       {
             current.moduleChartDetails !== null ? (
-                <Card elevation={2} className="max-h-[450px]">
+                <Card elevation={2} className="max-h-[3500px]">
                   {selectSpecificChart(current)}
                 </Card>
             ) : (

@@ -1,10 +1,119 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Line, getElementAtEvent } from "react-chartjs-2";
 import { Chart as ChartJS, registerables } from 'chart.js';
+import ReactEcharts from 'echarts-for-react';
+import * as echarts from 'echarts'
 
  ChartJS.register(...registerables);
 
 function LineChart(props) {
+
+  const chartData = [
+    props.moduleChartDetail.yaxis,
+    props.moduleChartDetail.yaxis_1,
+    props.moduleChartDetail.yaxis_2,
+    props.moduleChartDetail.yaxis_3,
+  ];
+
+  const colors = [
+    '#FE6F9B',
+    '#4FA3A5',
+    '#7D50B9',
+    '#FFBB5A',
+  ];
+
+  const lightColors = [
+    '#FFD6D4',
+    '#D2FFD7',
+    '#C7C6FF',
+    '#FFE0C5',
+  ];
+
+
+  const legend = ["0+%", "30+%", "60+%", "90+%"];
+
+  const [option, setOption] = useState({
+    // backgroundColor: "#052a4f",
+    // color: '#eee',
+    title: {
+      text: props.moduleChartDetail.chartName,
+      textStyle: {
+        // color: '#eee'
+      }
+    },
+    grid: {
+      show: false,
+    },
+    tooltip: {
+      trigger: 'axis'
+    },
+    legend: {
+      data: legend,
+      icon: 'roundRect'
+    },
+    toolbox: {
+      show: true,
+      feature: {
+        magicType: { show: true, type: ['stack', 'tiled'] },
+        saveAsImage: { show: true }
+      }
+    },
+    xAxis: {
+      type: 'category',
+      show: true,
+      name: props.moduleChartDetail.xaxisName,
+      boundaryGap: false,
+      data: props.moduleChartDetail.xaxis,
+      nameTextStyle:{
+        padding: 5,
+      },
+    },
+    yAxis: {
+      type: 'value',
+      show: true,
+      name: props.moduleChartDetail.yaxisName,
+      boundaryGap: [0, '100%'],
+      data: props.moduleChartDetail.yaxis.map((item, index)=>({
+          value: item,
+          textStyle: {
+            color: '#ee6',
+            fontSize: 12,
+          },
+        })
+      )
+    },
+    series: chartData.map((item, index)=>{
+      return {
+        name: legend[index],
+        type: 'line',
+        smooth: true,
+        data: item,
+        symbol: 'emptyCircle',
+        symbolSize: 7,
+        areaStyle: {
+          opacity: 1,
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: colors[index]
+            },
+            {
+              offset: 1,
+              color: lightColors[index]
+            }
+          ]),
+        },
+        itemStyle: {
+          color: colors[index]
+        },
+        lineStyle: {
+          color: colors[index],
+          width: 3,
+        }
+      
+      }
+    }) 
+  });
 
   let {
     module_Id,
@@ -102,73 +211,49 @@ function LineChart(props) {
     }
 
   }
+
+  const onEvents = {
+    // 'mouseover': (e) => {
+    //   console.log("mouseover", e);
+    //   setOption({
+    //     ...option,
+    //     xAxis: {
+    //       ...option.xAxis,
+    //       show: true,
+    //     },
+    //     yAxis: {
+    //       ...option.yAxis,
+    //       show: true,
+    //     }
+    //   })
+    // },
+    // 'mouseout': (e) => {
+    //   console.log("mouseout", e);
+    //   setOption({
+    //     ...option,
+    //     xAxis: {
+    //       ...option.xAxis,
+    //       show: false
+    //     },
+    //     yAxis: {
+    //       ...option.yAxis,
+    //       show: false,
+    //     }
+    //   })
+    // }
+  }
   // console.log(props);
-  const cData = {
-    labels: props.moduleChartDetail && props.moduleChartDetail.xaxis,
-    datasets: [
-      {
-        label: "0+%", //props.moduleChartDetail.labelName,
-        backgroundColor: "#0074D9",
-        borderColor: "#0074D9",
-        fill: false,
-        lineTension: 0,
-        radius: 5,
-        borderWidth: 1,
-        hoverBackgroundColor: "rgba(255,99,132,0.4)",
-        hoverBorderColor: "rgba(255,99,132,1)",
-        data: props.moduleChartDetail && props.moduleChartDetail.yaxis,
-        xAxisID: 'xAxes',
-        yAxisID: 'yAxes',
-      },
-      {
-        label: "30+%",
-        backgroundColor: "#FF4136",
-        borderColor: "#FF4136",
-        fill: false,
-        lineTension: 0,
-        radius: 5,
-        borderWidth: 1,
-        hoverBackgroundColor: "rgba(255,99,132,0.4)",
-        hoverBorderColor: "rgba(255,99,132,1)",
-        data: props.moduleChartDetail && props.moduleChartDetail.yaxis_1,
-        xAxisID: 'xAxes',
-        yAxisID: 'yAxes',
-      },
-      {
-        label: "60+%",
-        backgroundColor: "#2ECC40",
-        borderColor: "#2ECC40",
-        fill: false,
-        lineTension: 0,
-        radius: 5,
-        borderWidth: 1,
-        hoverBackgroundColor: "rgba(255,99,132,0.4)",
-        hoverBorderColor: "rgba(255,99,132,1)",
-        data: props.moduleChartDetail && props.moduleChartDetail.yaxis_2,
-        xAxisID: 'xAxes',
-        yAxisID: 'yAxes',
-      },
-      {
-        label: "90+%",
-        backgroundColor: "#FF851B",
-        borderColor: "#FF851B",
-        fill: false,
-        lineTension: 0,
-        radius: 5,
-        borderWidth: 1,
-        hoverBackgroundColor: "rgba(255,99,132,0.4)",
-        hoverBorderColor: "rgba(255,99,132,1)",
-        data: props.moduleChartDetail && props.moduleChartDetail.yaxis_3,
-        xAxisID: 'xAxes',
-        yAxisID: 'yAxes',
-      }
-    ]
-  };
+  
   // console.log(props);
   // console.log(cData)
   return (
-    <div style={{ position: "relative", padding: '10px' }}>
-      <Line
+    <div 
+      // onMouseEnter={()=>onEvents.click()} 
+      // onMouseLeave={()=>onEvents.mouseout()} 
+      style={{ position: "relative", padding: '10px' }}
+      >
+      <ReactEcharts option={option} onEvents={onEvents} />
+      {/* <Line
         data={cData}
         // getElementAtEvent={elms => graphClickEvent(elms)}
         onClick={(elms) => isClickable?graphClickEvent(elms):null}
@@ -220,7 +305,7 @@ function LineChart(props) {
             },
           }
         }}
-      />
+      /> */}
     </div>
   );
 }

@@ -33,6 +33,7 @@ import {
 import featureService from 'services/features/featureService'
 import getIconByKey from 'assets';
 import ModuleChartFrame from 'components/common/modules/mainModuleSearchFrame/ModuleChartFrame'
+import { Sticky, StickyContainer } from 'react-sticky';
 // import { handleBreakpoints } from '@mui/system';
 
 const styles = theme => ({
@@ -70,7 +71,7 @@ const styles = theme => ({
     //   }
 })
 
-const FeatureHolder = ({feature, hideHeader, setHideHeader}) => {
+const FeatureHolder = ({feature}) => {
 
   const [bookMark, toggleBookMark] = useState(null);
 //   const [trail, setTrail] = useState(feature.breadCrumbs);
@@ -199,57 +200,50 @@ const FeatureHolder = ({feature, hideHeader, setHideHeader}) => {
     //   dispatch(removeModuleFromDeleted(uniqueNo));
     //   dispatch(selectSpecificModule(false, uniqueNo));
     } else {
-    //   dispatch(removeModuleFromDeleted(uniqueNo));
-    //   if (dataPointClick !== undefined && dataPointClick === true) {
-    //     dispatch(putMapClickedDataInFeatures(moduleDataArray));
-    //   }
-        if(module.dataPointClick === true){
-            if(module.hasMoreChild === true){
-                makeApiCallUrl(parentModuleId, parentModule_Id, null).then(res=>{
-                    featureService
-                    .fetchModuleData(res).then(response=>{
-                        console.log("response:-", response);
-                        dispatch(putMapClickedDataInFeatures(response, module.parentModuleId, module.parentModule_Id, module.uniqueNo));
-                        makeApiCallUrl(uniqueNo, module_Id, parentModule_Id).then(res => {
-                            dispatch(
-                                fetchModuleDetails(
-                                    res,
-                                    module_Id,
-                                    uniqueNo,
-                                    selectedFeature
-                                )
-                            );
-                        });
-                    })
-                    
-                })
-                
-                
-            }
-            else{
-                makeApiCallUrl(parentModuleId, parentModule_Id, null).then(res=>{
-                    featureService
-                    .fetchModuleData(res).then(response=>{
-                        console.log("response:-", response);
-                        dispatch(putMapClickedDataInFeatures(response, module.parentModuleId, module.parentModule_Id, module.uniqueNo));
-                    })
-                })
-            }
-        }
-        else{
-            if(module.hasChildren === true){
-                makeApiCallUrl(uniqueNo, module_Id, parentModule_Id).then(res => {
-                    dispatch(
-                        fetchModuleDetails(
-                            res,
-                            module_Id,
-                            uniqueNo,
-                            selectedFeature
-                        )
-                    );
-                });
-            }
-        }
+			if(module.dataPointClick === true){
+				if(module.hasMoreChild === true){
+					makeApiCallUrl(parentModuleId, parentModule_Id, null).then(res=>{
+						featureService
+						.fetchModuleData(res).then(response=>{
+							console.log("response:-", response);
+							dispatch(putMapClickedDataInFeatures(response, module.parentModuleId, module.parentModule_Id, module.uniqueNo));
+							makeApiCallUrl(uniqueNo, module_Id, parentModule_Id).then(res => {
+								dispatch(
+									fetchModuleDetails(
+											res,
+											module_Id,
+											uniqueNo,
+											selectedFeature
+									)
+								);
+							});
+						})    
+					})    
+				}
+				else{
+					makeApiCallUrl(parentModuleId, parentModule_Id, null).then(res=>{
+						featureService
+						.fetchModuleData(res).then(response=>{
+							console.log("response:-", response);
+							dispatch(putMapClickedDataInFeatures(response, module.parentModuleId, module.parentModule_Id, module.uniqueNo));
+						})
+					})
+				}
+			}
+			else{
+				if(module.hasChildren === true){
+					makeApiCallUrl(uniqueNo, module_Id, parentModule_Id).then(res => {
+						dispatch(
+							fetchModuleDetails(
+								res,
+								module_Id,
+								uniqueNo,
+								selectedFeature
+							)
+						);
+					});
+				}
+			}
     }
   }
 
@@ -409,147 +403,151 @@ const FeatureHolder = ({feature, hideHeader, setHideHeader}) => {
 
   const handleScroll = (e) => {
     // console.log("Scroll Amount:-",e.target.scrollTop)
-    if(e.target.scrollTop<20){
-        setHideHeader(false);
-    }else{
-        if(hideHeader === false){
-            setHideHeader(true);
-        }
-    } 
+    // if(e.target.scrollTop<20){
+    //     setHideHeader(false);
+    // }else{
+    //     if(hideHeader === false){
+    //         setHideHeader(true);
+    //     }
+    // } 
   }
   
     return(
-    <div >
-        
-        <div className={ "flex justify-start w-100"} >
-            <div className="w-full" >
-                {feature.openTabs.length>0&&(
-                    <Box className="px-1 pt-1 bottom-1 text-left ml-5" style={{backgroundColor: '#fff'}} >
-                        {feature.openTabs.length>0 && feature.openTabs.map((item, index)=>(
-                            <span key={index} >
-                                {feature.showModule===item.id ? (
-                                    <Chip 
-                                        key={item.id} 
-                                        style={{backgroundColor: '#83a3bb',}} 
-                                        className="text-sm m-1 text-white font-gSans" 
-                                        label={item.label}
-                                        icon={
-                                            <IoMdRefreshCircle 
-                                                className=" text-[#61798b] hover:text-[#565f6f]" 
-                                                onClick={()=>{handleRefresh(item)}} 
-                                            />
-                                        }
-                                        size="small" 
-                                        onDelete={()=>handleDelete(item)}
-                                        classes={{
-                                            root: classes.chipRoot,
-                                        }} 
-                                    />
-                                ):(
-                                    <Chip 
-                                        key={item.id} 
-                                        style={{border: '1px solid #83a3bb'}} 
-                                        className=" bg-transparent font-gSans hover:bg-light-grey hover:text-white text-sm m-1" 
-                                        size="small" 
-                                        label={item.label} 
-                                        onClick={()=>handleClick(item)}  
-                                        onDelete={()=>handleDelete(item)} 
-                                        classes={{
-                                            root: classes.inactiveChip
-                                        }}
-                                    />
-                                )}
-                            </span>
-                        ))}
-                    </Box>
-                )}
-                
-                
-                <Box className="flex justify-between border-4 border-solid border-white text-white items-center px-1 ml-5 text-left" style={{backgroundColor: '#052a4f'}} >
-                    <div className='flex justify-start items-center' >
-                        {feature.breadCrumbs.length>1 &&(
-                            <IconButton onClick={()=>handlePin()} className="m-0 p-0 ml-1 mr-2" >
-                                <img src={getIconByKey('whitePin')} alt="pin Icon" className="w-5 p-0 h-auto m-0" />
-                            </IconButton>
-                        )}
-                        
-                        <Breadcrumbs className="text-white text-base font-gSans" >
-                            {feature.breadCrumbs.sort((a, b) => a.level > b.level ? 1:-1).map((item)=>(
-                                <p 
-                                    onClick={()=>handleClickBreadcrumb(item)} 
-                                    className="cursor-pointer my-1 text-white"
-                                    key={item.id}
-                                > 
-                                    {item.label}{feature.breadCrumbs.indexOf(item) === feature.breadCrumbs.length-1&&' /'}
-                                </p>
-                            ))}
-                        </Breadcrumbs>
-                    </div>
-                </Box>
-            </div>
-            <IconButton id="basic-button"
-                aria-controls={open ? 'basic-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
-                onClick={handleBookmark} 
-                className="m-0 p-0 ml-1"
-            >
-                <img src={getIconByKey('yellowPin')} alt="Pinned Modules Logo" className="w-14 h-auto m-0"  />
-            </IconButton>
-            <Menu
-            id="basic-menu"
-            anchorEl={bookMark}
-            open={open}
-            onClose={handleBookmarkClose}
-            MenuListProps={{
-            'aria-labelledby': 'basic-button',
-            }}
-            >
-                {pinnedModules.length>0 ? pinnedModules.map((item)=>(
-                    <MenuItem disableRipple key={item.featureCode}>
-                        <Link component="button" onClick={()=>handleOpenPin(item)} className="text-2xl" underline='false' >{item.moduleName}</Link>
-                        &nbsp;&nbsp;
-                        <IconButton sx={{width: '14px', height: '14px'}} className="p-1" onClick={()=>handleRemovePin(item)} >
-                            <img src={getIconByKey('closeBlue')} alt="closeIcon" style={{width: '10px', height: '10px'}} className="ml-5" />
-                        </IconButton>
-                    </MenuItem>
-                )):(<p>&nbsp;&nbsp;No Pinned Modules!&nbsp;&nbsp;</p>)}
+    <StickyContainer >
+			<Sticky >
+				{({ style }) => (
+					<div style={{ ...style, zIndex: 1 }}> 
+						<div  className={feature.openTabs.length<1?"flex justify-start w-100 bg-[#052a4f] pb-2 pt-2":"flex justify-start w-100 bg-[#052a4f] pb-5 pt-3"} >
+							<div className="w-full " >
+								{feature.openTabs.length>0&&(
+									<Box className="px-1 pt-1 bottom-1 text-left ml-5" style={{backgroundColor: '#fff'}} >
+										{feature.openTabs.length>0 && feature.openTabs.map((item, index)=>(
+											<span key={index} >
+												{feature.showModule===item.id ? (
+													<Chip 
+														key={item.id} 
+														style={{backgroundColor: '#83a3bb',}} 
+														className="text-sm m-1 text-white font-gSans" 
+														label={item.label}
+														icon={
+															<IoMdRefreshCircle 
+																	className=" text-[#61798b] hover:text-[#565f6f]" 
+																	onClick={()=>{handleRefresh(item)}} 
+															/>
+														}
+														size="small" 
+														onDelete={()=>handleDelete(item)}
+														classes={{
+															root: classes.chipRoot,
+														}} 
+													/>
+												):(
+													<Chip 
+														key={item.id} 
+														style={{border: '1px solid #83a3bb'}} 
+														className=" bg-transparent font-gSans hover:bg-light-grey hover:text-white text-sm m-1" 
+														size="small" 
+														label={item.label} 
+														onClick={()=>handleClick(item)}  
+														onDelete={()=>handleDelete(item)} 
+														classes={{
+															root: classes.inactiveChip
+														}}
+													/>
+												)}
+											</span>
+										))}
+									</Box>
+								)}
+								<Box className="flex justify-between border-4 border-solid border-white text-white items-center px-1 ml-5 text-left">
+									<div className='flex justify-start items-center' >
+										{feature.breadCrumbs.length>1 &&(
+											<IconButton onClick={()=>handlePin()} className="m-0 p-0 ml-1 mr-2" >
+													<img src={getIconByKey('whitePin')} alt="pin Icon" className="w-5 p-0 h-auto m-0" />
+											</IconButton>
+										)}
+										
+										<Breadcrumbs className="text-white text-base font-gSans" >
+											{feature.breadCrumbs.sort((a, b) => a.level > b.level ? 1:-1).map((item)=>(
+												<p 
+													onClick={()=>handleClickBreadcrumb(item)} 
+													className="cursor-pointer my-1 text-white"
+													key={item.id}
+												> 
+													{item.label}{feature.breadCrumbs.indexOf(item) === feature.breadCrumbs.length-1&&' /'}
+												</p>
+											))}
+										</Breadcrumbs>
+									</div>
+								</Box>
+							</div>
+							<IconButton id="basic-button"
+									aria-controls={open ? 'basic-menu' : undefined}
+									aria-haspopup="true"
+									aria-expanded={open ? 'true' : undefined}
+									onClick={handleBookmark} 
+									className="m-0 p-0 ml-1 mr-3"
+							>
+								<img src={getIconByKey('yellowPin')} alt="Pinned Modules Logo" className="w-14 h-auto m-0"  />
+							</IconButton>
+							<Menu
+								id="basic-menu"
+								anchorEl={bookMark}
+								open={open}
+								onClose={handleBookmarkClose}
+								MenuListProps={{
+								'aria-labelledby': 'basic-button',
+								}}
+							>
+								{pinnedModules.length>0 ? pinnedModules.map((item)=>(
+										<MenuItem disableRipple key={item.featureCode}>
+												<Link component="button" onClick={()=>handleOpenPin(item)} className="text-2xl" underline='false' >{item.moduleName}</Link>
+												&nbsp;&nbsp;
+												<IconButton sx={{width: '14px', height: '14px'}} className="p-1" onClick={()=>handleRemovePin(item)} >
+														<img src={getIconByKey('closeBlue')} alt="closeIcon" style={{width: '10px', height: '10px'}} className="ml-5" />
+												</IconButton>
+										</MenuItem>
+								)):(<p>&nbsp;&nbsp;No Pinned Modules!&nbsp;&nbsp;</p>)}
 
-            </Menu>
-        </div>
+							</Menu>
+						</div>
+					</div>
+				)}
+			
+			</Sticky>
         {isLoading?(
-            <CircularProgress />
+          <CircularProgress />
         ):(
-            <>
-                {isModuleLoading?(
-                    <Box
-                        className={'bg-white m-5 mt-4 mb-2 pb-2 pt-2 rounded-md h-[80vh] overflow-y-scroll no-scrollbar'}
-                    >
-                        <CircularProgress />     
-                    </Box>
-                ):(
-                    <>
-                        <ComponentHolder hideHeader={hideHeader} index={feature.featureCode} type={'main'} value={feature.showModule} onScroll={(e)=>handleScroll(e)}>
-                            <MainPage 
-                                key={feature.featureCode} 
-                                feature={feature} 
-                                getModuleChartData={getModuleChartData} 
-                                isRefreshing={isRefreshing}
-                                setIsRefreshing={setIsRefreshing}
-                            />
-                        </ComponentHolder>
-                        {feature.modules.length > 0 && feature.modules.map((item)=>(
-                            <ComponentHolder hideHeader={hideHeader} index={item.uniqueNo} key={item.uniqueNo} type={'main'} value={feature.showModule} onScroll={(e)=>handleScroll(e)} >
-                                <ModuleHolder isRefreshing={isRefreshing} setIsRefreshing={setIsRefreshing} feature={feature} module={item} getModuleChartData={getModuleChartData} />
-                            </ComponentHolder>
-                        ))}
-                    </>
-                )}
-                
-            </>
+					<>
+						{isModuleLoading?(
+							<Box
+								className={'bg-white m-5 mt-4 mb-2 pb-2 pt-2 rounded-md h-[80vh]'}
+							>
+								<CircularProgress color='primary' />     
+							</Box>
+						):(
+							<>
+								<ComponentHolder  index={feature.featureCode} type={'main'} value={feature.showModule} onScroll={(e)=>handleScroll(e)}>
+									<MainPage 
+											key={feature.featureCode} 
+											feature={feature} 
+											getModuleChartData={getModuleChartData} 
+											isRefreshing={isRefreshing}
+											setIsRefreshing={setIsRefreshing}
+									/>
+								</ComponentHolder>
+								{feature.modules.length > 0 && feature.modules.map((item)=>(
+									<ComponentHolder index={item.uniqueNo} key={item.uniqueNo} type={'main'} value={feature.showModule} onScroll={(e)=>handleScroll(e)} >
+										<ModuleHolder isRefreshing={isRefreshing} setIsRefreshing={setIsRefreshing} feature={feature} module={item} getModuleChartData={getModuleChartData} />
+									</ComponentHolder>
+								))}
+							</>
+						)}
+							
+					</>
         )}
             
-    </div>
+    </StickyContainer>
   )
 }
 
@@ -586,41 +584,37 @@ const MainPage = ({feature, getModuleChartData, isRefreshing, setIsRefreshing}) 
     return(
       <Grid container direction={'row'} justifyContent={'flex-start'} alignItems={'flex-start'} className="px-5 py-3" >
 
-           {/* mapping all the modules inside a feature as button */}
+				{/* mapping all the modules inside a feature as button */}
         {feature.modules.length>0 && feature.modules.map((item, index)=>(
-            <Grid item key={index} xs={6} className="sm:max-h-[300px] lg:min-h-[450px]" >
-                {item.parentModule_Id == null?(
-                    <>
-                    {item.parentModuleId==null&&item.moduleChartDetails!=null?(
-
-                        <div className="text-center mx-2 my-0" >
-                            <p>{item.moduleName}</p>
-                            <ModuleChartFrame 
-                                current={item} 
-                                getModuleChartData={getModuleChartData} 
-                                feature={feature} 
-                                isRefreshing={isRefreshing}
-                                setIsRefreshing={setIsRefreshing}
-                            />
-                        </div>
-    
-                    ):(
-                        <>
-                            {item.parentModuleId==null&&(
-                                <button key={item.id} onClick={()=>handleClick(item)} className="m-5 text-white font-bold border-none bg-red-500 hover:bg-red-700 rounded-md p-3 cursor-pointer">
-                                    {item.moduleName}
-                                </button>
-                            )}   
-                        </>
-                    )}
-                    </>
-                ):""}
-                
-            </Grid>
-
+					<Grid item key={index} xs={6} className="sm:max-h-[300px] lg:min-h-[450px]" >
+						{item.parentModule_Id == null?(
+							<>
+								{item.parentModuleId==null&&item.moduleChartDetails!=null?(
+									<div className="text-center mx-2 my-0" >
+										<p>{item.moduleName}</p>
+										<ModuleChartFrame 
+											current={item} 
+											getModuleChartData={getModuleChartData} 
+											feature={feature} 
+											isRefreshing={isRefreshing}
+											setIsRefreshing={setIsRefreshing}
+										/>
+									</div>
+								):(
+									<>
+										{item.parentModuleId==null&&(
+											<button key={item.id} onClick={()=>handleClick(item)} className="m-5 text-white font-bold border-none bg-red-500 hover:bg-red-700 rounded-md p-3 cursor-pointer">
+												{item.moduleName}
+											</button>
+										)}   
+									</>
+								)}
+							</>
+						):""}
+					</Grid>
         ))}
         
-        </Grid>
+      </Grid>
     )
 }
 

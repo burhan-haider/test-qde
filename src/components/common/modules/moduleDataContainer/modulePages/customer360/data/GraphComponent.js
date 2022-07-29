@@ -1,322 +1,198 @@
 import React, { useEffect, useState, useRef, useLayoutEffect } from  'react';
-import { useD3 } from '@application';
-import * as d3 from 'd3';
+import getIconByKey from 'assets';
+// import { useD3 } from '@application';
+// import * as d3 from 'd3';
+import ReactEcharts from 'echarts-for-react';
 
 const GraphComponent = (props) => {
 
+    const data = props.data || null;
+
+    const root = props.data!=null?{
+        ...data, 
+        itemStyle: {
+            color: 'rgb(0, 0, 4)'
+        },
+        children: data.children.map((item, index) =>{
+        return {
+            ...item,
+            itemStyle: {
+                color: "rgb(81, 19, 124)"
+            },
+            children: item.children.map((child, index)=>{
+                return {
+                    ...child,
+                    itemStyle: {
+                        color: "rgb(182, 55, 122)"
+                    },
+                    children: child.children.map((grandChild, index)=>{
+                        return {
+                            ...grandChild,
+                            itemStyle: {
+                                color: "rgb(251, 135, 98)"
+                            }
+                        }
+                    })
+                }
+            })
+        }
+    })}:null;
+
+    const parentRef = useRef();
+    const chartRef = useRef();
+
+    //get root path
+    const rootPath = window.location.pathname;
     const [d3Config, setD3Config] = useState("")
     const [parentHeight, setParentHeight] = useState(0)
     const [parentWidth, setParentWidth] = useState(0)
+    const [options, setOptions] = useState({
+        tooltip:{
+            trigger: 'item',
+            triggerOn: 'mousemove',
+            formatter: (params) => {
+                return(
+                    `${params.value}`
+                )
+            }
+        },
+        toolbox: {
+            show: true,
+            itemSize: 20,
+            itemGap: 12,
+            showTitle: true,
+            feature: {
+                saveAsImage: { 
+                    show: true 
+                },
+                restore: {
+                    show: true,
+                    title: "Restore"
+                },
+                dataView: {
+                    show: true,
+                    title: "Data View",
+                    lang: ["Data View", "Close", "Refresh"],
+                    readOnly: true,
+                    optionToContent: (opt) => {
+                        console.log("opt:-",opt.series)
+                        return(
+                            `<div>${JSON.stringify(opt.series[0].data)}</div>`
+                        )
+                    }
+                },
+                myExpandAll:{
+                    show: true,
+                    title: "Expand All",
+                    icon: 'path://M0,10 L10,10 L10,0 L0,0z M0,10 L10,10 L10,0 L0,0z M0,10 L10,10 L10,0 L0,0z',
+                    onclick: (e) => {
+                        setOptions({
+                            ...options,
+                            series: [
+                                {
+                                    ...options.series[0],
+                                    initialTreeDepth: -1,
+                                }
+                            ]
+                        })
+                    },
+                },
+                myCollapseAll:{
+                    show: true,
+                    title: "Collapse All",
+                    icon: 'path://M0,10 L10,10 L10,0 L0,0z M0,10 L10,10 L10,0 L0,0z M0,10 L10,10 L10,0 L0,0z',
+                    onclick: (e) => {
+                        setOptions({
+                            ...options,
+                            series: [
+                                {
+                                    ...options.series[0],
+                                    initialTreeDepth: 0,
+                                }
+                            ]
+                        })
+                    },
+                }
+            },
+            
+          },
+        series: [
+            {
+                type: 'tree',
+                data: root != null ? [root] : [],
+                top: '8%',
+                roam: true,
+                bottom: '20%',
+                layout: 'radial',
+                symbol: 'circle',
+                symbolSize: 7,
+                initialTreeDepth: 1,
+                animationDurationUpdate: 550,
+                emphasis: {
+                    focus: 'descendant',
+                },
+                label: {
+                    distance: 10
+                }
+            }
+        ]
+    });
 
-    const parentRef = useRef();
-    const d3Container = useRef();
 
     useLayoutEffect(() => {
-        console.log("Parent Height:-", parentRef.current.clientHeight)
-        console.log("Parent Width:-", parentRef.current.clientWidth)
+        // console.log("Parent Height:-", parentRef.current.clientHeight)
+        // console.log("Parent Width:-", parentRef.current.clientWidth)
         setParentHeight(parentRef.current.clientHeight)
         setParentWidth(parentRef.current.clientWidth)
-    })
+    },[parentRef.current])
 
-    const data = props.data?props.data:null;
+    useEffect(()=>{
 
-       
-
-        
-
-        // var diagonal = d3.linkHorizontal()
-        //     .y(function(d) {
-        //         return d.y;
-        //     })
-        //     .x(function(d){
-        //         return d.x / 180 * Math.PI;
-        //     })
-
-        useEffect(()=>{
-            var channelName = null;
-            var countTrans = "N.A.";
-            var channelType = null;
-            // var customerId = document.getElementById("customerId").value;
-            var transAmount = null;
-            var diameter = 800;
-            var wid = parentRef.current.clientWidth;
-            var hei = wid-100;
-    
-            var margin = {
-                top : 400,
-                right : 200,
-                bottom : 150,
-                left : 600
-            }
-            var width = wid - margin.right - margin.left;
-            var height = hei - margin.top - margin.bottom;
-    
-            var i = 0
-            var duration = 500
-            var root;
-    
-            var custName;
-    
-            var r = 960 / 2;
-            console.log("parentRef:-", parentRef.current.width)
-
-            var tree = d3.layout.tree().size([ 360, r - 80 ]).separation(
-                function(a, b) {
-                    return (a.parent == b.parent ? 1 : 10) / a.depth;
-                });
-    
-            var diagonal = d3.svg.diagonal.radial().projection(function(d) {
-                return [ d.y, d.x / 180 * Math.PI ];
-            });
-
-            var svg = d3.select(d3Container.current).append("svg:svg")
-            .attr("width", width + margin.right + margin.left)
-            .attr("height", height + margin.top + margin.bottom)
-            .append("svg:g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-            //collapse nodes
-            const collapse = (d) => {
-                if (d.children) {
-                    d._children = d.children;
-                    d._children.forEach(collapse);
-                    d.children = null;
+        setOptions({
+            ...options, 
+            series:[
+                {
+                    ...options.series[0], 
+                    data:[root]
                 }
-            }
-                
-            //expand nodes
-            const expand = (d) => {   
-                var children = (d.children)?d.children:d._children;
-                if (d._children) {        
-                    d.children = d._children;
-                    d._children = null;       
-                }
-                if(children)
-                    children.forEach(expand);
-            }
+            ]
+        })
 
-            const update = (source) => {
-                
+        console.log("Use Effect Called", rootPath)
+        console.log("Graph Data:-",root)
+        console.log("Charts Ref:-", chartRef.current)
+        // console.log("Image:-", getIconByKey('expand'));
+    },[data])
 
-                // Compute the new tree layout.
-                var nodes = tree.nodes(root),
-                links = tree.links(nodes);
-
-                //Normalize for fixed-depth.
-                nodes.forEach((d)=>{
-                    d.y = d.depth * 80;
-                });
-
-                // Update the nodes…
-                var node = svg.selectAll("g.node")
-                    .data(nodes, (d)=>{
-                        return d.id || (d.id = ++i);
-                    })
-
-                // Enter any new nodes at the parent's previous position.
-                var nodeEnter = node.enter()
-                    .append("g")
-                    .attr("class", "node")
-                    .on("click", (d)=>{
-                        if(d.depth<=1 || d.depth==2){
-                            if (d.children) {
-                                d._children = d.children;
-                                d.children = null;
-                            }
-                            else{
-                                d.children = d._children;
-                                d._children = null;
-                            }
-                            update(d);
-                        }
-                        else if(d.depth==3){
-                            if (d.children) {
-                                d._children = d.children;
-                                d.children = null;
-                            }
-                            else {
-                                d.children = d._children;
-                                d._children = null;
-                                channelType = d.name;
-                            }
-                            update(d);
-                        }
-                        else if(d.depth>=3){
-                            var moduleValueClicked = d.name;
-                            var moduleCode = "transactionDetailsMaster";
-                            var moduleHeader = "Transaction Details";
-                            var moduleValue = moduleValueClicked;
-                            var detailPage = "InvestigationTools/TransactionDetails/TransactionDetails";
-                            // if(moduleValue != undefined){
-                            //     openModalInTab($(this), moduleHeader, moduleValue, moduleCode, detailPage);
-
-                            // }
-                        }
-                    })
-
-                nodeEnter.append("circle")
-                    .attr("r", 4)
-                    .style("fill", d => d._children ? "lightsteelblue" : "#fff");
-
-                nodeEnter.append("rect")
-                    .attr("width", 2)
-                    .attr("height", 10)
-                    .attr("x", 5)
-                    .attr("y", -5)
-                    .attr("transform", d=>d.id==1?"rotate(180)":"rotate(0)")
-                    .style("fill", "white");
-
-                nodeEnter.append("g").append("text")
-                    .style("text-decoration", d=>d.depth>3?"underline":"none")
-                    .style("fill", d=>d.depth>3?"blue":"black")
-                    .style("fill-opacity", 1)
-                    .attr("dx", 6)
-                    .attr("class", "keyText")
-                    .attr("dy", 0.35)
-                    .on("mouseover", (d)=>{}) /* Need to Comeback For Flare Data Dialog Box */  
-                    .attr("text-anchor", "start")
-                    .attr("transform", d=>d.id==1?"rotate(234)":d.x<180?null:null)
-                    .text(d=>d.depth==0?custName+" - "+d.name+" ":d.name);
-
-                nodeEnter.selectAll('rect')
-                    // .attr("width", d=>d.parentNode?d.parentNode.getBBox().width:0)
-                    .attr("width", d=>d.parentNode?120:0)
-
-                // Transition nodes to their new position.
-                var nodeUpdate = node.transition()
-                    .duration(duration)
-                    .attr("transform", d=>"rotate(" + (d.x-90) + ")translate(" + d.y + ")");
-
-                nodeUpdate.select("circle")
-                    .attr("r", 4)
-                    .style("fill", d=>{
-                        switch(d.depth){
-                            case 0: return "rgb(0,0,4)"
-                            case 1: return "rgb(81,19,124)"
-                            case 2: return "rgb(182, 55, 122)"
-                            case 3: return "rgb(251, 135, 98)"
-                            case 4: return "rgb(0, 0, 255)"
-                            case 5: return "rgb(251, 135, 98)"
-                            default: return "rgb(252, 253, 191)"
-                        }
-                    });
-                
-                nodeUpdate.select("text")
-                    .text(d=>{
-                        if(d.name === "Customer Name"){
-                            custName = d.value;
-                        }
-                        return d.depth==0?custName+" - "+d.name+" ":d.name;
-                    })
-                    .style("fill-opacity", 1);
-
-                // Transition exiting nodes to the parent's new position.
-                var nodeExit = node.exit().transition().duration(duration).remove()
-
-                nodeExit.select("circle").attr("r", 4);
-
-                nodeExit.select("text").style("fill-opacity", 1);
-
-                // Update the links…
-                var link = svg.selectAll("path.link").data(links, d=>d.target.id);
-
-                // Enter any new links at the parent's previous position.
-                link.enter().insert("path", "g")
-                    .attr("class", "link")
-                    .attr("d", d=>{
-                        var o = {
-                            x: source.x0,
-                            y: source.y0
-                        };
-                        return diagonal({
-                            source: o,
-                            target: o
-                        });
-                    })
-                    .attr("stroke", d=>{
-                        switch(d.target.depth){
-                            case 1: return "rgb(0,0,4)"
-                            case 2: return "rgb(81,19,124)"
-                            case 3: return "rgb(182, 55, 122)"
-                            case 4: return "rgb(251, 135, 98)"
-                            case 5: return "rgb(251, 135, 98)"
-                            case 6: return "rgb(204, 204, 0)"
-                            default: return "rgb(252, 253, 191)"
-                        }
-                    });
-
-                // Transition links to their new position.
-                link.transition().duration(duration).attr("d", diagonal);
-
-                // Transition exiting nodes to the parent's new position.
-                link.exit().transition().duration(duration).attr("d", d=>{
-                    var o = {
-                        x: source.x,
-                        y: source.y
-                    };
-                    return diagonal({
-                        source: o,
-                        target: o
-                    });
-                })
-                .remove();
-
-                // Stash the old positions for transition.
-                nodes.forEach(d=>{
-                    d.x0 = d.x;
-                    d.y0 = d.y;
-                });
-            }
-
-            if(data!=null){
-                root = data;
-                root.x0 = height / 2;
-                root.y0 = 0;
-                custName = root.children[0].children[0].children[1].value
     
-                root.children[0].children.forEach(collapse);
-                root.children[1].children.forEach(collapse);
-            
-                update(root);
-            }
 
-            
+    const handleClick = (e) => {
+        console.log("Clicked:-", e);
+    };
 
-            // Toggle children on click.
-            const click = (d) => {
-                if (d.children) {
-                    //alert("inside click if")
-                    d._children = d.children;
-                    d.children = null;
-                } 
-                else{
-                    //alert("inside click else second")
-                    d.children = d._children;
-                    d._children = null;
-                }
+    // Event Listeners for individual nodes eg. "click", "mousemove", "mouseover", "mouseout"
+    const onEvents = {
+        "click": (e) => handleClick(e),
+    }
 
-                update(d);
-            }
-
-            
-
-            function expandAll(){
-                expand(root); 
-                update(root);
-            }
-        
-            function collapseAll(){
-                root.children.forEach(collapse);
-                collapse(root);
-                update(root);
-            }
-        }, [data])
-        
-        
 
     return(
-        <div ref={parentRef} >
-            <div id="chart" ref={d3Container} ></div>
+        <div 
+            ref={parentRef}
+            className="mb-5" 
+        >
+            <ReactEcharts
+                style={{
+                    width: parentWidth - 50, 
+                    height: parentWidth - 800,
+                    marginLeft: 'auto',
+                    marginRight: 'auto',
+                    border: '2px solid #ccc',
+                }}
+                onEvents={onEvents}
+                option={options} 
+                ref={chartRef}
+            />
         </div>
     )
 
