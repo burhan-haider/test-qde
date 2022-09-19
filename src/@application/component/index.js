@@ -23,3 +23,5 @@ export { default as GenericMessage } from "./message/GenericMessage";
 export { default as DraggableList } from "./draggableList/DraggableList";
 
 export { default as GenericSwitch } from "./switch/GenericSwitch";
+
+export { default as GenericDatagrid } from "./datagrid/GenericDatagrid";

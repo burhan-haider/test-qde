@@ -1,28 +1,36 @@
 import React, { useState, useEffect } from "react";
 import Fab from "@mui/material/Fab";
 // import AddIcon from "@material-ui/icons/Add";
-import { MdAdd as AddIcon, MdEdit as EditIcon } from 'react-icons/md'
-import { GenericDatatable, GenericDialog } from "@application";
+import { MdAdd as AddIcon, MdEdit as EditIcon } from "react-icons/md";
+import { GenericDatatable, GenericDialog, GenericDatagrid } from "@application";
 import RoleCreationForm from "../role/RoleCreationForm";
 import Dialog from "@mui/material/Dialog";
-import { AppBar, Toolbar, Typography, SpeedDial, SpeedDialAction, SpeedDialIcon, Box } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  SpeedDial,
+  SpeedDialAction,
+  SpeedDialIcon,
+  Box,
+} from "@mui/material";
 import roleOperationService from "services/role/RoleOperationService";
-import * as MessageActions from 'redux/message/message.actions'
+import * as MessageActions from "redux/message/message.actions";
 import RoleUpdate from "./RoleUpdate";
 import { useDispatch } from "react-redux";
-import { useClasses } from '@application';
+import { useClasses } from "@application";
 
-const styles = theme => ({
+const styles = (theme) => ({
   speedDial: {},
   mainDivSpeedDial: {
     position: "relative",
     marginRight: "2%",
-    marginBottom: "1%"
+    marginBottom: "1%",
   },
   speedDialAction: {
-    background: "#d4d4d4"
-  }
-})
+    background: "#d4d4d4",
+  },
+});
 
 function RoleComponent(props) {
   const [open, setOpen] = React.useState(false);
@@ -39,12 +47,12 @@ function RoleComponent(props) {
   const modalData = {
     AddRole: {
       title: "Add Role",
-      size: "lg"
+      size: "lg",
     },
     UpdateRole: {
       title: "Update Role",
-      size: "lg"
-    }
+      size: "lg",
+    },
   };
 
   const handleOpenModal = () => {
@@ -59,7 +67,7 @@ function RoleComponent(props) {
   const handleOpen = () => {
     setOpen(true);
   };
-  const displayProperty = data => {
+  const displayProperty = (data) => {
     setProperty(modalData[data]);
   };
 
@@ -76,7 +84,7 @@ function RoleComponent(props) {
   // }
   return (
     <>
-      <div>
+      <div className="mx-5 my-5">
         <GenericDatatable
           dataSet={props.indexPageData}
           isSelection={true}
@@ -85,11 +93,12 @@ function RoleComponent(props) {
           selected={dataSelected}
           selectHandler={setDataSelected}
         ></GenericDatatable>
+        <GenericDatagrid dataSet={props.indexPageData} utilColumn={"select"} />
       </div>
-        {/* <Fab color="primary" aria-label="add">
+      {/* <Fab color="primary" aria-label="add">
           <AddIcon onClick={openCreaeUserDialog} />
         </Fab> */}
-        {/* <Dialog
+      {/* <Dialog
           maxWidth="md"
           fullWidth={true}
           open={open}
@@ -108,8 +117,8 @@ function RoleComponent(props) {
             addNewRole={addNewRole}
           />
         </Dialog> */}
-        <Box classes={classes.mainDivSpeedDial} >
-          <SpeedDial 
+      <Box classes={classes.mainDivSpeedDial}>
+        <SpeedDial
           classes={classes.speedDial}
           ariaLabel="Role"
           icon={<SpeedDialIcon />}
@@ -117,70 +126,70 @@ function RoleComponent(props) {
           onClose={handleClose}
           onOpen={handleOpen}
           open={open}
-          >
-            <SpeedDialAction
-              classes={classes.speedDialAction}
-              key="Add Role"
-              tooltipTitle="Add"
-              tooltipPlacement="top"
-              icon={<AddIcon />}
-              onClick={e => {
-                setAction("Add");
+        >
+          <SpeedDialAction
+            classes={classes.speedDialAction}
+            key="Add Role"
+            tooltipTitle="Add"
+            tooltipPlacement="top"
+            icon={<AddIcon />}
+            onClick={(e) => {
+              setAction("Add");
+              handleOpenModal();
+              displayProperty("AddRole");
+            }}
+          />
+          <SpeedDialAction
+            classes={classes.speedDialAction}
+            key="Update Role"
+            tooltipTitle="Update"
+            tooltipPlacement="top"
+            icon={<EditIcon />}
+            onClick={(e) => {
+              if (dataSelected.length > 0) {
+                setAction("Update");
                 handleOpenModal();
-                displayProperty("AddRole");
-              }}
+                displayProperty("UpdateRole");
+              } else {
+                dispatch(
+                  MessageActions.showMessage({
+                    message: "Please select a record to update",
+                    variant: "warning",
+                  })
+                );
+              }
+            }}
+          />
+        </SpeedDial>
+        {action === "Add" ? (
+          <GenericDialog
+            state={openModal}
+            closeModal={handleCloseModal}
+            property={property}
+          >
+            <RoleCreationForm
+              action={action}
+              // addNewRole={addNewRole}
+              closeModal={handleCloseModal}
             />
-            <SpeedDialAction
-              classes={classes.speedDialAction}
-              key="Update Role"
-              tooltipTitle="Update"
-              tooltipPlacement="top"
-              icon={<EditIcon />}
-              onClick={e => {
-                if (dataSelected.length > 0) {
-                  setAction("Update");
-                  handleOpenModal();
-                  displayProperty("UpdateRole");
-                } else {
-                  dispatch(
-                    MessageActions.showMessage({
-                      message: "Please select a record to update",
-                      variant: "warning"
-                    })
-                  );
-                }
-              }}
-              />
-          </SpeedDial>
-          {action === "Add" ? (
-            <GenericDialog 
-              state={openModal}
+          </GenericDialog>
+        ) : action === "Update" ? (
+          <GenericDialog
+            state={openModal}
+            closeModal={handleCloseModal}
+            property={property}
+          >
+            <RoleUpdate
+              action={action}
+              selectedData={dataSelected}
+              // addNewRole={addNewRole}
               closeModal={handleCloseModal}
-              property={property}
-            >
-              <RoleCreationForm
-                action={action}
-                // addNewRole={addNewRole}
-                closeModal={handleCloseModal}
-              />
-            </GenericDialog>
-          ) : action === "Update" ? (
-            <GenericDialog 
-              state={openModal}
-              closeModal={handleCloseModal}
-              property={property}
-            >
-              <RoleUpdate
-                action={action}
-                selectedData={dataSelected}
-                // addNewRole={addNewRole}
-                closeModal={handleCloseModal} 
-              />
-            </GenericDialog>
-          ) : (
-            ""
-          )}
-        </Box>
+            />
+          </GenericDialog>
+        ) : (
+          ""
+        )}
+      </Box>
     </>
   );
 }
